@@ -1,3 +1,9 @@
 .content_main{
     background-color: #18191a;
 }
+
+.error_message {
+    color: red;
+    text-align: left;
+    font-size: 15px;
+}
