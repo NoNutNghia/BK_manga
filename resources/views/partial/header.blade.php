@@ -10,12 +10,12 @@
             </div>
         </div>
         <div class="flex flex-row gap-[12px]">
-            <button class="button_auth">
+            <button class="button_auth" id="login">
                 <span>
                     Login
                 </span>
             </button>
-            <button class="button_auth">
+            <button class="button_auth" id="register">
                 <span>
                     Register
                 </span>

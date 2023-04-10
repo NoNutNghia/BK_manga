@@ -101,4 +101,75 @@ ul>li>a {
     display: none;
 }
 
+.login_popup {
+    margin: 0 15px;
+}
 
+.input_auth {
+    padding: 0 15px;
+    height: 49px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    color: #354052;
+    outline: none;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.input_password {
+    position: relative;
+    padding-right: 40px;
+}
+
+.icon_eye {
+    position: absolute;
+    width: 25px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.label_input {
+    text-align: left;
+    color: #2E2E2E;
+    line-height: 25px;
+    font-size: 15px;
+}
+
+button.swal2-close {
+    outline: none !important;
+}
+
+.popup_text_redirect {
+    color: #5a7484;
+    line-height: 35px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.divide_text {
+    height: 18px;
+    width: 1px;
+    background-color: #5a7484;
+}
+
+#show_password {
+    display: block;
+}
+
+#hide_password {
+    display: none;
+}
+
+.button_forgot_password {
+    background-color: #f18121;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 15px;
+    border: none;
+    color: #fff;
+    font-weight: 600;
+}
+
+.button_auth:hover {
+    opacity: 0.8;
+}
