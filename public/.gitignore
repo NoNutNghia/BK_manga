@@ -1,6 +1,5 @@
-*
-!assets/
-!css/
-!js/
-!mix-manifest.json
+assets/
+css/
+js/
+mix-manifest.json
 !.gitignore
