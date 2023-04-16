@@ -1,9 +1,22 @@
 .content_main{
     background-color: #18191a;
+    padding: 1rem 12%;
 }
 
 .error_message {
     color: red;
     text-align: left;
     font-size: 15px;
+}
+
+.icon_main {
+    font-size: 20px;
+    color: white;
+}
+
+.text_updated_manga {
+    text-transform: uppercase;
+    font-size: 20px;
+    color: white;
+    font-weight: 300;
 }
