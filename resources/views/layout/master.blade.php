@@ -25,4 +25,5 @@
         @include('partial.footer')
     </main>
 </body>
+@yield('script')
 </html>

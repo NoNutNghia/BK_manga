@@ -44,7 +44,7 @@ body {
 }
 
 .navigation, .header {
-    padding: 0 6rem;
+    padding: 0 12%;
 }
 
 .navigation {
@@ -83,13 +83,14 @@ ul>li>a {
 
 .content_hidden {
     position: absolute;
-    padding: 22px 6rem;
+    padding: 22px 12%;
     background-color: #242526;
     border-bottom: 1px solid white;
     border-top: 1px solid white;
     height: auto;
     width: 100%;
     top: 52px;
+    z-index: 9999;
 }
 
 .content_hidden a {

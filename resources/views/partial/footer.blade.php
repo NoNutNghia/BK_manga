@@ -111,7 +111,8 @@
             Every information and images on the website are collected on the internet.
             We do not own or be responsible for any information on this website.
             If it affects any individual or organization, if any reported, we will review and remove it immediately.
-            ( Or not :D )
+            ( Or not :D ).
+            From NN, TD, DD, NM, QH with love <3
         </p>
     </div>
 </footer>
