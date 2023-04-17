@@ -53,6 +53,11 @@
                     </span>
                 </div>
             </div>
+            <div class="flex flex-col description_chapter_middle">
+                    <span>
+                        Albert Einstein said before: "Have two things that unlimited. It's cosmo, and how much stupid Duck have." (He did not say that)
+                    </span>
+            </div>
         </a>
     </div>
     <div class="flex flex-col gap-[4px] manga_side">
