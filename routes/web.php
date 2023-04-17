@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.user.manga.main');
 });
 
 Route::get('/main', function () {
-    return view('pages.user.main');
+    return view('pages.user.manga.main');
 });
