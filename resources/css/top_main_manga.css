@@ -15,6 +15,7 @@
 
 .top_main_manga img {
     width: 100%;
+    aspect-ratio: 3/2;
 }
 
 .image_manga_container {

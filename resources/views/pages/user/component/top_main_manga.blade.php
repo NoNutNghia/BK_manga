@@ -1,7 +1,7 @@
 <div class="flex flex-row top_main_manga gap-[4px]">
     <div class="flex flex-col gap-[4px] manga_side">
         <a href="" class="image_manga_container">
-            <img src="{{ asset('storage/nazi.jpg') }}" alt="">
+            <img src="{{ asset('storage/manga/2/image_large.jpg') }}" alt="">
             <div class="content_chapter">
                 <span>
                     Chapter 123
@@ -14,7 +14,7 @@
             </div>
         </a>
         <a href="" class="image_manga_container">
-            <img src="{{ asset('storage/nazi.jpg') }}" alt="">
+            <img src="{{ asset('storage/manga/2/image_large.jpg') }}" alt="">
             <div class="content_chapter">
                 <span>
                     Chapter 123
@@ -29,7 +29,7 @@
     </div>
     <div class="manga_middle">
         <a href="" class="image_manga_container h-full">
-            <img src="{{ asset('storage/nazi.jpg') }}" alt="">
+            <img src="{{ asset('storage/manga/2/image_large.jpg') }}" alt="">
             <div class="filter_hover">
 
             </div>
@@ -54,15 +54,15 @@
                 </div>
             </div>
             <div class="flex flex-col description_chapter_middle">
-                    <span>
-                        Albert Einstein said before: "Have two things that unlimited. It's cosmo, and how much stupid Duck have." (He did not say that)
-                    </span>
+                <span>
+                    Albert Einstein said before: "Have two things that unlimited. It's cosmo, and how much stupid Duck have." (He did not say that)
+                </span>
             </div>
         </a>
     </div>
     <div class="flex flex-col gap-[4px] manga_side">
         <a href="" class="image_manga_container">
-            <img src="{{ asset('storage/nazi.jpg') }}" alt="">
+            <img src="{{ asset('storage/manga/2/image_large.jpg') }}" alt="">
             <div class="content_chapter">
                 <span>
                     Chapter 123
@@ -75,7 +75,7 @@
             </div>
         </a>
         <a href="" class="image_manga_container">
-            <img src="{{ asset('storage/nazi.jpg') }}" alt="">
+            <img src="{{ asset('storage/manga/2/image_large.jpg') }}" alt="">
             <div class="content_chapter">
                 <span>
                     Chapter 123
