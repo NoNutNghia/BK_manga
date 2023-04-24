@@ -1,5 +1,7 @@
 <div class="flex flex-row manga_information gap-[24px]">
-    <img class="image_manga" src="{{ asset('storage/manga/1/image_logo.jpg') }}">
+    <div class="w-[230px]">
+        <img class="image_manga" src="{{ asset('storage/manga/1/image_logo.jpg') }}">
+    </div>
     <div class="flex flex-col manga_information_detail gap-[8px]">
         <span class="title_manga">
             Duck Ngu Duck Ngu Duck Ngu Duck Ngu Duck Ngu Duck Ngu Duck Ngu Duck Ngu Duck Ngu
