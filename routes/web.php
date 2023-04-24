@@ -20,3 +20,7 @@ Route::get('/', function () {
 Route::get('/main', function () {
     return view('pages.user.manga.main');
 });
+
+Route::get('/detail', function () {
+    return view('pages.user.manga.detail');
+});
