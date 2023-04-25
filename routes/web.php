@@ -24,3 +24,7 @@ Route::get('/main', function () {
 Route::get('/detail', function () {
     return view('pages.user.manga.detail');
 });
+
+Route::get('/chapter', function () {
+    return view('pages.user.manga.chapter');
+});
