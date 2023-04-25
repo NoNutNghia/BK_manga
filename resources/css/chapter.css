@@ -1,0 +1,46 @@
+.chapter_navigation {
+    padding: 1.25rem;
+    border-radius: 6px;
+    background-color: #242526;
+}
+
+.navigation_fixed {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 5px 5px 16px -4px #8e8e8e;
+    padding: 4px;
+    background-color: #242526;
+}
+
+.navigation_fixed a {
+    display: flex;
+}
+
+.navigation_fixed i{
+    font-size: 24px;
+}
+
+.select_chapter {
+    line-height: 35px;
+    border-radius: 3px;
+    padding: 12px 10px;
+    margin: 0 3px;
+    cursor: pointer;
+    text-transform: capitalize;
+    width: 200px;
+    outline: none;
+}
+
+.fixed_action {
+    padding: 8px;
+}
+
+.fixed_action i {
+    font-size: 15px;
+}

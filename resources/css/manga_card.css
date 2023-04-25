@@ -1,6 +1,7 @@
 .image_manga_card {
     border-radius: 10px;
     width: 100%;
+    aspect-ratio: 3/4;
 }
 
 .title_manga_card {
