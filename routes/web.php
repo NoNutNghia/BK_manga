@@ -28,3 +28,7 @@ Route::get('/detail', function () {
 Route::get('/chapter', function () {
     return view('pages.user.manga.chapter');
 });
+
+Route::get('/following', function () {
+    return view('pages.user.manga.following');
+});
