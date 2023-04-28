@@ -59,13 +59,6 @@
             <li>
                 <a href="" class="gap-[4px]">
                     <span>
-                        History
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="" class="gap-[4px]">
-                    <span>
                         Following
                     </span>
                 </a>
