@@ -1,6 +1,6 @@
 <footer class="flex flex-row justify-between footer">
     <div class="flex flex-col w-[150px] gap-[12px]">
-        <a href="">
+        <a href="{{ route('main') }}">
             <img src="{{ asset('storage/logo/Bkmanga.svg') }}" alt="">
         </a>
         <img src="{{ asset('storage/download/download-googleplay.svg') }}" alt="">
