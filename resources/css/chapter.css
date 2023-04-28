@@ -35,6 +35,7 @@
     text-transform: capitalize;
     width: 200px;
     outline: none;
+    color: black !important;
 }
 
 .fixed_action {

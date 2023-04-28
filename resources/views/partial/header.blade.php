@@ -1,7 +1,7 @@
 <header class="flex flex-col ">
     <div class="flex flex-row items-center justify-between header">
         <div class="flex flex-row items-center">
-            <a href="">
+            <a href="{{ route('main') }}">
                 <img width="150px" src="{{ asset('storage/logo/Bkmanga.svg') }}" alt="">
             </a>
             <div class="flex flex-row items-center justify-between relative w-[400px]">
@@ -25,7 +25,7 @@
     <div class="flex flex-row items-center relative">
         <ul class="flex flex-row items-center navigation">
             <li>
-                <a href="/main">
+                <a href="{{ route('main') }}">
                     <span>
                         Main page
                     </span>
@@ -50,21 +50,14 @@
                 </a>
             </li>
             <li>
-                <a href="" class="gap-[4px]">
+                <a href="{{ route('search') }}" class="gap-[4px]">
                     <span>
                         Search manga
                     </span>
                 </a>
             </li>
             <li>
-                <a href="" class="gap-[4px]">
-                    <span>
-                        History
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="" class="gap-[4px]">
+                <a href="{{ route('following') }}" class="gap-[4px]">
                     <span>
                         Following
                     </span>

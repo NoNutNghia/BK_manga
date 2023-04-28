@@ -21,3 +21,10 @@
     color: white;
     font-weight: 300;
 }
+
+.icon_remove_following {
+    top: 3px;
+    right: 3px;
+    font-size: 30px;
+    position: absolute;
+}

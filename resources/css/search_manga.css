@@ -1,0 +1,24 @@
+.search_box {
+    padding: 1.25rem;
+    background-color: #242526;
+}
+
+.advanced_area {
+    margin: 1.25rem 0;
+    color: white;
+    transition: all 300ms ease-out;
+}
+
+#show_search {
+    display: none;
+}
+
+#hide_search {
+    display: block;
+}
+
+.advanced_area input[type='checkbox'] {
+    cursor: pointer;
+}
+
+
