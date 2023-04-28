@@ -15,7 +15,7 @@
     </div>
     <div class="navigation_fixed text-[white]">
         <div class="flex flex-row justify-end items-center gap-[12px] w-[49.5%]">
-            <a href="">
+            <a href="{{ route('main') }}">
                 <i class="fa-solid fa-house"></i>
             </a>
             <a href="">

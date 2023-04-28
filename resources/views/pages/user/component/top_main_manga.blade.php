@@ -1,6 +1,6 @@
 <div class="flex flex-row top_main_manga gap-[4px]">
     <div class="flex flex-col gap-[4px] manga_side">
-        <a href="" class="image_manga_container">
+        <a href="{{ route('chapter') }}" class="image_manga_container">
             <img src="{{ asset('storage/manga/2/image_large.jpg') }}" alt="">
             <div class="content_chapter">
                 <span>
@@ -13,7 +13,7 @@
                 </span>
             </div>
         </a>
-        <a href="" class="image_manga_container">
+        <a href="{{ route('chapter') }}" class="image_manga_container">
             <img src="{{ asset('storage/manga/2/image_large.jpg') }}" alt="">
             <div class="content_chapter">
                 <span>
@@ -28,7 +28,7 @@
         </a>
     </div>
     <div class="manga_middle">
-        <a href="" class="image_manga_container h-full">
+        <a href="{{ route('chapter') }}" class="image_manga_container h-full">
             <img src="{{ asset('storage/manga/2/image_large.jpg') }}" alt="">
             <div class="filter_hover">
 
@@ -61,7 +61,7 @@
         </a>
     </div>
     <div class="flex flex-col gap-[4px] manga_side">
-        <a href="" class="image_manga_container">
+        <a href="{{ route('chapter') }}" class="image_manga_container">
             <img src="{{ asset('storage/manga/2/image_large.jpg') }}" alt="">
             <div class="content_chapter">
                 <span>
@@ -74,7 +74,7 @@
                 </span>
             </div>
         </a>
-        <a href="" class="image_manga_container">
+        <a href="{{ route('chapter') }}" class="image_manga_container">
             <img src="{{ asset('storage/manga/2/image_large.jpg') }}" alt="">
             <div class="content_chapter">
                 <span>

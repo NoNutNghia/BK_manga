@@ -7,77 +7,15 @@
     </div>
 
     <div class="flex flex-col chapter_list gap-[12px]">
-        <div class="chapter">
-            <a href="">
-                Chapter 10
-            </a>
-            <span>
-                24/04/2023
-            </span>
-        </div>
-        <div class="chapter">
-            <a href="">
-                Chapter 10
-            </a>
-            <span>
-                24/04/2023
-            </span>
-        </div>
-        <div class="chapter">
-            <a href="">
-                Chapter 10
-            </a>
-            <span>
-                24/04/2023
-            </span>
-        </div>
-        <div class="chapter">
-            <a href="">
-                Chapter 10
-            </a>
-            <span>
-                24/04/2023
-            </span>
-        </div>
-        <div class="chapter">
-            <a href="">
-                Chapter 10
-            </a>
-            <span>
-                24/04/2023
-            </span>
-        </div>
-        <div class="chapter">
-            <a href="">
-                Chapter 10
-            </a>
-            <span>
-                24/04/2023
-            </span>
-        </div>
-        <div class="chapter">
-            <a href="">
-                Chapter 10
-            </a>
-            <span>
-                24/04/2023
-            </span>
-        </div>
-        <div class="chapter">
-            <a href="">
-                Chapter 10
-            </a>
-            <span>
-                24/04/2023
-            </span>
-        </div>
-        <div class="chapter">
-            <a href="">
-                Chapter 10
-            </a>
-            <span>
-                24/04/2023
-            </span>
-        </div>
+        @for($i = 1; $i <= 10; $i++)
+            <div class="chapter">
+                <a href="{{ route('chapter') }}">
+                    Chapter {{$i}}
+                </a>
+                <span>
+                    24/04/2023
+                </span>
+            </div>
+        @endfor
     </div>
 </div>
