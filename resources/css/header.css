@@ -179,3 +179,28 @@ button.swal2-close {
 .button_auth:hover {
     opacity: 0.8;
 }
+
+#personal_avatar {
+    cursor: pointer;
+    position: relative;
+}
+
+.modal_user {
+    display: flex;
+    color: white;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 5px;
+    position: absolute;
+    width: 250px;
+    z-index: 30;
+    right: 12%;
+    top: 64px;
+    gap: 15px;
+    box-shadow: 0 0 1px 0 #000;
+    background-color: #3a3b3c;
+}
+
+.hidden_modal {
+    display: none;
+}

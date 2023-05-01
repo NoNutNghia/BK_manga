@@ -36,3 +36,13 @@ Route::get('/following', function () {
 Route::get('/search', function () {
     return view('pages.user.manga.search_manga');
 })->name('search');
+
+Route::prefix('/personal')->name('personal.')->group(function () {
+    Route::get('/information', function () {
+        return view('pages.user.personal.information');
+    })->name('information');
+
+    Route::get('/change_password', function () {
+        return view('pages.user.personal.change_password');
+    })->name('change_password');
+});
