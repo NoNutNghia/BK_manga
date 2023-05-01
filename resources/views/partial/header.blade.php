@@ -9,7 +9,7 @@
                 <i class="fa-solid fa-magnifying-glass icon_search"></i>
             </div>
         </div>
-        <div class="flex flex-row gap-[12px]">
+        <div class="flex flex-row items-center gap-[12px]">
             <button class="button_auth" id="login">
                 <span>
                     Login
@@ -20,6 +20,21 @@
                     Register
                 </span>
             </button>
+            <div class="w-[52px]">
+                <img src="{{ asset('storage/icon/pepesmile.ico') }}" class="avatar_user" id="personal_avatar" alt="">
+                <div class="modal_user hidden_modal">
+                    <a href="{{ route('personal.information') }}">
+                        <span>
+                            Personal Information
+                        </span>
+                    </a>
+                    <a href="">
+                        <span>
+                            Logout
+                        </span>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="flex flex-row items-center relative">

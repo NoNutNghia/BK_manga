@@ -4,6 +4,8 @@ let genre_hide = $('#genre_hide')
 let ranking_hide = $('#ranking_hide')
 let login = $('#login')
 let register = $('#register')
+let avatar_user = $('#personal_avatar')
+let modal_user = $('.modal_user')
 
 genre.hover(
     function () {
@@ -215,3 +217,11 @@ function popup_login() {
         showCloseButton: true,
     })
 }
+
+avatar_user.on('click', function () {
+    if (modal_user.hasClass('hidden_modal')) {
+        modal_user.removeClass('hidden_modal')
+    } else {
+        modal_user.addClass('hidden_modal')
+    }
+})
