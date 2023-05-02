@@ -16,10 +16,10 @@ class CreateMangaDetailTable extends Migration
         Schema::create('manga_detail', function (Blueprint $table) {
             $table->id();
             $table->integer('manga_id');
-            $table-> tinyInteger('manga_status');
+            $table->tinyInteger('manga_status');
             $table->integer('author_id');
             $table->string('other_name');
-            $table->integer('age_range');
+            $table->tinyInteger('age_range');
             $table->text('description');
         });
     }

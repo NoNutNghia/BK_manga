@@ -16,7 +16,7 @@ class CreateGenreMangaTable extends Migration
         Schema::create('genre_manga', function (Blueprint $table) {
             $table->id();
             $table->tinyInteger('genre_id');
-            $table->tinyInteger('manga_id');
+            $table->integer('manga_id');
         });
     }
 
