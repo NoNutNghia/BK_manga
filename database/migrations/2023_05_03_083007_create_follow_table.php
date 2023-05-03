@@ -17,7 +17,6 @@ class CreateFollowTable extends Migration
             $table->integer('id');
             $table->integer('user_id');
             $table->integer('manga_id');
-            $table->timestamps();
         });
     }
 
