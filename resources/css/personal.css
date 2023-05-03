@@ -1,0 +1,34 @@
+.personal_information {
+    background-color: #252525;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.form_information {
+    display: flex;
+    flex-direction: column;
+}
+
+.form_information span {
+    color: white;
+}
+
+.form_information:not(.gender) input {
+    width: 100%;
+}
+
+label.button_follow {
+    cursor: pointer;
+}
+
+.menu_personal {
+    display: flex;
+    flex-direction: column;
+    background-color: #f2f2f2;
+    padding: 10px 25px;
+}
+
+.menu_personal a {
+    padding: 10px;
+}
