@@ -32,6 +32,16 @@
                     Follow
                 </span>
             </button>
+            <button class="button_action button_unfollow gap-[4px] fixed_action">
+                <i class="fa-solid fa-heart-crack"></i>
+                <span>
+                    Unfollow
+                </span>
+            </button>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script src="{{ asset('assets/js/manga_information.js') }}"></script>
 @endsection

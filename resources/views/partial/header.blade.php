@@ -9,17 +9,35 @@
                 <i class="fa-solid fa-magnifying-glass icon_search"></i>
             </div>
         </div>
-        <div class="flex flex-row gap-[12px]">
-            <button class="button_auth" id="login">
-                <span>
-                    Login
-                </span>
-            </button>
-            <button class="button_auth" id="register">
-                <span>
-                    Register
-                </span>
-            </button>
+        <div class="flex flex-row items-center gap-[12px]">
+            @if(\Illuminate\Support\Facades\Auth::check())
+                <div class="w-[52px]">
+                    <img src="{{ asset('storage/icon/pepesmile.ico') }}" class="avatar_user" id="personal_avatar" alt="">
+                    <div class="modal_user hidden_modal">
+                        <a href="{{ route('personal.information') }}">
+                        <span>
+                            Personal Information
+                        </span>
+                        </a>
+                        <a href="{{ route('logout') }}">
+                        <span>
+                            Logout
+                        </span>
+                        </a>
+                    </div>
+                </div>
+            @else
+                <button class="button_auth" id="login">
+                    <span>
+                        Login
+                    </span>
+                </button>
+                <button class="button_auth" id="register">
+                    <span>
+                        Register
+                    </span>
+                </button>
+            @endif
         </div>
     </div>
     <div class="flex flex-row items-center relative">
@@ -264,4 +282,13 @@
     </div>
 
 </header>
+<script type="text/javascript">
+    function getCSRFToken() {
+        return '{{ csrf_token() }}'
+    }
+
+    function getLoginRoute() {
+        return '{{ route('login') }}'
+    }
+</script>
 <script src="{{asset('assets/js/header.js')}}"></script>
