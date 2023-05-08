@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::post('/login', [UserController::class, 'login'])->name('login');
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::get('/', function () {
     return view('pages.user.manga.main');
@@ -37,7 +41,7 @@ Route::get('/search', function () {
     return view('pages.user.manga.search_manga');
 })->name('search');
 
-Route::prefix('/personal')->name('personal.')->group(function () {
+Route::prefix('/personal')->middleware('authorization')->name('personal.')->group(function () {
     Route::get('/information', function () {
         return view('pages.user.personal.information');
     })->name('information');
