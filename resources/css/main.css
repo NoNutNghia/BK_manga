@@ -35,8 +35,16 @@
     background-color: #ff3860;
 }
 
+.button_unfollow {
+    background-color: #f18121;
+}
+
 .button_like {
     background-color: #bd10e0;
+}
+
+.button_unlike {
+    background-color: #10e097;
 }
 
 .button_send_comment {
@@ -46,7 +54,9 @@
 .button_read_begin,
 .button_like,
 .button_follow,
-.button_send_comment {
+.button_send_comment,
+.button_unfollow,
+.button_unlike {
     min-width: 157px;
     display: flex;
     flex-direction: row;
@@ -54,6 +64,14 @@
     justify-content: center;
     transition: all 300ms ease-out;
     color: white;
+}
+
+.button_unfollow {
+    display: none;
+}
+
+.button_unlike {
+    display: none;
 }
 
 .button_action:hover {

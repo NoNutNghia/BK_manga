@@ -99,10 +99,22 @@
                     Follow
                 </span>
             </button>
+            <button class="button_action button_unfollow">
+                <i class="fa-solid fa-heart-crack"></i>
+                <span>
+                    Unfollow
+                </span>
+            </button>
             <button class="button_action button_like">
                 <i class="fa-solid fa-thumbs-up"></i>
                 <span>
                     Like
+                </span>
+            </button>
+            <button class="button_action button_unlike">
+                <i class="fa-solid fa-thumbs-down"></i>
+                <span>
+                    Unlike
                 </span>
             </button>
         </div>
@@ -110,3 +122,9 @@
     </div>
 
 </div>
+
+<script type="text/javascript">
+    function getNyanCat() {
+        return '{{ asset('storage/nyan-cat.gif') }}'
+    }
+</script>
