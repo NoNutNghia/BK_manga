@@ -39,4 +39,29 @@ class User extends Authenticatable
     ];
 
     public $timestamps = true;
+
+    public function statusUser()
+    {
+        return $this->belongsTo(UserStatus::class, 'status', 'id');
+    }
+
+    public function roleUser()
+    {
+        return $this->belongsTo(UserRole::class, 'role', 'id');
+    }
+
+    public function genderUser()
+    {
+        return $this->belongsTo(Gender::class, 'gender', 'id');
+    }
+
+    public function followByUser()
+    {
+        return $this->hasMany(Follow::class, 'user_id', 'id');
+    }
+
+    public function likeByUser()
+    {
+        return $this->hasMany(Like::class, 'user_id', 'id');
+    }
 }

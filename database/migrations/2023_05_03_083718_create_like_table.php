@@ -14,7 +14,7 @@ class CreateLikeTable extends Migration
     public function up()
     {
         Schema::create('like', function (Blueprint $table) {
-            $table->integer('id');
+            $table->id();
             $table->integer('user_id');
             $table->integer('manga_id');
         });

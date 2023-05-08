@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Gender extends Model
+class View extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'gender_name'
+        'manga_id',
+        'number_of_views'
     ];
-
-    protected $table = 'gender';
+    protected $table = 'view';
 }
