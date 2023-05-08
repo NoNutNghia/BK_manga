@@ -24,5 +24,4 @@ class MangaComment extends Model
      */
 
 
-    public $timestamps = true;
 }

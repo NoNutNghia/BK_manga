@@ -22,7 +22,4 @@ class ChapterComment extends Model
      *
      * @var array<int, string>
      */
-
-
-    public $timestamps = true;
 }

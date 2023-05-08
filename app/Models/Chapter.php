@@ -25,5 +25,4 @@ class Chapter extends Model
      */
 
 
-    public $timestamps = true;
 }
