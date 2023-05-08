@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Service\Repository\Impl\UserRepositoryImpl;
+use App\Service\Repository\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -15,9 +17,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-//        if (env(key: 'APP_ENV') !=='local') {
-//            URL::forceScheme(scheme:'https');
-//        }
+        $this->app->singleton(UserRepository::class, function () {
+            return new UserRepositoryImpl();
+        });
     }
 
     /**

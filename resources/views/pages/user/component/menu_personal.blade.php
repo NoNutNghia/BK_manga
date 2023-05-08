@@ -14,7 +14,7 @@
             </span>
         </a>
         <hr>
-        <a href="{{ route('personal.change_password') }}" class="flex flex-row items-center gap-[12px]">
+        <a href="{{ route('logout') }}" class="flex flex-row items-center gap-[12px]">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>
                 Logout

@@ -21,9 +21,8 @@ class User extends Authenticatable
         'full_name',
         'nick_name',
         'gender',
-        'birth_day',
+        'date_of_birth',
         'email',
-        'password',
         'role',
         'status'
     ];
@@ -38,4 +37,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    public $timestamps = true;
 }
