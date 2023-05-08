@@ -41,6 +41,10 @@ Route::get('/search', function () {
     return view('pages.user.manga.search_manga');
 })->name('search');
 
+Route::get('/error', function () {
+    return view('pages.user.error.not_found');
+})->name('error');
+
 Route::prefix('/personal')->middleware('authorization')->name('personal.')->group(function () {
     Route::get('/information', function () {
         return view('pages.user.personal.information');
