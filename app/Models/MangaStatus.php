@@ -9,4 +9,5 @@ class MangaStatus extends Model
 {
     use HasFactory;
     protected $fillable = ['status_name'];
+    protected $table = 'manga_status';
 }
