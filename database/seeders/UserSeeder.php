@@ -27,6 +27,18 @@ class UserSeeder extends Seeder
                 'date_of_birth' => Carbon::createFromFormat('d/m/Y','26/07/2001'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
+            ),
+            array(
+                'email' => 'nghiann@zyyx.jp',
+                'nick_name' => 'NoNutAdmin',
+                'full_name' => 'Nguyen Ngoc Nghia',
+                'gender' => 1,
+                'user_status' => 1,
+                'role' => 2,
+                'password' => sha1('admin'),
+                'date_of_birth' => Carbon::createFromFormat('d/m/Y','26/07/2001'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             )
         ));
     }

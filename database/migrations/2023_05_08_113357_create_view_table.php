@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFollowTable extends Migration
+class CreateViewTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateFollowTable extends Migration
      */
     public function up()
     {
-        Schema::create('follow', function (Blueprint $table) {
+        Schema::create('view', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
             $table->integer('manga_id');
+            $table->bigInteger('number_of_views')->default(0);
         });
     }
 
@@ -27,6 +27,6 @@ class CreateFollowTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('follow');
+        Schema::dropIfExists('view');
     }
 }

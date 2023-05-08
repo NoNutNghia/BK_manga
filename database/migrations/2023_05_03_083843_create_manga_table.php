@@ -14,7 +14,7 @@ class CreateMangaTable extends Migration
     public function up()
     {
         Schema::create('manga', function (Blueprint $table) {
-            $table->integer('id');
+            $table->id();
             $table->integer('updated_by');
             $table->integer('approved_by');
             $table->timestamps();
