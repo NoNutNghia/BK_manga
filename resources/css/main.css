@@ -1,6 +1,7 @@
 .content_main{
     background-color: #18191a;
     padding: 1rem 12%;
+    min-height: 100vh;
 }
 
 .error_message {
