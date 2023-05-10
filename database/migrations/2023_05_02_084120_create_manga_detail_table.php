@@ -19,6 +19,7 @@ class CreateMangaDetailTable extends Migration
             $table->tinyInteger('manga_status');
             $table->integer('author_id');
             $table->string('other_name');
+            $table->string('title');
             $table->tinyInteger('age_range');
             $table->text('description');
         });

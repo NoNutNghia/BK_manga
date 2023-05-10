@@ -15,7 +15,7 @@ class CreateGenreTable extends Migration
     {
         Schema::create('genre', function (Blueprint $table) {
             $table->id();
-            $table->string('genre_manga');
+            $table->string('genre_name');
         });
     }
 
