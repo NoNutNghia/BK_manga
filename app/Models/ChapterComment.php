@@ -12,14 +12,9 @@ class ChapterComment extends Model
         'chapter_id',
         'user_id',
         'content'
-       
+
     ];
 
     protected $table = 'chapter_comment';
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
 }
