@@ -38,4 +38,26 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $e)
+    {
+
+        $this->renderable(function (\Exception $e) {
+            if ($e->getPrevious() instanceof \Illuminate\Session\TokenMismatchException) {
+                return redirect()->route('login');
+            };
+        });
+
+        if ($this->isHttpException($e)) {
+            switch (intval($e->getStatusCode())) {
+                case 419:
+                case 404:
+                case 405:
+                    return redirect()->route('error');
+                default:
+                    return $this->renderHttpException($e);
+            }
+        }
+        return parent::render($request, $e);
+    }
 }
