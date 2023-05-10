@@ -13,16 +13,9 @@ class Chapter extends Model
         'manga_id',
         'uploaded_by',
         'updated_by'
-       
+
     ];
 
     protected $table = 'chapter';
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-
 
 }
