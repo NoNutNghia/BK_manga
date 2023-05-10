@@ -19,7 +19,7 @@
             <span>
                 Email
             </span>
-            <input type="text" class="input_auth">
+            <input type="text" class="input_auth" value="{{ $foundUser->email }}">
         </div>
     </div>
     <div class="flex flex-col gap-[8px]">
@@ -30,30 +30,30 @@
             <span>
                 Full name
             </span>
-            <input type="text" class="input_auth">
+            <input type="text" class="input_auth" value="{{ $foundUser->full_name }}">
         </div>
         <div class="form_information">
             <span>
                 Nickname
             </span>
-            <input type="text" class="input_auth">
+            <input type="text" class="input_auth" value="{{ $foundUser->nick_name }}">
         </div>
         <div class="form_information">
             <span>
                 Date of Birth
             </span>
-            <input type="date" class="input_auth">
+            <input type="date" class="input_auth" value="{{ $foundUser->date_of_birth }}">
         </div>
         <div class="form_information gender">
             <span>
                 Gender
             </span>
             <div class="flex flex-row items-center gap-[8px] text-[white]">
-                <input type="radio" name="gender" checked id="1" value="1">
+                <input type="radio" name="gender" {{ $foundUser->gender == 1 ? 'checked' : '' }} id="1" value="1">
                 <label for="1">Male</label>
-                <input type="radio" name="gender" id="2" value="2">
+                <input type="radio" name="gender" {{ $foundUser->gender == 2 ? 'checked' : '' }} id="2" value="2">
                 <label for="2">Female</label>
-                <input type="radio" name="gender" id="3" value="3">
+                <input type="radio" name="gender" {{ $foundUser->gender == 3 ? 'checked' : '' }} id="3" value="3">
                 <label for="3">Other</label>
             </div>
         </div>

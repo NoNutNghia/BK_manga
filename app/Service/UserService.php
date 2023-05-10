@@ -53,4 +53,15 @@ class UserService
 
         return redirect()->back();
     }
+
+    public function personalInformation(Request $request)
+    {
+        $foundUser = $this->userRepository->getUserById($request->id);
+
+        if (!$foundUser) {
+
+        }
+
+        return view('pages.user.personal.information', compact('foundUser'));
+    }
 }

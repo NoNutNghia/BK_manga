@@ -14,7 +14,7 @@
                 <div class="w-[52px]">
                     <img src="{{ asset('storage/icon/pepesmile.ico') }}" class="avatar_user" id="personal_avatar" alt="">
                     <div class="modal_user hidden_modal">
-                        <a href="{{ route('personal.information') }}">
+                        <a href="{{ route('personal.information', ['id' => \Illuminate\Support\Facades\Auth::id()]) }}">
                         <span>
                             Personal Information
                         </span>
