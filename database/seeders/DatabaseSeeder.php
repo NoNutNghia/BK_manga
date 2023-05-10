@@ -19,5 +19,12 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(MangaSeeder::class);
         $this->call(ViewSeeder::class);
+        $this->call(AgeRangeSeeder::class);
+        $this->call(AuthorSeeder::class);
+        $this->call(GenreSeeder::class);
+        $this->call(GenreMangaSeeder::class);
+        $this->call(MangaStatusSeeder::class);
+        $this->call(MangaDetailSeeder::class);
+        $this->call(ChapterSeeder::class);
     }
 }
