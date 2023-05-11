@@ -247,3 +247,25 @@ avatar_user.on('click', function () {
         modal_user.addClass('hidden_modal')
     }
 })
+
+function getGenre() {
+    $.ajax({
+        type: 'GET',
+        url: getGenreRoute(),
+        success: function (response) {
+            if (response.result) {
+                let genre_list = response.data
+
+                let html = ''
+
+                genre_list.forEach(genre => {
+                    html += `<div> <a href='${genre.id}'> <span> ${genre.genre_name} </span> </a> </div>`
+                })
+
+                genre_hide.html(html)
+            }
+        }
+    })
+}
+
+getGenre()

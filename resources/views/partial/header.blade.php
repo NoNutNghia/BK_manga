@@ -290,5 +290,9 @@
     function getLoginRoute() {
         return '{{ route('login') }}'
     }
+
+    function getGenreRoute() {
+        return "{{ route('genre') }}"
+    }
 </script>
 <script src="{{asset('assets/js/header.js')}}"></script>

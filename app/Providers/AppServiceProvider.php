@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Service\Repository\GenreRepository;
+use App\Service\Repository\Impl\GenreRepositoryImpl;
 use App\Service\Repository\Impl\UserRepositoryImpl;
 use App\Service\Repository\UserRepository;
 use Illuminate\Http\Request;
@@ -19,6 +21,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(UserRepository::class, function () {
             return new UserRepositoryImpl();
+        });
+        $this->app->singleton(GenreRepository::class, function () {
+            return new GenreRepositoryImpl();
         });
     }
 
