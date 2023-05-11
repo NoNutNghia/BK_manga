@@ -17,7 +17,6 @@ class UserRepositoryImpl implements UserRepository
         $this->user = new User();
     }
 
-
     public function getUser($login_id, $password)
     {
         try {

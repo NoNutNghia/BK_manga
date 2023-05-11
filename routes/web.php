@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GenreController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,8 @@ Route::get('/chapter', function () {
 Route::get('/following', function () {
     return view('pages.user.manga.following');
 })->name('following');
+
+Route::get('/genre', [GenreController::class, 'getGenre'])->name('genre');
 
 Route::get('/search', function () {
     return view('pages.user.manga.search_manga');
