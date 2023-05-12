@@ -1,6 +1,6 @@
 <div class="w-[35%]">
     <div class="menu_personal">
-        <a href="{{ route('personal.information') }}" class="flex flex-row items-center gap-[12px]">
+        <a href="{{ route('personal.information', ['id' => \Illuminate\Support\Facades\Auth::id()]) }}" class="flex flex-row items-center gap-[12px]">
             <i class="fa-solid fa-user"></i>
             <span>
                 Manage personal information

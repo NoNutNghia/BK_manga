@@ -58,10 +58,6 @@ class UserService
     {
         $foundUser = $this->userRepository->getUserById($request->id);
 
-        if (!$foundUser) {
-
-        }
-
         return view('pages.user.personal.information', compact('foundUser'));
     }
 }

@@ -25,15 +25,3 @@ document.addEventListener(
     },
     false
 )
-
-let title_manga_card = $('.title_manga_card')
-
-title_manga_card.hover(
-    function () {
-        description_tooltip.css('display', 'block')
-    },
-
-    function () {
-        description_tooltip.css('display', 'none')
-    }
-)

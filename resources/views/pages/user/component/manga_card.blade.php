@@ -1,19 +1,20 @@
-<div class="flex flex-col justify-center items-center gap-[8px] relative" id="{{ $index }}">
-    <a href="{{ route('detail') }}" class="flex manga_card flex-col items-center w-full gap-[12px]">
-        <img class="image_manga_card" src="{{ asset('storage/manga/2/image_logo.jpg') }}" alt="">
-        <span class="title_manga_card">
-            Duck Ngu Duck Ngu Duck Ngu Duck Ngu Duck Ngu Duck Ngu Duck Ngu Duck Ngu Duck Ngu
-        </span>
-    </a>
-    @if(isset($following))
-        @if($following)
-            <i class="fa-regular fa-circle-xmark icon_remove_following" id="{{ $index }}" onclick="unFollow({{ $index }})"></i>
+<div class="manga_card_element">
+    <div class="flex flex-col justify-center items-center gap-[8px] relative">
+        <a href="{{ route('detail', ['id' => $mangaCard->manga_id]) }}" class="flex manga_card flex-col items-center w-full gap-[12px]">
+            <img class="image_manga_card" src="{{ asset('storage/manga/2/image_logo.jpg') }}" alt="">
+            <span class="title_manga_card">
+                {{ $mangaCard->title }}
+            </span>
+        </a>
+        @if(isset($following))
+            @if($following)
+                <i class="fa-regular fa-circle-xmark icon_remove_following" id="{{ $index }}" onclick="unFollow({{ $index }})"></i>
+            @endif
         @endif
-    @endif
 
-    <a href="{{ route('chapter') }}" class="last_chapter_manga_card">
-        Chapter 123
-    </a>
+        <a href="{{ route('chapter') }}" class="last_chapter_manga_card">
+            {{ $mangaCard->latest_chapter }}
+        </a>
+    </div>
+    @include('pages.user.component.description_tooltip', ['mangaCard' => $mangaCard])
 </div>
-@include('pages.user.component.description_tooltip')
-

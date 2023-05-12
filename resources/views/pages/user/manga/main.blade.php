@@ -11,9 +11,9 @@
                 </span>
             </div>
             <div class="grid grid-cols-6 w-full gap-[16px]">
-                @for($i = 0; $i < 10; $i++)
-                    @include('pages.user.component.manga_card', ["index" => $i])
-                @endfor
+                @foreach($mangaCardList as $mangaCard)
+                    @include('pages.user.component.manga_card', ["mangaCard" => $mangaCard])
+                @endforeach
             </div>
         </div>
     </div>

@@ -7,15 +7,15 @@
     </div>
 
     <div class="flex flex-col chapter_list gap-[12px]">
-        @for($i = 1; $i <= 10; $i++)
+        @foreach($foundManga->chapter_manga as $chapter)
             <div class="chapter">
                 <a href="{{ route('chapter') }}">
-                    Chapter {{$i}}
+                    {{ $chapter->title }}
                 </a>
                 <span>
-                    24/04/2023
+                    {{ $chapter->uploaded_at }}
                 </span>
             </div>
-        @endfor
+        @endforeach
     </div>
 </div>
