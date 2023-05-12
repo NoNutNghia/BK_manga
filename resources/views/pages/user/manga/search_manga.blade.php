@@ -18,6 +18,11 @@
 @endsection
 
 @section('script')
+    <script type="text/javascript">
+        function getAdvanceRoute() {
+            return "{{ route('search.advance') }}"
+        }
+    </script>
     <script src="{{ asset('assets/js/search.js') }}"></script>
     <script src="{{ asset('assets/js/description_tooltip.js') }}"></script>
 @endsection

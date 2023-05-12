@@ -24,15 +24,7 @@
             <span class="text-[18px]">
                 Genre List
             </span>
-            <div class="grid grid-cols-4 gap-[8px]">
-                @for($i = 0; $i < 23; $i++)
-                    <div class="flex flex-row gap-[4px]">
-                        <input type="checkbox" class="w-[17px]" name="" id="">
-                        <span>
-                            Duck ngu
-                        </span>
-                    </div>
-                @endfor
+            <div class="grid grid-cols-4 gap-[8px]" id="genre_checkbox">
             </div>
         </div>
         <div class="flex flex-col justify-center items-center select_search_option gap-[12px] w-full">
@@ -41,10 +33,7 @@
                     Status
                 </span>
                 <select name="select_status" id="select_status" class="w-full select_chapter">
-                    <option value="1">Lmao 1</option>
-                    <option value="2">Lmao 2</option>
-                    <option value="3">Lmao 3</option>
-                    <option value="4">Lmao 4</option>
+
                 </select>
             </div>
             <div class="flex flex-row items-center w-[50%]">
