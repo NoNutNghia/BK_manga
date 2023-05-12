@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,9 +41,11 @@ Route::get('/following', function () {
 
 Route::get('/genre', [GenreController::class, 'getGenre'])->name('genre');
 
-Route::get('/search', function () {
-    return view('pages.user.manga.search_manga');
-})->name('search');
+Route::name('search.')->group(function () {
+    Route::get('/search', [SearchController::class, 'index'])->name('index');
+    Route::get('/advance', [SearchController::class, 'advance'])->name('advance');
+    Route::post('/title', [SearchController::class, 'titleManga'])->name('title');
+});
 
 Route::get('/error', function () {
     return view('pages.user.error.not_found');

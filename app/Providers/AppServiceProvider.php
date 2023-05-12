@@ -4,7 +4,11 @@ namespace App\Providers;
 
 use App\Service\Repository\GenreRepository;
 use App\Service\Repository\Impl\GenreRepositoryImpl;
+use App\Service\Repository\Impl\MangaDetailRepositoryImpl;
+use App\Service\Repository\Impl\MangaStatusRepositoryImpl;
 use App\Service\Repository\Impl\UserRepositoryImpl;
+use App\Service\Repository\MangaDetailRepository;
+use App\Service\Repository\MangaStatusRepository;
 use App\Service\Repository\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
@@ -24,6 +28,12 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton(GenreRepository::class, function () {
             return new GenreRepositoryImpl();
+        });
+        $this->app->singleton(MangaStatusRepository::class, function () {
+            return new MangaStatusRepositoryImpl();
+        });
+        $this->app->singleton(MangaDetailRepository::class, function () {
+            return new MangaDetailRepositoryImpl();
         });
     }
 
