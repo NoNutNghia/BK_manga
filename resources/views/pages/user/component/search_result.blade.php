@@ -1,7 +1,7 @@
 @if(count($foundManga) > 0)
     <div class="flex flex-col">
         @foreach($foundManga as $manga)
-            <a href="" class="flex flex-row search_element gap-[8px]">
+            <a href="{{ route('detail', ['id' => $manga->manga_id]) }}" class="flex flex-row search_element gap-[8px]">
                 <div class="w-[65px]">
                     <img src="{{ asset('storage/manga/1/image_logo.jpg') }}" alt="">
                 </div>
