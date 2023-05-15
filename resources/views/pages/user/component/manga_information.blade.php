@@ -73,31 +73,41 @@
             @endforeach
         </div>
         <div class="flex flex-row items-center mt-[4px] gap-[10px]">
-            <button class="button_action button_read_begin">
+            <a role="button" href="{{ route('chapter', ['id' => $foundManga->chapter_manga[0]->id]) }}" class="button_action button_read_begin">
                 <i class="fa-solid fa-book"></i>
                 <span>
                     Read Beginning
                 </span>
-            </button>
-            <button class="button_action button_follow">
+            </a>
+            <button class="button_action button_follow"
+                    style="display: {{ !$existFollow ? 'flex' : 'none' }}"
+            >
                 <i class="fa-solid fa-heart"></i>
                 <span>
                     Follow
                 </span>
             </button>
-            <button class="button_action button_unfollow">
+            <button class="button_action button_unfollow"
+                    style="display: {{ $existFollow ? 'flex' : 'none' }}"
+                    id="{{ $existFollow ? $existFollow->id : '' }}"
+            >
                 <i class="fa-solid fa-heart-crack"></i>
                 <span>
                     Unfollow
                 </span>
             </button>
-            <button class="button_action button_like">
+            <button class="button_action button_like"
+                    style="display: {{ !$existLike ? 'flex' : 'none' }}"
+            >
                 <i class="fa-solid fa-thumbs-up"></i>
                 <span>
                     Like
                 </span>
             </button>
-            <button class="button_action button_unlike">
+            <button class="button_action button_unlike"
+                    style="display: {{ $existLike ? 'flex' : 'none' }}"
+                    id="{{ $existLike ? $existLike->id : '' }}"
+            >
                 <i class="fa-solid fa-thumbs-down"></i>
                 <span>
                     Unlike

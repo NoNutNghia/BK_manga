@@ -26,21 +26,47 @@
             </a>
         </div>
         <div class="flex flex-row items-center gap-[12px] w-[49.5%]">
-            <button class="button_action button_follow gap-[4px] fixed_action">
-                <i class="fa-solid fa-heart"></i>
-                <span>
-                    Follow
-                </span>
-            </button>
-            <button class="button_action button_unfollow gap-[4px] fixed_action">
-                <i class="fa-solid fa-heart-crack"></i>
-                <span>
-                    Unfollow
-                </span>
-            </button>
+                <button class="button_action button_follow gap-[4px] fixed_action " style="display: {{ !$chapterObject['existFollow'] ? 'flex' : 'none' }}">
+                    <i class="fa-solid fa-heart"></i>
+                    <span>
+                        Follow
+                    </span>
+                </button>
+                <button class="button_action button_unfollow gap-[4px] fixed_action"
+                        style="display: {{ $chapterObject['existFollow'] ? 'flex' : 'none' }}"
+                        id="{{ $chapterObject['existFollow'] ? $chapterObject['existFollow']->id : '' }}">
+                    <i class="fa-solid fa-heart-crack"></i>
+                    <span>
+                        Unfollow
+                    </span>
+                </button>
         </div>
     </div>
 @endsection
+
+<script type="text/javascript">
+
+    function getCSRFToken() {
+        return '{{ csrf_token() }}'
+    }
+
+    function getMangaId() {
+        return '{{ $chapterObject['parentManga']->manga_id }}'
+    }
+
+    function getUserId() {
+        return '{{ \Illuminate\Support\Facades\Auth::id() }}'
+    }
+
+    function getFollowRoute() {
+        return '{{ route('follow') }}'
+    }
+
+    function getUnfollowRoute() {
+        return '{{ route('unfollow') }}'
+    }
+
+</script>
 
 @section('script')
     <script src="{{ asset('assets/js/manga_information.js') }}"></script>

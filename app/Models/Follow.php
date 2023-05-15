@@ -15,4 +15,6 @@ class Follow extends Model
     ];
 
     protected $table = 'follow';
+
+    public $timestamps = false;
 }
