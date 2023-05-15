@@ -9,11 +9,11 @@
             </span>
         </div>
         @include('pages.user.component.advanced_search_box')
-        <div class="grid grid-cols-6 w-full gap-[16px]">
-            @for($i = 0; $i < 10; $i++)
-                @include('pages.user.component.manga_card', ["index" => $i])
-            @endfor
-        </div>
+{{--        <div class="grid grid-cols-6 w-full gap-[16px]">--}}
+{{--            @for($i = 0; $i < 10; $i++)--}}
+{{--                @include('pages.user.component.manga_card', ["index" => $i])--}}
+{{--            @endfor--}}
+{{--        </div>--}}
     </div>
 @endsection
 

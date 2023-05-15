@@ -9,7 +9,7 @@
     <div class="flex flex-col chapter_list gap-[12px]">
         @foreach($foundManga->chapter_manga as $chapter)
             <div class="chapter">
-                <a href="{{ route('chapter') }}">
+                <a href="{{ route('chapter', ['id' => $chapter->id]) }}">
                     {{ $chapter->title }}
                 </a>
                 <span>

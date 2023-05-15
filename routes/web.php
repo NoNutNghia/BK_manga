@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MangaController;
 use App\Http\Controllers\SearchController;
@@ -28,9 +29,7 @@ Route::get('/main', [MangaController::class, 'mangaCardList'])->name('main');
 
 Route::get('/detail', [MangaController::class, 'mangaDetail'])->name('detail');
 
-Route::get('/chapter', function () {
-    return view('pages.user.manga.chapter');
-})->name('chapter');
+Route::get('/chapter', [ChapterController::class, 'chapterDetail'])->name('chapter');
 
 Route::get('/following', function () {
     return view('pages.user.manga.following');

@@ -18,4 +18,9 @@ class Chapter extends Model
 
     protected $table = 'chapter';
 
+    public function parent_manga()
+    {
+        return $this->belongsTo(MangaDetail::class, 'manga_id', 'manga_id');
+    }
+
 }

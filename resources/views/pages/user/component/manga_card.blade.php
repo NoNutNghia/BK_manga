@@ -12,7 +12,7 @@
             @endif
         @endif
 
-        <a href="{{ route('chapter') }}" class="last_chapter_manga_card">
+        <a href="{{ route('chapter', ['id' => $mangaCard->latest_id]) }}" class="last_chapter_manga_card">
             {{ $mangaCard->latest_chapter }}
         </a>
     </div>
