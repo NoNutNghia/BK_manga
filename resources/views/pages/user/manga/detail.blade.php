@@ -4,19 +4,8 @@
     <div class="flex flex-col content_main">
         <div class="flex flex-col manga_info_container">
             {{--            Breadcrums              --}}
-            <div class="flex flex-row items-center gap-[8px] breadcrums">
-                <span>
-                    Home
-                </span>
-                <span>
-                    /
-                </span>
-                <span>
-                    Stupid Duck
-                </span>
-            </div>
+            {{ \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::render('manga', $foundManga) }}
             {{--            End Breadcrums            --}}
-
 {{--            Manga information detail--}}
             @include('pages.user.component.manga_information')
             @include('pages.user.component.description_manga')
