@@ -6,7 +6,7 @@
                 Status
             </span>
             <span>:</span>
-            <span>
+            <span style="text-transform: capitalize">
                 {{ $mangaCard->status_manga->status_name }}
             </span>
         </div>

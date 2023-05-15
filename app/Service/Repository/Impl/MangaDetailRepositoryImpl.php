@@ -56,10 +56,11 @@ class MangaDetailRepositoryImpl implements MangaDetailRepository
             return $this->mangaDetail
                 ->select(
                     'manga_detail.*',
-                    'chapter_tmp.title as latest_chapter'
+                    'chapter_tmp.title as latest_chapter',
+                    'chapter_tmp.latest_id as latest_id'
                 )
                 ->join(
-                    DB::raw('(SELECT manga_id, title FROM chapter
+                    DB::raw('(SELECT manga_id, title, id as latest_id FROM chapter
 	                WHERE id IN (SELECT MAX(id) from chapter GROUP BY manga_id)
                     ) chapter_tmp'), 'chapter_tmp.manga_id', '=', 'manga_detail.manga_id')
                 ->join('manga', 'manga.id', '=', 'manga_detail.manga_id')

@@ -3,10 +3,10 @@
 @section('content')
     <div class="flex flex-col content_main gap-[24px]">
         @include('pages.user.component.chapter_navigation', ['navigation_top' => true])
-        <div class="pl-[148px] pr-[148px]">
-            @for($i = 0; $i < 10; $i++)
-                <img class="w-full" src="{{ asset('storage/manga/2/chapter/1.jpg') }}" alt="">
-            @endfor
+        <div class="pl-[148px] pr-[148px] max-h-[100vh]" style="overflow-y: auto">
+            @foreach($chapterObject['imageList'] as $image)
+                <img class="w-full" src="{{ asset('storage/manga/' . $chapterObject['parentManga']->manga_id . '/chapter/' . $chapterObject['foundChapter']->id . '/' . $image) }}" alt="">
+            @endforeach
         </div>
         @include('pages.user.component.chapter_navigation')
         <div class="chapter_navigation">
