@@ -16,47 +16,146 @@ $(window).on('resize', function () {
 })
 
 button_follow.on('click', function () {
-    Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Follow manga successfully',
-        showConfirmButton: false,
-        backdrop: `
-            rgba(0,0,123,0.4)
-            url("/storage/nyan-cat.gif")
-            left top
-            no-repeat
-          `,
-        timer: 1500
+
+    let request_follow = {
+        'user_id': getUserId(),
+        'manga_id': getMangaId()
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: getFollowRoute(),
+        headers: {'X-CSRF-TOKEN': getCSRFToken()},
+        data: request_follow,
+        success: function (response) {
+            if (response.result) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: `${response.message}`,
+                    showConfirmButton: false,
+                    backdrop: `
+                        rgba(0,0,123,0.4)
+                        url("/storage/nyan-cat.gif")
+                        left top
+                        no-repeat
+                      `,
+                    timer: 1500
+                })
+                button_unfollow.css('display', 'flex')
+                button_unfollow.attr('id', response.data)
+                button_follow.css('display', 'none')
+            } else {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: `${response.message}`,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        }
     })
 
-    button_unfollow.css('display', 'flex')
-    $(this).css('display', 'none')
+
 })
 
 button_unfollow.on('click', function () {
-    Swal.fire({
-        position: 'top-end',
-        imageUrl: "storage/xqc-uncanny.gif",
-        title: 'Unfollow manga successfully',
-        imageWidth: 400,
-        imageHeight: 221.25,
-        showConfirmButton: false,
-        timer: 3500
-    })
 
-    $(this).css('display', 'none')
-    button_follow.css('display', 'flex')
+    let request_unfollow = {
+        'follow_id': button_unfollow.attr('id')
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: getUnfollowRoute(),
+        headers: {'X-CSRF-TOKEN': getCSRFToken()},
+        data: request_unfollow,
+        success: function (response) {
+            if (response.result) {
+                Swal.fire({
+                    position: 'top-end',
+                    imageUrl: "storage/xqc-uncanny.gif",
+                    title: `${response.message}`,
+                    imageWidth: 400,
+                    imageHeight: 221.25,
+                    showConfirmButton: false,
+                    timer: 3500
+                })
+                button_unfollow.css('display', 'none')
+                button_unfollow.attr('id', '')
+                button_follow.css('display', 'flex')
+            } else {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: `${response.message}`,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        }
+    })
 })
 
 button_like.on('click', function () {
-    $(this).css('display', 'none')
-    button_unlike.css('display', 'flex')
+
+    let request_like = {
+        'user_id': getUserId(),
+        'manga_id': getMangaId()
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: getLikeRoute(),
+        headers: {'X-CSRF-TOKEN': getCSRFToken()},
+        data: request_like,
+        success: function (response) {
+            if (response.result) {
+                button_like.css('display', 'none')
+                button_unlike.css('display', 'flex')
+                button_unlike.attr('id', response.data)
+            } else {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: `${response.message}`,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        }
+    })
+
 })
 
 button_unlike.on('click', function () {
-    $(this).css('display', 'none')
-    button_like.css('display', 'flex')
+
+    let request_unlike = {
+        'like_id': button_unlike.attr('id')
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: getUnlikeRoute(),
+        headers: {'X-CSRF-TOKEN': getCSRFToken()},
+        data: request_unlike,
+        success: function (response) {
+            if (response.result) {
+                button_unlike.css('display', 'none')
+                button_unlike.attr('id', '');
+                button_like.css('display', 'flex')
+            } else {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: `${response.message}`,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        }
+    })
 })
 
 

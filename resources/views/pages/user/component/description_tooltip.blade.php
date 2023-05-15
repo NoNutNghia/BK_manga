@@ -1,13 +1,13 @@
 <div class="description_tooltip">
     <div class="flex flex-col gap-[8px]">
-        <span class="tooltip_title_manga">Super ultra mega ultimate stupid Duck</span>
+        <span class="tooltip_title_manga">{{ $mangaCard->title }}</span>
         <div class="flex flex-row items-center gap-[4px]">
             <span>
                 Status
             </span>
             <span>:</span>
-            <span>
-                In progress
+            <span style="text-transform: capitalize">
+                {{ $mangaCard->status_manga->status_name }}
             </span>
         </div>
         <div class="flex flex-row items-center gap-[4px]">
@@ -16,7 +16,7 @@
             </span>
             <span>:</span>
             <span>
-                69999696969
+                {{ $mangaCard->manga_views->number_of_views }}
             </span>
         </div>
         <div class="flex flex-row items-center gap-[4px]">
@@ -25,33 +25,20 @@
             </span>
             <span>:</span>
             <span>
-                6969696
+                {{ count($mangaCard->manga_follows) }}
             </span>
         </div>
         <div class="flex flex-row gap-[2px] flex-wrap">
-            <div class="tooltip_genre_manga">
-                Pregnant
-            </div>
-            <div class="tooltip_genre_manga">
-                NTR
-            </div>
-            <div class="tooltip_genre_manga">
-                MILF
-            </div>
-            <div class="tooltip_genre_manga">
-                Dirty old man
-            </div>
-            <div class="tooltip_genre_manga">
-                Insect
-            </div>
-            <div class="tooltip_genre_manga">
-                Duck ngu
-            </div>
+            @foreach($mangaCard->genre_manga as $genre)
+                <div class="tooltip_genre_manga">
+                    {{ $genre->belong_to_genre->genre_name }}
+                </div>
+            @endforeach
         </div>
 
         <div class="tooltip_description_manga">
             <span>
-                Albert Einstein said before: "Have two things that unlimited. It's cosmo, and how much stupid Duck have." (He did not say that)
+                {{ $mangaCard->description }}
             </span>
         </div>
     </div>

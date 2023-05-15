@@ -5,8 +5,9 @@
                 <img width="150px" src="{{ asset('storage/logo/Bkmanga.svg') }}" alt="">
             </a>
             <div class="flex flex-row items-center justify-between relative w-[400px]">
-                <input type="text" class="input_search" placeholder="Type your manga you want to search">
+                <input type="text" class="input_search" placeholder="Type your manga you want to search" id="input_search">
                 <i class="fa-solid fa-magnifying-glass icon_search"></i>
+                <div id="search_result"></div>
             </div>
         </div>
         <div class="flex flex-row items-center gap-[12px]">
@@ -68,7 +69,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('search') }}" class="gap-[4px]">
+                <a href="{{ route('search.index') }}" class="gap-[4px]">
                     <span>
                         Search manga
                     </span>
@@ -82,161 +83,7 @@
                 </a>
             </li>
         </ul>
-        <div class="content_hidden grid grid-cols-8 gap-[12px]" id="genre_hide">
-            <div>
-                <a href="">
-                <span>
-                    Duck ngu
-                </span>
-                </a>
-            </div>
-
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-        </div>
+        <div class="content_hidden grid grid-cols-8 gap-[12px]" id="genre_hide"></div>
         <div class="content_hidden grid grid-cols-8 gap-[12px]" id="ranking_hide">
             <a href="">
                 <span>
@@ -283,6 +130,7 @@
 
 </header>
 <script type="text/javascript">
+
     function getCSRFToken() {
         return '{{ csrf_token() }}'
     }
@@ -290,5 +138,14 @@
     function getLoginRoute() {
         return '{{ route('login') }}'
     }
+
+    function getGenreRoute() {
+        return "{{ route('genre') }}"
+    }
+
+    function getSearchTitleRoute() {
+        return "{{ route('search.title') }}"
+    }
+
 </script>
 <script src="{{asset('assets/js/header.js')}}"></script>

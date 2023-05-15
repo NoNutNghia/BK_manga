@@ -7,7 +7,7 @@
     </div>
 
     <span>
-        Albert Einstein said before: "Have two things that unlimited. It's cosmo, and how much stupid Duck have." (He did not say that)
+        {{ $foundManga->description }}
     </span>
 
 </div>

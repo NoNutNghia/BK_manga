@@ -14,4 +14,9 @@ class Genre extends Model
     ];
 
     protected $table = "genre";
+
+    public function manga_belongs()
+    {
+        return $this->hasMany(GenreManga::class, 'genre_id', 'id');
+    }
 }

@@ -6,6 +6,8 @@ let login = $('#login')
 let register = $('#register')
 let avatar_user = $('#personal_avatar')
 let modal_user = $('.modal_user')
+let input_search = $('#input_search')
+let search_result = $('#search_result')
 
 genre.hover(
     function () {
@@ -245,5 +247,57 @@ avatar_user.on('click', function () {
         modal_user.removeClass('hidden_modal')
     } else {
         modal_user.addClass('hidden_modal')
+    }
+})
+
+function getGenre() {
+    $.ajax({
+        type: 'GET',
+        url: getGenreRoute(),
+        success: function (response) {
+            if (response.result) {
+                let genre_list = response.data
+
+                let html = ''
+
+                genre_list.forEach(genre => {
+                    html += `<div> <a href='${genre.id}'> <span> ${genre.genre_name} </span> </a> </div>`
+                })
+
+                genre_hide.html(html)
+            }
+        }
+    })
+}
+
+getGenre()
+
+input_search.on('keyup', function (event) {
+    let key = event.target.value.trim()
+
+    if (key) {
+        $.ajax({
+            type: "POST",
+            url: getSearchTitleRoute(),
+            data: {
+                'key': key
+            },
+            headers: {'X-CSRF-TOKEN': getCSRFToken()},
+            success: function (response) {
+                if (response.result) {
+                    search_result.html(response.data)
+                    search_result.css('display', 'block')
+                }
+            }
+        })
+    } else {
+        search_result.css('display', 'none')
+    }
+})
+
+$(document).on('click', function (event) {
+    let target = $(event.target)
+    if (target.attr('id') !== 'input_search') {
+        search_result.css('display', 'none')
     }
 })

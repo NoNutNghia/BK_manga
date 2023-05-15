@@ -15,4 +15,14 @@ class GenreManga extends Model
     ];
 
     protected $table = "genre_manga";
+
+    public function belong_to_manga()
+    {
+        return $this->belongsTo(MangaDetail::class, 'manga_id', 'manga_id');
+    }
+
+    public function belong_to_genre()
+    {
+        return $this->belongsTo(Genre::class,'genre_id', 'id');
+    }
 }

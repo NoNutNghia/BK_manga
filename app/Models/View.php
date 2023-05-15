@@ -14,4 +14,6 @@ class View extends Model
         'number_of_views'
     ];
     protected $table = 'view';
+
+    public $timestamps = false;
 }

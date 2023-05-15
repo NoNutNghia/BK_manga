@@ -3,10 +3,10 @@
 @section('content')
     <div class="flex flex-col content_main gap-[24px]">
         @include('pages.user.component.chapter_navigation', ['navigation_top' => true])
-        <div class="pl-[148px] pr-[148px]">
-            @for($i = 0; $i < 10; $i++)
-                <img class="w-full" src="{{ asset('storage/manga/2/chapter/1.jpg') }}" alt="">
-            @endfor
+        <div class="pl-[148px] pr-[148px] max-h-[100vh]" style="overflow-y: auto">
+            @foreach($chapterObject['imageList'] as $image)
+                <img class="w-full" src="{{ asset('storage/manga/' . $chapterObject['parentManga']->manga_id . '/chapter/' . $chapterObject['foundChapter']->id . '/' . $image) }}" alt="">
+            @endforeach
         </div>
         @include('pages.user.component.chapter_navigation')
         <div class="chapter_navigation">
@@ -26,21 +26,47 @@
             </a>
         </div>
         <div class="flex flex-row items-center gap-[12px] w-[49.5%]">
-            <button class="button_action button_follow gap-[4px] fixed_action">
-                <i class="fa-solid fa-heart"></i>
-                <span>
-                    Follow
-                </span>
-            </button>
-            <button class="button_action button_unfollow gap-[4px] fixed_action">
-                <i class="fa-solid fa-heart-crack"></i>
-                <span>
-                    Unfollow
-                </span>
-            </button>
+                <button class="button_action button_follow gap-[4px] fixed_action " style="display: {{ !$chapterObject['existFollow'] ? 'flex' : 'none' }}">
+                    <i class="fa-solid fa-heart"></i>
+                    <span>
+                        Follow
+                    </span>
+                </button>
+                <button class="button_action button_unfollow gap-[4px] fixed_action"
+                        style="display: {{ $chapterObject['existFollow'] ? 'flex' : 'none' }}"
+                        id="{{ $chapterObject['existFollow'] ? $chapterObject['existFollow']->id : '' }}">
+                    <i class="fa-solid fa-heart-crack"></i>
+                    <span>
+                        Unfollow
+                    </span>
+                </button>
         </div>
     </div>
 @endsection
+
+<script type="text/javascript">
+
+    function getCSRFToken() {
+        return '{{ csrf_token() }}'
+    }
+
+    function getMangaId() {
+        return '{{ $chapterObject['parentManga']->manga_id }}'
+    }
+
+    function getUserId() {
+        return '{{ \Illuminate\Support\Facades\Auth::id() }}'
+    }
+
+    function getFollowRoute() {
+        return '{{ route('follow') }}'
+    }
+
+    function getUnfollowRoute() {
+        return '{{ route('unfollow') }}'
+    }
+
+</script>
 
 @section('script')
     <script src="{{ asset('assets/js/manga_information.js') }}"></script>

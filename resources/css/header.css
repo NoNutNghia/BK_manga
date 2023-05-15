@@ -204,3 +204,26 @@ button.swal2-close {
 .hidden_modal {
     display: none;
 }
+
+#search_result {
+    position: absolute;
+    width: 400px;
+    max-height: 300px;
+    height: auto;
+    background-color: #3a3b3c;
+    z-index: 34;
+    top: 25px;
+    margin-left: 1rem;
+    border-radius: 4px;
+    overflow: hidden;
+    overflow-y: auto;
+    display: none;
+}
+
+.search_element {
+    padding: 10px;
+}
+
+.search_element:hover {
+    background-color: #cacece;
+}
