@@ -15,6 +15,38 @@
     </div>
 @endsection
 
+<script type="text/javascript">
+
+    function getCSRFToken() {
+        return '{{ csrf_token() }}'
+    }
+
+    function getMangaId() {
+        return '{{ $foundManga->manga_id }}'
+    }
+
+    function getUserId() {
+        return '{{ \Illuminate\Support\Facades\Auth::id() }}'
+    }
+
+    function getFollowRoute() {
+        return '{{ route('follow') }}'
+    }
+
+    function getUnfollowRoute() {
+        return '{{ route('unfollow') }}'
+    }
+
+    function getLikeRoute() {
+        return '{{ route('like') }}'
+    }
+
+    function getUnlikeRoute() {
+        return '{{ route('unlike') }}'
+    }
+
+</script>
+
 @section('script')
     <script src="{{ asset('assets/js/manga_information.js') }}"></script>
 @endsection

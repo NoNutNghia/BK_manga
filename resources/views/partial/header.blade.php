@@ -130,6 +130,7 @@
 
 </header>
 <script type="text/javascript">
+
     function getCSRFToken() {
         return '{{ csrf_token() }}'
     }

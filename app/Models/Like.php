@@ -15,4 +15,6 @@ class Like extends Model
     ];
 
     protected $table = 'like';
+
+    public $timestamps = false;
 }
