@@ -41,7 +41,7 @@ class ChapterService
         }
         $parentManga = $foundChapter->parent_manga;
 
-        $follow_check = $this->followRepository->checkExistFollow(Auth::id(), $id);
+        $follow_check = $this->followRepository->checkExistFollow(Auth::id(), $parentManga->id);
 
         if ($follow_check) {
             $existFollow = $follow_check;

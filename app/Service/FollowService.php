@@ -42,4 +42,9 @@ class FollowService
         return response()->json($response->responseObject());
     }
 
+    public function index(Request $request)
+    {
+        return view('pages.user.manga.following');
+    }
+
 }
