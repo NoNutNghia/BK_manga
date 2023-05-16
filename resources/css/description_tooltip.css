@@ -15,6 +15,10 @@
     display: block;
 }
 
+.icon_remove_following:hover .description_tooltip {
+    display: none;
+}
+
 .tooltip_title_manga {
     color: #e3a123;
 }

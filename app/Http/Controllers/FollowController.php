@@ -26,4 +26,9 @@ class FollowController extends Controller
     {
         return $this->followService->unfollowManga($request);
     }
+
+    public function index(Request $request)
+    {
+        return $this->followService->index($request);
+    }
 }

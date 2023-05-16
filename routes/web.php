@@ -33,10 +33,6 @@ Route::get('/detail', [MangaController::class, 'mangaDetail'])->name('detail');
 
 Route::get('/chapter', [ChapterController::class, 'chapterDetail'])->name('chapter');
 
-Route::get('/following', function () {
-    return view('pages.user.manga.following');
-})->name('following');
-
 Route::get('/genre', [GenreController::class, 'getGenre'])->name('genre');
 
 Route::name('search.')->group(function () {
@@ -55,6 +51,8 @@ Route::middleware('authorization')->group(function () {
     Route::post('/unfollow', [FollowController::class, 'unfollowManga'])->name('unfollow');
     Route::post('like', [LikeController::class, 'likeManga'])->name('like');
     Route::post('unlike', [LikeController::class, 'unlikeManga'])->name('unlike');
+
+    Route::get('/following', [FollowController::class, 'index'])->name('following');
 
     Route::prefix('/personal')->name('personal.')->group(function () {
         Route::get('/information', [UserController::class, 'personalInformation'])->name('information');
