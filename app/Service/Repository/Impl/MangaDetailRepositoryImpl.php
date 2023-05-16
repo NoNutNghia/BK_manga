@@ -2,6 +2,7 @@
 
 namespace App\Service\Repository\Impl;
 
+use App\Helper\DatabaseHelper;
 use App\Models\MangaDetail;
 use App\Service\Repository\MangaDetailRepository;
 use Illuminate\Support\Facades\DB;
@@ -64,8 +65,28 @@ class MangaDetailRepositoryImpl implements MangaDetailRepository
 	                WHERE id IN (SELECT MAX(id) from chapter GROUP BY manga_id)
                     ) chapter_tmp'), 'chapter_tmp.manga_id', '=', 'manga_detail.manga_id')
                 ->join('manga', 'manga.id', '=', 'manga_detail.manga_id')
+                ->join('view', 'manga_detail.manga_id', '=', 'view.manga_id')
+                ->orderBy('view.number_of_views', 'desc')
                 ->orderBy('manga.updated_at', 'desc')
                 ->get();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function getFilterManga($filterObject, $filterQueryRaw)
+    {
+        try {
+            return DatabaseHelper::queryWithoutOnlyFullGroupBy(function () use ($filterObject, $filterQueryRaw) {
+                return $this->mangaDetail
+                    ->select('manga_detail.*', DB::raw('COUNT(chapter.id)'))
+                    ->join('chapter', 'manga_detail.manga_id', '=', 'chapter.manga_id')
+                    ->join('genre_manga', 'manga_detail.manga_id', '=', 'genre_manga.manga_id')
+                    ->join('manga', 'manga.id', '=', 'manga_detail.manga_id')
+                    ->whereRaw($filterQueryRaw)
+                    ->groupBy('genre_manga.manga_id')
+                    ->get();
+            });
         } catch (\Exception $e) {
             return false;
         }

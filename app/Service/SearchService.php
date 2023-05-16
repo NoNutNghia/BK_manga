@@ -2,12 +2,12 @@
 
 namespace App\Service;
 
-use App\Models\MangaStatus;
 use App\ResponseObject\ResponseObject;
 use App\Service\Repository\GenreRepository;
 use App\Service\Repository\MangaDetailRepository;
 use App\Service\Repository\MangaStatusRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SearchService
 {
@@ -34,7 +34,9 @@ class SearchService
 
     public function index(Request $request)
     {
-        return view('pages.user.manga.search_manga');
+        $mangaCardList = $this->mangaDetailRepository->getMangaCardList();
+
+        return view('pages.user.manga.search_manga', compact('mangaCardList'));
     }
 
     public function advanceSearch(Request $request)
@@ -63,6 +65,41 @@ class SearchService
         $response = new ResponseObject(true, $html, '');
 
         return response()->json($response->responseObject());
+    }
+
+    public function filterSearch(Request $request)
+    {
+        $filterObject = array(
+            'genre_list' => [1],
+            'manga_status' => 1,
+            'chapter_count' => 10,
+            'upload_sorting' => 1
+        );
+
+        $filterQueryRaw = $this->getFilterSearchQuery($filterObject);
+
+        return $this->mangaDetailRepository->getFilterManga($filterObject, $filterQueryRaw);
+    }
+
+    private function getFilterSearchQuery($filterObject) {
+
+        $queryRaw = '';
+
+        if ($filterObject['genre_list']) {
+            $queryRaw .= 'genre_manga.genre_id IN (';
+            foreach ($filterObject['genre_list'] as $index => $genre_ele) {
+                $queryRaw .= '\'' . $genre_ele . '\'';
+                if ($index != array_key_last($filterObject['genre_list'])) {
+                    $queryRaw .= ', ';
+                } else {
+                    $queryRaw .= ') AND ';
+                }
+            }
+        }
+
+        $queryRaw .= 'manga_status = ' . $filterObject['manga_status'];
+
+        return $queryRaw;
     }
 
 }

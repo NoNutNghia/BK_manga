@@ -9,4 +9,6 @@ interface MangaDetailRepository
     public function getMangaDetailById($id);
 
     public function getMangaCardList();
+
+    public function getFilterManga($filterObject, $filterQueryRaw);
 }
