@@ -9,8 +9,11 @@
             @endforeach
         </div>
         @include('pages.user.component.chapter_navigation')
+        @php
+            $commentTarget = \App\Enum\CommentTarget::CHAPTER;
+        @endphp
         <div class="chapter_navigation">
-            @include('pages.user.component.comment')
+            @include('pages.user.component.comment', ['comment' => $chapterObject['foundChapter']->comment_chapter])
         </div>
     </div>
     <div class="navigation_fixed text-[white]">
@@ -66,8 +69,17 @@
         return '{{ route('unfollow') }}'
     }
 
+    function getRoutePostCommentChapter() {
+        return '{{ route('comment.chapter_post') }}'
+    }
+
+    function getChapterId() {
+        return '{{ $chapterObject['foundChapter']->id }}'
+    }
+
 </script>
 
 @section('script')
     <script src="{{ asset('assets/js/manga_information.js') }}"></script>
+    <script src="{{ asset('assets/js/comment_chapter.js') }}"></script>
 @endsection

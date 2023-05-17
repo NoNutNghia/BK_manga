@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use function MongoDB\BSON\toJSON;
 
 class User extends Authenticatable
 {
@@ -63,5 +64,15 @@ class User extends Authenticatable
     public function likeByUser()
     {
         return $this->hasMany(Like::class, 'user_id', 'id');
+    }
+
+    public function comment_manga()
+    {
+        return $this->hasMany(MangaComment::class, 'user_id', 'id');
+    }
+
+    public function comment_chapter()
+    {
+        return $this->hasMany(ChapterComment::class, 'user_id', 'id');
     }
 }

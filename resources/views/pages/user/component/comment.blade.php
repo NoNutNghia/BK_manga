@@ -2,7 +2,7 @@
     <div class="flex flex-row items-center gap-[8px] text-[#f18121] text-[20px]">
         <i class="fa-solid fa-comments"></i>
         <span>
-            Comments (3)
+            Comments ({{ count($comment) }})
         </span>
     </div>
     <div class="flex flex-row justify-between items-center">
@@ -73,7 +73,4 @@
             </div>
         </div>
     </div>
-
-
-
 </div>

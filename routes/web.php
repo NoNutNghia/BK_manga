@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChapterController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\LikeController;
@@ -60,5 +61,10 @@ Route::middleware('authorization')->group(function () {
         Route::get('/change_password', function () {
             return view('pages.user.personal.change_password');
         })->name('change_password');
+    });
+
+    Route::name('comment.')->prefix('/comment')->group(function () {
+        Route::post('/manga', [CommentController::class, 'commentManga'])->name('manga_post');
+        Route::post('/chapter', [CommentController::class, 'commentChapter'])->name('chapter_post');
     });
 });

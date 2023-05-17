@@ -17,4 +17,6 @@ class ChapterComment extends Model
 
     protected $table = 'chapter_comment';
 
+    public $timestamps = false;
+
 }
