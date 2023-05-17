@@ -3,7 +3,6 @@ let description_tooltip = $('.description_tooltip')
 document.addEventListener(
     'mousemove',
     function (e) {
-
         let client_screen = $(document).width()
 
         for (let i = description_tooltip.length; i--;) {

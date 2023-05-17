@@ -3,7 +3,10 @@
 @section('content')
     <div class="flex flex-col content_main ">
         <div id="newest_updated_area" class="flex flex-col gap-[12px]">
-            @include('pages.user.component.top_main_manga')
+            @php
+                $topMangaList = $mangaCardList->take(5);
+            @endphp
+            @include('pages.user.component.top_main_manga', compact('topMangaList'))
             <div class="flex flex-row items-center gap-[12px]">
                 <i class="fa-solid fa-cloud-arrow-down icon_main"></i>
                 <span class="text_updated_manga">
