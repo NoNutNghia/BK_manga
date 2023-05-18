@@ -74,17 +74,26 @@ class MangaDetailRepositoryImpl implements MangaDetailRepository
         }
     }
 
-    public function getFilterManga($filterObject, $filterQueryRaw)
+    public function getFilterManga($filterObject, $filterGenre)
     {
         try {
-            return DatabaseHelper::queryWithoutOnlyFullGroupBy(function () use ($filterObject, $filterQueryRaw) {
+            return DatabaseHelper::queryWithoutOnlyFullGroupBy(function () use ($filterGenre, $filterObject) {
                 return $this->mangaDetail
-                    ->select('manga_detail.*', DB::raw('COUNT(chapter.id)'))
-                    ->join('chapter', 'manga_detail.manga_id', '=', 'chapter.manga_id')
-                    ->join('genre_manga', 'manga_detail.manga_id', '=', 'genre_manga.manga_id')
+                    ->select('manga_detail.*')
+                    ->join(
+                        DB::raw('(SELECT GROUP_CONCAT("\'" ,genre_id, "\'") as genre_concat, manga_id
+                                FROM genre_manga
+                                GROUP BY manga_id) genre_manga_tmp'),
+                        'genre_manga_tmp.manga_id', '=' ,'manga_detail.manga_id')
+                    ->join('chapter', 'chapter.manga_id', '=', 'manga_detail.manga_id')
                     ->join('manga', 'manga.id', '=', 'manga_detail.manga_id')
-                    ->whereRaw($filterQueryRaw)
-                    ->groupBy('genre_manga.manga_id')
+                    ->where(function ($query) use ($filterObject, $filterGenre) {
+                        $query->where('genre_manga_tmp.genre_concat', 'LIKE', $filterGenre)
+                            ->where('manga_detail.manga_status', $filterObject['manga_status']);
+                    })
+                    ->groupBy('manga_detail.manga_id')
+                    ->orderBy('manga.updated_at', $filterObject['upload_sorting'])
+                    ->having(DB::raw('COUNT(chapter.id)'), '>=', $filterObject['chapter_count'])
                     ->get();
             });
         } catch (\Exception $e) {

@@ -4,6 +4,8 @@ let advanced_area = $('.advanced_area')
 let reset_button = $('#reset_button')
 let genre_checkbox = $('#genre_checkbox')
 let select_status = $('#select_status')
+let search_manga = $('#search_manga')
+let filter_result = $('#filter_result')
 
 hide_search.on('click', function () {
     show_search.css('display', 'block')
@@ -58,3 +60,66 @@ function getAdvance() {
 }
 
 getAdvance()
+
+search_manga.on('click', function () {
+
+    let chapter_count = $('#select_number_of_chapter :selected').val()
+    let upload_sorting = $('#select_sort_upload :selected').val()
+    let manga_status = $('#select_status :selected').val()
+    let checked_genre = $('input[type=checkbox]:checked').toArray()
+    let genre_list = []
+
+    checked_genre.forEach(element => {
+        genre_list.push($(element).val())
+    })
+
+    let request_filter = {
+        'manga_status': manga_status,
+        'chapter_count': chapter_count,
+        'upload_sorting': upload_sorting,
+        'genre_list': genre_list
+    }
+
+    $.ajax({
+        type: "POST",
+        url: getFilterRoute(),
+        headers: {'X-CSRF-TOKEN': getCSRFToken()},
+        data: request_filter,
+        success: function (response) {
+            if (response.result) {
+                filter_result.html(response.data)
+                hover_description()
+            }
+        }
+    })
+})
+
+function hover_description() {
+    let description_tooltip = $('.description_tooltip')
+
+    document.addEventListener(
+        'mousemove',
+        function (e) {
+            let client_screen = $(document).width()
+
+            for (let i = description_tooltip.length; i--;) {
+                let description_ele = $(description_tooltip[i])
+                if (e.pageX >= (client_screen / 2)) {
+                    description_ele.css('right', (client_screen - e.pageX) + 'px')
+                    description_ele.css('top', e.pageY + 'px')
+                    description_ele.css('left', '')
+                    description_ele.css('margin-right', '1rem')
+                    description_ele.css('margin-left', '')
+                } else {
+                    description_ele.css('left', e.pageX + 'px')
+                    description_ele.css('top', e.pageY + 'px')
+                    description_ele.css('right', '')
+                    description_ele.css('margin-left', '1rem')
+                    description_ele.css('margin-right', '')
+                }
+            }
+        },
+        false
+    )
+}
+

@@ -39,7 +39,7 @@ Route::name('search.')->group(function () {
     Route::get('/search', [SearchController::class, 'index'])->name('index');
     Route::get('/advance', [SearchController::class, 'advance'])->name('advance');
     Route::post('/title', [SearchController::class, 'titleManga'])->name('title');
-    Route::get('/filter', [SearchController::class, 'filterSearch'])->name('filter');
+    Route::post('/filter', [SearchController::class, 'filterSearch'])->name('filter');
 });
 
 Route::get('/error', function () {

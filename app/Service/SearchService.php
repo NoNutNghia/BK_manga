@@ -70,36 +70,39 @@ class SearchService
     public function filterSearch(Request $request)
     {
         $filterObject = array(
-            'genre_list' => [1],
-            'manga_status' => 1,
-            'chapter_count' => 10,
-            'upload_sorting' => 1
+            'genre_list' => $request->genre_list,
+            'manga_status' => $request->manga_status,
+            'chapter_count' => $request->chapter_count,
+            'upload_sorting' => $request->upload_sorting
         );
 
-        $filterQueryRaw = $this->getFilterSearchQuery($filterObject);
+        $filterGenre = $this->getFilterSearchQuery($filterObject);
 
-        return $this->mangaDetailRepository->getFilterManga($filterObject, $filterQueryRaw);
+        $filterMangaList = $this->mangaDetailRepository->getFilterManga($filterObject, $filterGenre);
+
+        $html = '';
+
+        foreach ($filterMangaList as $manga_ele) {
+            $html .= view('pages.user.component.manga_card', ['mangaCard' => $manga_ele]);
+        }
+
+        $response = new ResponseObject(true, $html, '');
+
+        return response()->json($response->responseObject());
     }
 
     private function getFilterSearchQuery($filterObject) {
 
-        $queryRaw = '';
+        $queryRaw = '%';
 
         if ($filterObject['genre_list']) {
-            $queryRaw .= 'genre_manga.genre_id IN (';
-            foreach ($filterObject['genre_list'] as $index => $genre_ele) {
-                $queryRaw .= '\'' . $genre_ele . '\'';
-                if ($index != array_key_last($filterObject['genre_list'])) {
-                    $queryRaw .= ', ';
-                } else {
-                    $queryRaw .= ') AND ';
-                }
+            foreach ($filterObject['genre_list'] as $genre_ele) {
+                $queryRaw .= '\'' . $genre_ele . '\'' . '%';
             }
+        } else {
+            $queryRaw .= '%';
         }
-
-        $queryRaw .= 'manga_status = ' . $filterObject['manga_status'];
 
         return $queryRaw;
     }
-
 }

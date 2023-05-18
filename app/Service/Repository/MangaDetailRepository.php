@@ -10,5 +10,5 @@ interface MangaDetailRepository
 
     public function getMangaCardList();
 
-    public function getFilterManga($filterObject, $filterQueryRaw);
+    public function getFilterManga($filterObject, $filterGenre);
 }
