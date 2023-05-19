@@ -13,29 +13,44 @@
         @endif
     @endif
     <div class="flex flex-row items-center w-full justify-center gap-[8px]">
-        <button class="button_action button_send_comment gap-[4px]">
-            <i class="fa-sharp fa-solid fa-arrow-left"></i>
-            <span>
-                Previous
-            </span>
-        </button>
+        @if ($previousChapterId)
+            <a role="button" href="{{ route('chapter', ['id' => $previousChapterId]) }}" class="button_action button_send_comment gap-[4px]">
+                <i class="fa-sharp fa-solid fa-arrow-left"></i>
+                <span>
+                    Previous
+                </span>
+            </a>
+        @else
+            <button class="button_action button_not_allowed button_send_comment gap-[4px]">
+                <span>
+                    Previous
+                </span>
+                <i class="fa-sharp fa-solid fa-arrow-left"></i>
+            </button>
+        @endif
+
         <select class="select_chapter" name="select_chapter">
-            <option value="1" selected>Chapter 10</option>
-            <option value="1">Chapter 10</option>
-            <option value="1">Chapter 10</option>
-            <option value="1">Chapter 10</option>
-            <option value="1">Chapter 10</option>
-            <option value="1">Chapter 10</option>
-            <option value="1">Chapter 10</option>
-            <option value="1">Chapter 10</option>
-            <option value="1">Chapter 10</option>
-            <option value="1">Chapter 10</option>
+            @foreach($chapterObject['parentManga']->chapter_manga as $chapter)
+                <option {{ $chapterObject['foundChapter']->id == $chapter->id ? 'selected' : '' }} value="{{ route('chapter', ['id' => $chapter->id]) }}">
+                    {{ $chapter->title }}
+                </option>
+            @endforeach
         </select>
-        <button class="button_action button_send_comment gap-[4px]">
-            <span>
-                Next
-            </span>
-            <i class="fa-sharp fa-solid fa-arrow-right"></i>
-        </button>
+
+        @if ($nextChapterId)
+            <a role="button" href="{{ route('chapter', ['id' => $nextChapterId]) }}" class="button_action button_send_comment gap-[4px]">
+                <span>
+                    Next
+                </span>
+                <i class="fa-sharp fa-solid fa-arrow-right"></i>
+            </a>
+        @else
+            <button class="button_action button_not_allowed button_send_comment gap-[4px]">
+                <span>
+                    Next
+                </span>
+                <i class="fa-sharp fa-solid fa-arrow-right"></i>
+            </button>
+        @endif
     </div>
 </div>
