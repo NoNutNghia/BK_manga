@@ -17,4 +17,10 @@ class ChapterComment extends Model
 
     protected $table = 'chapter_comment';
 
+    public $timestamps = false;
+
+    public function belong_to_user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

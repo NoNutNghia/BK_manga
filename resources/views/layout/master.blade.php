@@ -26,4 +26,5 @@
     </main>
 </body>
 @yield('script')
+<script src="{{asset('assets/js/header.js')}}"></script>
 </html>
