@@ -7,4 +7,8 @@ interface CommentRepository
     public function mangaComment($mangaId, $userId, $content);
 
     public function chapterComment($chapterId, $userId, $content);
+
+    public function getMangaComment($limit, $offset, $mangaId);
+
+    public function getChapterComment($limit, $offset, $chapterId);
 }

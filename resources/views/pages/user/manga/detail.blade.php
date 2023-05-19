@@ -49,6 +49,10 @@
         return ' {{ route('comment.manga_post') }}'
     }
 
+    function getRouteCommentManga() {
+        return '{{ route('comment.manga') }}'
+    }
+
 </script>
 
 @section('script')

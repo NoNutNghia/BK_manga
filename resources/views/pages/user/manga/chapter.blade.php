@@ -9,9 +9,6 @@
             @endforeach
         </div>
         @include('pages.user.component.chapter_navigation')
-        @php
-            $commentTarget = \App\Enum\CommentTarget::CHAPTER;
-        @endphp
         <div class="chapter_navigation">
             @include('pages.user.component.comment', ['comment' => $chapterObject['foundChapter']->comment_chapter])
         </div>
@@ -75,6 +72,10 @@
 
     function getChapterId() {
         return '{{ $chapterObject['foundChapter']->id }}'
+    }
+
+    function getRouteCommentChapter() {
+        return '{{ route('comment.chapter') }}'
     }
 
 </script>

@@ -1,5 +1,5 @@
 let button_send_comment = $('.button_send_comment')
-
+let comment_list = $('.comment_list')
 button_send_comment.on('click', function () {
 
     let content_comment = $('.comment_box').val()
@@ -19,3 +19,25 @@ button_send_comment.on('click', function () {
         }
     })
 })
+
+function getCommentChapter() {
+
+    let get_comment = {
+        'chapter_id': getChapterId(),
+        'page': 1
+    }
+
+    $.ajax({
+        type: "POST",
+        url: getRouteCommentChapter(),
+        headers: {'X-CSRF-TOKEN': getCSRFToken()},
+        data: get_comment,
+        success: function (response) {
+            if (response.result) {
+                comment_list.html(response.data)
+            }
+        }
+    })
+}
+
+getCommentChapter()

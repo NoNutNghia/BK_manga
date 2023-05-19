@@ -22,7 +22,7 @@ class MangaComment extends Model
 
     public function belong_to_user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
 }

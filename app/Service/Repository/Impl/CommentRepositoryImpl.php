@@ -55,4 +55,22 @@ class CommentRepositoryImpl implements CommentRepository
             return false;
         }
     }
+
+    public function getMangaComment($limit, $offset, $mangaId)
+    {
+        try {
+            return $this->mangaComment->where('manga_id', $mangaId)->skip($offset)->take($limit)->get();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function getChapterComment($limit, $offset, $chapterId)
+    {
+        try {
+            return $this->chapterComment->where('chapter_id', $chapterId)->skip($offset)->take($limit)->get();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

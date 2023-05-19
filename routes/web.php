@@ -46,6 +46,11 @@ Route::get('/error', function () {
     return view('pages.user.error.not_found');
 })->name('error');
 
+Route::name('comment.')->prefix('/comment')->group(function () {
+    Route::post('/manga/get', [CommentController::class, 'getCommentManga'])->name('manga');
+    Route::post('chapter/get', [CommentController::class, 'getCommentChapter'])->name('chapter');
+});
+
 Route::middleware('authorization')->group(function () {
 
     Route::post('/follow', [FollowController::class, 'followManga'])->name('follow');
