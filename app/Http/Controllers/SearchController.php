@@ -32,4 +32,9 @@ class SearchController extends Controller
         return $this->searchService->titleManga($request);
     }
 
+    public function filterSearch(Request $request)
+    {
+        return $this->searchService->filterSearch($request);
+    }
+
 }

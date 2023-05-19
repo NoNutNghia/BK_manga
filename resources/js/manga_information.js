@@ -157,5 +157,3 @@ button_unlike.on('click', function () {
         }
     })
 })
-
-
