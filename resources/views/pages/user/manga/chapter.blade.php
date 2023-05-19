@@ -10,7 +10,10 @@
         </div>
         @include('pages.user.component.chapter_navigation')
         <div class="chapter_navigation">
-            @include('pages.user.component.comment', ['comment' => $chapterObject['foundChapter']->comment_chapter])
+            @include('pages.user.component.comment', [
+                'comment' => $chapterObject['foundChapter']->comment_chapter,
+                'countComment' => count($chapterObject['foundChapter']->comment_chapter)
+            ])
         </div>
     </div>
     <div class="navigation_fixed text-[white]">
@@ -76,6 +79,10 @@
 
     function getRouteCommentChapter() {
         return '{{ route('comment.chapter') }}'
+    }
+
+    function getRouteCountCommentChapter() {
+        return '{{ route('comment.chapter_count') }}'
     }
 
 </script>

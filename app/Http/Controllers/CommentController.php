@@ -36,4 +36,14 @@ class CommentController extends Controller
     {
         return $this->commentService->getCommentChapter($request);
     }
+
+    public function countCommentChapter(Request $request)
+    {
+        return $this->commentService->countCommentChapter($request);
+    }
+
+    public function countCommentManga(Request $request)
+    {
+        return $this->commentService->countCommentManga($request);
+    }
 }

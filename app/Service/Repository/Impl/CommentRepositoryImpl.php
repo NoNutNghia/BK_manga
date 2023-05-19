@@ -59,7 +59,11 @@ class CommentRepositoryImpl implements CommentRepository
     public function getMangaComment($limit, $offset, $mangaId)
     {
         try {
-            return $this->mangaComment->where('manga_id', $mangaId)->skip($offset)->take($limit)->get();
+            return $this->mangaComment->where('manga_id', $mangaId)
+                ->skip($offset)
+                ->take($limit)
+                ->orderBy('created_at', 'desc')
+                ->get();
         } catch (\Exception $e) {
             return false;
         }
@@ -68,7 +72,35 @@ class CommentRepositoryImpl implements CommentRepository
     public function getChapterComment($limit, $offset, $chapterId)
     {
         try {
-            return $this->chapterComment->where('chapter_id', $chapterId)->skip($offset)->take($limit)->get();
+            return $this->chapterComment->where('chapter_id', $chapterId)
+                ->skip($offset)
+                ->take($limit)
+                ->orderBy('created_at', 'desc')
+                ->get();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function getCountCommentChapter($chapterId)
+    {
+        try {
+            return $this->chapterComment->selectRaw('count(*) as count_comment')
+                ->where('chapter_id', $chapterId)
+                ->groupBy('chapter_id')
+                ->first();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function getCountCommentManga($mangaId)
+    {
+        try {
+            return $this->mangaComment->selectRaw('count(*) as count_comment')
+                ->where('manga_id', $mangaId)
+                ->groupBy('manga_id')
+                ->first();
         } catch (\Exception $e) {
             return false;
         }

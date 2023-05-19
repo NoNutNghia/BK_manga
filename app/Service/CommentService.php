@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Enum\AmountOfComment;
 use App\ResponseObject\ResponseObject;
 use App\Service\Repository\CommentRepository;
 use Illuminate\Http\Request;
@@ -26,7 +27,11 @@ class CommentService
 
         $result = $this->commentRepository->mangaComment($mangaId, Auth::id(), $content);
 
-        return $result;
+        if ($result) {
+            $response = new ResponseObject(true, $result, '');
+        }
+
+        return response()->json($response->responseObject());
     }
 
     public function commentChapter(Request $request)
@@ -36,12 +41,16 @@ class CommentService
 
         $result = $this->commentRepository->chapterComment($chapterId, Auth::id(), $content);
 
-        return $result;
+        if ($result) {
+            $response = new ResponseObject(true, $result, '');
+        }
+
+        return response()->json($response->responseObject());
     }
 
     public function getCommentManga(Request $request)
     {
-        $limit = 1;
+        $limit = AmountOfComment::AMOUNT_OF_COMMENT;
         $offset = (intval($request->page) - 1) * $limit;
         $mangaId = $request->manga_id;
 
@@ -56,7 +65,7 @@ class CommentService
 
     public function getCommentChapter(Request $request)
     {
-        $limit = 1;
+        $limit = AmountOfComment::AMOUNT_OF_COMMENT;
         $offset = (intval($request->page) - 1) * $limit;
         $chapterId = $request->chapter_id;
 
@@ -65,6 +74,28 @@ class CommentService
         $html = view('pages.user.component.comment_list', compact('commentList'))->render();
 
         $response = new ResponseObject(true, $html, '');
+
+        return response()->json($response->responseObject());
+    }
+
+    public function countCommentChapter(Request $request)
+    {
+        $chapterId = $request->id;
+
+        $countComment = $this->commentRepository->getCountCommentChapter($chapterId)->count_comment;
+
+        $response = new ResponseObject(true, $countComment, '');
+
+        return response()->json($response->responseObject());
+    }
+
+    public function countCommentManga(Request $request)
+    {
+        $mangaId = $request->id;
+
+        $countComment = $this->commentRepository->getCountCommentManga($mangaId)->count_comment;
+
+        $response = new ResponseObject(true, $countComment, '');
 
         return response()->json($response->responseObject());
     }

@@ -50,6 +50,8 @@ Route::get('/error', function () {
 Route::name('comment.')->prefix('/comment')->group(function () {
     Route::post('/manga/get', [CommentController::class, 'getCommentManga'])->name('manga');
     Route::post('chapter/get', [CommentController::class, 'getCommentChapter'])->name('chapter');
+    Route::get('/chapter/count', [CommentController::class, 'countCommentChapter'])->name('chapter_count');
+    Route::get('/manga/count', [CommentController::class, 'countCommentManga'])->name('manga_count');
 });
 
 Route::middleware('authorization')->group(function () {
