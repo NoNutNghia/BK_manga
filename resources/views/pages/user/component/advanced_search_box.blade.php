@@ -41,10 +41,11 @@
                     Number of Chapter
                 </span>
                 <select name="select_number_of_chapter" id="select_number_of_chapter" class="w-full select_chapter">
-                    <option value="1">Lmao 1</option>
-                    <option value="2">Lmao 2</option>
-                    <option value="3">Lmao 3</option>
-                    <option value="4">Lmao 4</option>
+                    <option value="0"> > 0 </option>
+                    <option value="10"> >= 10 </option>
+                    <option value="20"> >= 20 </option>
+                    <option value="50"> >= 50 </option>
+                    <option value="100"> >= 100 </option>
                 </select>
             </div>
             <div class="flex flex-row items-center w-[50%]">
@@ -52,15 +53,13 @@
                     Upload Time Sorting
                 </span>
                 <select name="select_sort_upload" id="select_sort_upload" class="w-full select_chapter">
-                    <option value="1">Lmao 1</option>
-                    <option value="2">Lmao 2</option>
-                    <option value="3">Lmao 3</option>
-                    <option value="4">Lmao 4</option>
+                    <option value="asc">Oldest to Newest</option>
+                    <option value="desc">Newest to Oldest</option>
                 </select>
             </div>
         </div>
         <div class="flex flex-row items-center mt-[1.25rem] justify-center">
-            <button class="min-w-[0px] button_action button_read_begin">
+            <button class="min-w-[0px] button_action button_read_begin" id="search_manga">
                 <span>
                     Search
                 </span>

@@ -23,9 +23,6 @@ class ViewRepositoryImpl implements ViewRepository
                  $this->view->where('manga_id', $manga_id)->increment('number_of_views', 1);
             });
         } catch (\Exception $e) {
-            return DB::transaction(function () use ($manga_id){
-                $this->view->where('manga_id', $manga_id)->increment('number_of_views', 1);
-            });
             return false;
         }
     }

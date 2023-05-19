@@ -55,4 +55,9 @@ class MangaDetail extends Model
         return $this->hasMany(Chapter::class, 'manga_id', 'manga_id')
             ->orderBy('chapter.uploaded_at', 'desc');
     }
+
+    public function comment_manga()
+    {
+        return $this->hasMany(MangaComment::class, 'manga_id', 'manga_id');
+    }
 }

@@ -10,7 +10,9 @@
             @include('pages.user.component.manga_information')
             @include('pages.user.component.description_manga')
             @include('pages.user.component.chapter_list')
-            @include('pages.user.component.comment')
+            @include('pages.user.component.comment', [
+                'comment' => $foundManga->comment_manga
+            ])
         </div>
     </div>
 @endsection
@@ -45,8 +47,21 @@
         return '{{ route('unlike') }}'
     }
 
+    function getRoutePostCommentManga() {
+        return ' {{ route('comment.manga_post') }}'
+    }
+
+    function getRouteCommentManga() {
+        return '{{ route('comment.manga') }}'
+    }
+
+    function getRouteCountCommentManga() {
+        return '{{ route('comment.manga_count') }}'
+    }
+
 </script>
 
 @section('script')
     <script src="{{ asset('assets/js/manga_information.js') }}"></script>
+    <script src="{{ asset('assets/js/comment_manga.js') }}"></script>
 @endsection

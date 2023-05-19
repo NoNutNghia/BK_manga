@@ -1,0 +1,17 @@
+.pagination_button {
+    width: 50px;
+    height: 50px;
+    border: 1px solid white;
+    cursor: pointer;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.disable_pagination_button {
+    opacity: 0.2;
+    cursor: not-allowed;
+}

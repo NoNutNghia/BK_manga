@@ -8,6 +8,7 @@ let avatar_user = $('#personal_avatar')
 let modal_user = $('.modal_user')
 let input_search = $('#input_search')
 let search_result = $('#search_result')
+let footer_tag = $('.footer_tag')
 
 genre.hover(
     function () {
@@ -258,13 +259,17 @@ function getGenre() {
             if (response.result) {
                 let genre_list = response.data
 
-                let html = ''
+                let html_header = ''
+                let html_footer = ''
 
                 genre_list.forEach(genre => {
-                    html += `<div> <a href='${genre.id}'> <span> ${genre.genre_name} </span> </a> </div>`
+                    html_header += `<div> <a href='${genre.id}'> <span> ${genre.genre_name} </span> </a> </div>`
+
+                    html_footer += `<a href='${genre.id}'> <span> ${genre.genre_name} </span> </a>`
                 })
 
-                genre_hide.html(html)
+                genre_hide.html(html_header)
+                footer_tag.html(html_footer)
             }
         }
     })

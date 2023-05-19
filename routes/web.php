@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChapterController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\LikeController;
@@ -39,11 +40,19 @@ Route::name('search.')->group(function () {
     Route::get('/search', [SearchController::class, 'index'])->name('index');
     Route::get('/advance', [SearchController::class, 'advance'])->name('advance');
     Route::post('/title', [SearchController::class, 'titleManga'])->name('title');
+    Route::post('/filter', [SearchController::class, 'filterSearch'])->name('filter');
 });
 
 Route::get('/error', function () {
     return view('pages.user.error.not_found');
 })->name('error');
+
+Route::name('comment.')->prefix('/comment')->group(function () {
+    Route::post('/manga/get', [CommentController::class, 'getCommentManga'])->name('manga');
+    Route::post('chapter/get', [CommentController::class, 'getCommentChapter'])->name('chapter');
+    Route::get('/chapter/count', [CommentController::class, 'countCommentChapter'])->name('chapter_count');
+    Route::get('/manga/count', [CommentController::class, 'countCommentManga'])->name('manga_count');
+});
 
 Route::middleware('authorization')->group(function () {
 
@@ -60,5 +69,10 @@ Route::middleware('authorization')->group(function () {
         Route::get('/change_password', function () {
             return view('pages.user.personal.change_password');
         })->name('change_password');
+    });
+
+    Route::name('comment.')->prefix('/comment')->group(function () {
+        Route::post('/manga', [CommentController::class, 'commentManga'])->name('manga_post');
+        Route::post('/chapter', [CommentController::class, 'commentChapter'])->name('chapter_post');
     });
 });

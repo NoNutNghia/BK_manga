@@ -18,4 +18,11 @@ class MangaComment extends Model
 
     protected $table = 'manga_comment';
 
+    public $timestamps = false;
+
+    public function belong_to_user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
 }
