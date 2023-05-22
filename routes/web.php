@@ -35,6 +35,7 @@ Route::get('/detail', [MangaController::class, 'mangaDetail'])->name('detail');
 Route::get('/chapter', [ChapterController::class, 'chapterDetail'])->name('chapter');
 
 Route::get('/genre', [GenreController::class, 'getGenre'])->name('genre');
+Route::get('manga/genre', [GenreController::class, 'getMangaByGenre'])->name('manga_genre');
 
 Route::name('search.')->group(function () {
     Route::get('/search', [SearchController::class, 'index'])->name('index');

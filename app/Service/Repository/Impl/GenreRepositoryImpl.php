@@ -25,4 +25,13 @@ class GenreRepositoryImpl implements GenreRepository
             return false;
         }
     }
+
+    public function getGenreById($id)
+    {
+        try {
+            return $this->genre->where('id', $id)->first();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

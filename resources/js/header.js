@@ -263,9 +263,9 @@ function getGenre() {
                 let html_footer = ''
 
                 genre_list.forEach(genre => {
-                    html_header += `<div> <a href='${genre.id}'> <span> ${genre.genre_name} </span> </a> </div>`
+                    html_header += `<div> <a href='/manga/genre?id=${genre.id}'> <span> ${genre.genre_name} </span> </a> </div>`
 
-                    html_footer += `<a href='${genre.id}'> <span> ${genre.genre_name} </span> </a>`
+                    html_footer += `<a href='/manga/genre?id=${genre.id}'> <span> ${genre.genre_name} </span> </a>`
                 })
 
                 genre_hide.html(html_header)

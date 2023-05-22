@@ -67,7 +67,7 @@
         </div>
         <div class="flex flex-row gap-[8px]">
             @foreach($foundManga->genre_manga as $genre_manga)
-                <a href="{{ $genre_manga->belong_to_genre->id }}" class="manga_genre">
+                <a href="{{ route('manga_genre', ['id' => $genre_manga->belong_to_genre->id]) }}" class="manga_genre">
                     {{ $genre_manga->belong_to_genre->genre_name }}
                 </a>
             @endforeach
