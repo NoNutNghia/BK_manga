@@ -40,7 +40,7 @@
             <span class="label_info">
                 Number of likes
             </span>
-            <span>
+            <span id="like_count">
                 {{ count($foundManga->manga_likes) }}
             </span>
 
@@ -50,7 +50,7 @@
             <span class="label_info">
                 Number of follows
             </span>
-            <span>
+            <span id="follow_count">
                 {{ count($foundManga->manga_follows) }}
             </span>
 
