@@ -7,6 +7,7 @@ use App\Http\Controllers\GenreController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MangaController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\TopMangaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,14 @@ Route::get('/chapter', [ChapterController::class, 'chapterDetail'])->name('chapt
 
 Route::get('/genre', [GenreController::class, 'getGenre'])->name('genre');
 Route::get('manga/genre', [GenreController::class, 'getMangaByGenre'])->name('manga_genre');
+
+Route::prefix('top')->name('top.')->group(function () {
+    Route::get('/following', [TopMangaController::class, 'getTopFollowingManga'])->name('following');
+    Route::get('/view', [TopMangaController::class, 'getTopViewManga'])->name('view');
+    Route::get('/like', [TopMangaController::class, 'getTopLikeManga'])->name('like');
+    Route::get('/newest', [TopMangaController::class, 'getNewestManga'])->name('newest');
+    Route::get('complete', [TopMangaController::class, 'getCompleteManga'])->name('complete');
+});
 
 Route::name('search.')->group(function () {
     Route::get('/search', [SearchController::class, 'index'])->name('index');

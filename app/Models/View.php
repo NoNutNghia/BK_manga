@@ -16,4 +16,9 @@ class View extends Model
     protected $table = 'view';
 
     public $timestamps = false;
+
+    public function mapping_to_manga()
+    {
+        return $this->hasOne(MangaDetail::class, 'manga_id', 'manga_id');
+    }
 }
