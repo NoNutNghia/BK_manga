@@ -5,16 +5,13 @@
         <div class="flex flex-row items-center text-[#56ccf2] text-[20px] gap-[12px]">
             <i class="fa-solid fa-flag"></i>
             <span class="capitalize">
-                Genre {{ $genreName }}
+                {{ $topMangaTitle }}
             </span>
         </div>
-        @if(count($listGenreManga) > 0)
+        @if(count($mangaList) > 0)
             <div class="grid grid-cols-6 w-full gap-[16px]">
-                @foreach($listGenreManga as $genreMangaEle)
-                    @php
-                        $mangaCard = $genreMangaEle->belong_to_manga
-                    @endphp
-                    @include('pages.user.component.manga_card', ["mangaCard" => $mangaCard])
+                @foreach($mangaList as $manga)
+                    @include('pages.user.component.manga_card', ["mangaCard" => $manga])
                 @endforeach
             </div>
 

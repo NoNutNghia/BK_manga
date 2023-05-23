@@ -11,4 +11,12 @@ interface MangaDetailRepository
     public function getMangaCardList();
 
     public function getFilterManga($filterObject, $filterGenre);
+
+    public function getTopFollowingManga();
+
+    public function getTopLikeManga();
+
+    public function getNewestManga();
+
+    public function getCompleteManga();
 }

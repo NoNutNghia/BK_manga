@@ -26,4 +26,13 @@ class ViewRepositoryImpl implements ViewRepository
             return false;
         }
     }
+
+    public function getTopView()
+    {
+        try {
+            return $this->view->orderBy('number_of_views', 'desc')->get();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

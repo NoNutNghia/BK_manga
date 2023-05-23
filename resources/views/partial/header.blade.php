@@ -85,46 +85,21 @@
         </ul>
         <div class="content_hidden grid grid-cols-8 gap-[12px]" id="genre_hide"></div>
         <div class="content_hidden grid grid-cols-8 gap-[12px]" id="ranking_hide">
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
-            <a href="">
-                <span>
-                    Duck ngu
-                </span>
-            </a>
+            <div>
+                <a href="{{ route('top.following') }}"> <span> Top following </span> </a>
+            </div>
+            <div>
+                <a href="{{ route('top.view') }}"> <span> Top view </span> </a>
+            </div>
+            <div>
+                <a href="{{ route('top.like') }}"> <span> Top like </span> </a>
+            </div>
+            <div>
+                <a href="{{ route('top.newest') }}"> <span> New manga </span> </a>
+            </div>
+            <div>
+                <a href="{{ route('top.complete') }}"> <span> Manga Complete </span> </a>
+            </div>
         </div>
     </div>
 
