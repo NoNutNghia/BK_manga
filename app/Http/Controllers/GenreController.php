@@ -22,4 +22,9 @@ class GenreController extends Controller
     {
         return $this->genreService->getGenre($request);
     }
+
+    public function getMangaByGenre(Request $request)
+    {
+        return $this->genreService->getMangaByGenre($request);
+    }
 }

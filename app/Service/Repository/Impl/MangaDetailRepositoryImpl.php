@@ -2,6 +2,7 @@
 
 namespace App\Service\Repository\Impl;
 
+use App\Enum\MangaStatus;
 use App\Helper\DatabaseHelper;
 use App\Models\MangaDetail;
 use App\Service\Repository\MangaDetailRepository;
@@ -96,6 +97,62 @@ class MangaDetailRepositoryImpl implements MangaDetailRepository
                     ->having(DB::raw('COUNT(chapter.id)'), '>=', $filterObject['chapter_count'])
                     ->get();
             });
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function getTopFollowingManga()
+    {
+        try {
+            return DatabaseHelper::queryWithoutOnlyFullGroupBy(function () {
+                return $this->mangaDetail
+                    ->select('manga_detail.*')
+                    ->leftJoin('follow', 'follow.manga_id', '=', 'manga_detail.manga_id')
+                    ->groupBy('manga_detail.manga_id')
+                    ->orderBy(DB::raw('COUNT("follow.manga_id")'), 'desc')
+                    ->get();
+            });
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function getTopLikeManga()
+    {
+        try {
+            return DatabaseHelper::queryWithoutOnlyFullGroupBy(function () {
+                return $this->mangaDetail
+                    ->select('manga_detail.*')
+                    ->leftJoin('like', 'like.manga_id', '=', 'manga_detail.manga_id')
+                    ->groupBy('manga_detail.manga_id')
+                    ->orderBy(DB::raw('COUNT("like.manga_id")'), 'desc')
+                    ->get();
+            });
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function getNewestManga()
+    {
+        try {
+            return $this->mangaDetail->join('manga', 'manga_detail.manga_id', '=', 'manga.id')
+                ->orderBy('manga.created_at', 'desc')
+                ->get();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function getCompleteManga()
+    {
+        try {
+            return $this->mangaDetail
+                ->join('view', 'view.manga_id', '=', 'manga_detail.manga_id')
+                ->where('manga_status', MangaStatus::COMPLETE)
+                ->orderBy('view.number_of_views', 'desc')
+                ->get();
         } catch (\Exception $e) {
             return false;
         }

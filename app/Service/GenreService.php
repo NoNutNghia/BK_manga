@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Models\GenreManga;
 use App\ResponseObject\ResponseObject;
 use App\Service\Repository\GenreRepository;
 use Illuminate\Http\Request;
@@ -25,6 +26,20 @@ class GenreService
         $response = new ResponseObject(true, $genre, '');
 
         return response()->json($response->responseObject());
+    }
+
+    public function getMangaByGenre(Request $request)
+    {
+        $genreId = $request->id;
+
+        $foundGenre = $this->genreRepository->getGenreById($genreId);
+
+        $listGenreManga = $foundGenre->manga_belongs;
+
+        return view('pages.user.manga.genre', array(
+            'listGenreManga' => $listGenreManga,
+            'genreName' => $foundGenre->genre_name
+        ));
     }
 
 }
