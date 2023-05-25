@@ -1,7 +1,7 @@
 <div class="flex flex-row top_main_manga gap-[4px]">
     <div class="flex flex-col gap-[4px] manga_side">
         <a href="{{ route('chapter', ['id' => $topMangaList->get(1)->latest_id]) }}" class="image_manga_container">
-            <img src="{{ asset('storage/manga/2/image_large.jpg') }}" alt="">
+            <img src="{{ asset('storage/manga/' . $topMangaList->get(1)->id . '/image_large.jpg') }}" alt="">
             <div class="content_chapter">
                 <span>
                     {{ $topMangaList->get(1)->latest_chapter }}
@@ -14,7 +14,7 @@
             </div>
         </a>
         <a href="{{ route('chapter', ['id' => $topMangaList->get(2)->latest_id]) }}" class="image_manga_container">
-            <img src="{{ asset('storage/manga/2/image_large.jpg') }}" alt="">
+            <img src="{{ asset('storage/manga/' . $topMangaList->get(2)->id . '/image_large.jpg') }}" alt="">
             <div class="content_chapter">
                 <span>
                     {{ $topMangaList->get(2)->latest_chapter }}
@@ -29,7 +29,7 @@
     </div>
     <div class="manga_middle">
         <a href="{{ route('chapter', ['id' => $topMangaList->get(0)->latest_id]) }}" class="image_manga_container h-full">
-            <img src="{{ asset('storage/manga/2/image_large.jpg') }}" alt="">
+            <img src="{{ asset('storage/manga/' . $topMangaList->get(0)->id . '/image_large.jpg') }}" alt="">
             <div class="filter_hover">
 
             </div>
@@ -73,7 +73,7 @@
     </div>
     <div class="flex flex-col gap-[4px] manga_side">
         <a href="{{ route('chapter', ['id' => $topMangaList->get(3)->latest_id]) }}" class="image_manga_container">
-            <img src="{{ asset('storage/manga/2/image_large.jpg') }}" alt="">
+            <img src="{{ asset('storage/manga/' . $topMangaList->get(3)->id . '/image_large.jpg') }}" alt="">
             <div class="content_chapter">
                 <span>
                     {{ $topMangaList->get(3)->latest_chapter }}
@@ -86,7 +86,7 @@
             </div>
         </a>
         <a href="{{ route('chapter', ['id' => $topMangaList->get(4)->latest_id]) }}" class="image_manga_container">
-            <img src="{{ asset('storage/manga/2/image_large.jpg') }}" alt="">
+            <img src="{{ asset('storage/manga/' . $topMangaList->get(4)->id . '/image_large.jpg') }}" alt="">
             <div class="content_chapter">
                 <span>
                     {{ $topMangaList->get(4)->latest_chapter }}
