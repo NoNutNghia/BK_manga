@@ -1,6 +1,6 @@
 <div class="flex flex-row manga_information gap-[24px]">
     <div class="w-[230px]">
-        <img class="image_manga" src="{{ asset('storage/manga/1/image_logo.jpg') }}">
+        <img class="image_manga" src="{{ asset('storage/manga/' . $foundManga->id . '/image_logo.jpg') }}">
     </div>
     <div class="flex flex-col manga_information_detail gap-[8px]">
         <span class="title_manga">
@@ -40,7 +40,7 @@
             <span class="label_info">
                 Number of likes
             </span>
-            <span>
+            <span id="like_count">
                 {{ count($foundManga->manga_likes) }}
             </span>
 
@@ -50,7 +50,7 @@
             <span class="label_info">
                 Number of follows
             </span>
-            <span>
+            <span id="follow_count">
                 {{ count($foundManga->manga_follows) }}
             </span>
 

@@ -3,7 +3,7 @@
         @foreach($foundManga as $manga)
             <a href="{{ route('detail', ['id' => $manga->manga_id]) }}" class="flex flex-row search_element gap-[8px]">
                 <div class="w-[65px]">
-                    <img src="{{ asset('storage/manga/1/image_logo.jpg') }}" alt="">
+                    <img src="{{ asset('storage/manga/' . $manga->manga_id . '/image_logo.jpg') }}" alt="">
                 </div>
                 <div class="flex flex-col text-[white]">
                     <span class="text-[18px]">
