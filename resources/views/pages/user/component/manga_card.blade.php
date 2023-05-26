@@ -1,7 +1,7 @@
 <div class="manga_card_element" id="{{ $mangaCard->manga_id }}">
     <div class="flex flex-col justify-center items-center gap-[8px] relative">
         <a href="{{ route('detail', ['id' => $mangaCard->manga_id]) }}" class="flex manga_card flex-col items-center w-full gap-[12px]">
-            <img class="image_manga_card" src="{{ asset('storage/manga/2/image_logo.jpg') }}" alt="">
+            <img class="image_manga_card" src="{{ asset('storage/manga/' . $mangaCard->manga_id . '/image_logo.jpg') }}" alt="">
             <span class="title_manga_card">
                 {{ $mangaCard->title }}
             </span>
