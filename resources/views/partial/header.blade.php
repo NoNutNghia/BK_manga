@@ -58,8 +58,6 @@
                     <i class="fa fa-caret-down"></i>
                 </a>
             </li>
-
-
             <li id="ranking">
                 <a href="" class="gap-[4px]">
                     <span>

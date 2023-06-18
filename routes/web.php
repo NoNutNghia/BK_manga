@@ -25,11 +25,10 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
-Route::get('/', function () {
-    return view('pages.user.manga.main');
-})->name('main');
-
-Route::get('/main', [MangaController::class, 'mangaCardList'])->name('main');
+Route::name('main')->group(function () {
+    Route::get('/', [MangaController::class, 'mangaCardList']);
+    Route::get('/main', [MangaController::class, 'mangaCardList']);
+});
 
 Route::get('/detail', [MangaController::class, 'mangaDetail'])->name('detail');
 

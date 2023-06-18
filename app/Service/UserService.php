@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Enum\ResponseResult;
 use App\ResponseObject\ResponseObject;
 use App\Service\Repository\UserRepository;
 use Illuminate\Http\Request;
@@ -26,13 +27,6 @@ class UserService
 
         $user = $this->userRepository->getUser($login_id, $password);
 
-//        if (!$user) {
-//            return response()->json(array(
-//                'login_id' => $request->login_id,
-//                'password' => $password
-//            ));
-//        }
-
         if ($user) {
 
             Auth::login($user);
@@ -42,7 +36,7 @@ class UserService
             return response()->json($loginResponse->responseObject());
         }
 
-        $loginResponse = new ResponseObject(false, '', '');
+        $loginResponse = new ResponseObject(false, '', __('error_message.login_error'));
 
         return response()->json($loginResponse->responseObject());
     }

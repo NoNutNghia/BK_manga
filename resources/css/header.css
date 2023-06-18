@@ -118,6 +118,10 @@ ul>li>a {
     border-radius: 5px;
 }
 
+.error_input {
+    border: 1px solid red;
+}
+
 .input_password {
     position: relative;
     padding-right: 40px;
@@ -135,6 +139,7 @@ ul>li>a {
     color: #2E2E2E;
     line-height: 25px;
     font-size: 15px;
+    font-weight: 600;
 }
 
 button.swal2-close {
@@ -226,4 +231,20 @@ button.swal2-close {
 
 .search_element:hover {
     background-color: #cacece;
+}
+
+.gender_option,
+.gender_option div
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.gender_option {
+    gap: 12px;
+}
+
+.gender_option div {
+    gap: 4px;
 }
