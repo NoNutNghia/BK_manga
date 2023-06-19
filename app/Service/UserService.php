@@ -54,4 +54,50 @@ class UserService
 
         return view('pages.user.personal.information', compact('foundUser'));
     }
+
+    public function register(Request $request)
+    {
+        $nick_name = $request->nick_name;
+        $login_id = $request->login_id;
+
+        $foundUser = $this->userRepository->getUserByEmailOrNickname($login_id, $nick_name);
+
+        if ($foundUser) {
+            if ($foundUser->nick_name == $nick_name) {
+                $response = new ResponseObject(
+                    ResponseResult::FAILURE,
+                    'nick_name_error',
+                    __('error_message.nick_name_exist')
+                );
+
+                return response()->json($response->responseObject());
+            }
+
+            if ($foundUser->email == $login_id) {
+                $response = new ResponseObject(
+                    ResponseResult::FAILURE,
+                    'email_error',
+                    __('error_message.email_exist')
+                );
+
+                return response()->json($response->responseObject());
+            }
+        }
+
+        $createUser = $this->userRepository->createUser($request);
+
+        if (!$createUser) {
+            $response = new ResponseObject(
+                ResponseResult::FAILURE,
+                'register_error',
+                __('error_message.register_user')
+            );
+
+            return response()->json($response->responseObject());
+        }
+
+        $response = new ResponseObject(ResponseResult::SUCCESS, $createUser, '');
+
+        return response()->json($response->responseObject());
+    }
 }

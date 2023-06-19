@@ -120,4 +120,8 @@
         return "{{ route('search.title') }}"
     }
 
+    function getRegisterRoute() {
+        return "{{ route('register') }}"
+    }
+
 </script>
