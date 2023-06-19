@@ -129,14 +129,22 @@ function popup_register() {
     let html_input =
         `
             <div class="flex flex-col gap-[8px] login_popup">
+                <span class="error_message text-center" id="register_error">
+                </span>
                 <div class="flex flex-col w-full gap-[4px]">
-                    <label for="email_login" class="label_input">Nickname</label>
+                    <label for="full_name" class="label_input">Full name</label>
+                    <input type='text' placeholder='Full name' class="input_auth" id="full_name">
+                    <span class="error_message" id="full_name_error">
+                    </span>
+                </div>
+                <div class="flex flex-col w-full gap-[4px]">
+                    <label for="nick_name" class="label_input">Nickname</label>
                     <input type='text' placeholder='Nickname' class="input_auth" id="nick_name">
                     <span class="error_message" id="nick_name_error">
                     </span>
                 </div>
                 <div class="flex flex-col w-full gap-[4px]">
-                    <label for="email_login" class="label_input">Email</label>
+                    <label for="login_id" class="label_input">Email</label>
                     <input type='text' placeholder='Email' class="input_auth" id="login_id">
                     <span class="error_message" id="email_error">
                     </span>
@@ -215,19 +223,31 @@ function popup_register() {
         let password = $('#password_login').val().trim()
         let login_id = $('#login_id').val().trim()
         let nick_name = $('#nick_name').val().trim()
+        let full_name = $('#full_name').val().trim()
         let date_of_birth = $('#date_of_birth').val()
         let gender = $('input[name="gender"]:checked').val()
 
         data = {
             'login_id': login_id,
+            'full_name': full_name,
             'password': password,
             'nick_name': nick_name,
             'date_of_birth': date_of_birth,
-            'gender': gender
+            'gender': gender,
         }
 
         if(validationRegisterUser(data)) {
-
+            $.ajax({
+                type: 'POST',
+                url: getRegisterRoute(),
+                headers: {'X-CSRF-TOKEN': getCSRFToken()},
+                data: data,
+                success: function (res) {
+                    if (!res.result) {
+                        $(`#${res.data}`).html(res.message)
+                    }
+                }
+            })
         }
 
         let email_error_message = $('#email_error')
@@ -341,6 +361,11 @@ function validationRegisterUser(data) {
     if (!data['nick_name']) {
         $('#nick_name_error').html('You must input your nick name!')
         setErrorInput($('#nick_name'), validation)
+    }
+
+    if (!data['full_name']) {
+        $('#full_name_error').html('You must input your full name!')
+        setErrorInput($('#full_name'), validation)
     }
 
     if (!data['login_id']) {

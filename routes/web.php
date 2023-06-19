@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/login', [UserController::class, 'login'])->name('login');
+Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::name('main')->group(function () {

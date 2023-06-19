@@ -32,4 +32,8 @@ class UserController extends Controller
     {
         return $this->userService->personalInformation($request);
     }
+
+    public function register(Request $request) {
+        return $this->userService->register($request);
+    }
 }

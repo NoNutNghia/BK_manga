@@ -7,7 +7,7 @@ use BenSampo\Enum\Enum;
 
 final class ResponseResult extends Enum implements LocalizedEnum
 {
-    public const SUCCESS = 1;
+    public const SUCCESS = true;
 
-    public const FAILURE = 2;
+    public const FAILURE = false;
 }
