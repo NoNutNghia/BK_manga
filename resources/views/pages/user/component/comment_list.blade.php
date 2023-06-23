@@ -1,7 +1,7 @@
 @foreach($commentList as $comment)
     <div class="flex flex-row gap-[8px]">
         <div class="w-[52px]">
-            <img src="{{ asset('storage/icon/pepesmile.ico') }}" class="avatar_user" alt="">
+            <img src="{{ asset('storage/avatar/' . $comment->belong_to_user->id . '/avatar.jpeg') }}" class="avatar_user" alt="">
         </div>
         <div class="comment_detail">
             <div class="flex flex-row items-center name_user_comment justify-between">

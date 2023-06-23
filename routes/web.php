@@ -23,13 +23,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/login', [UserController::class, 'login'])->name('login');
+Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
-Route::get('/', function () {
-    return view('pages.user.manga.main');
-})->name('main');
-
-Route::get('/main', [MangaController::class, 'mangaCardList'])->name('main');
+Route::name('main')->group(function () {
+    Route::get('/', [MangaController::class, 'mangaCardList']);
+    Route::get('/main', [MangaController::class, 'mangaCardList']);
+});
 
 Route::get('/detail', [MangaController::class, 'mangaDetail'])->name('detail');
 
@@ -75,6 +75,7 @@ Route::middleware('authorization')->group(function () {
 
     Route::prefix('/personal')->name('personal.')->group(function () {
         Route::get('/information', [UserController::class, 'personalInformation'])->name('information');
+        Route::post('/changeInformation', [UserController::class, 'changeInformationUser'])->name('changeInformation');
 
         Route::get('/change_password', function () {
             return view('pages.user.personal.change_password');

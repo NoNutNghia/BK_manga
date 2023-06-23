@@ -13,7 +13,7 @@
         <div class="flex flex-row items-center gap-[12px]">
             @if(\Illuminate\Support\Facades\Auth::check())
                 <div class="w-[52px]">
-                    <img src="{{ asset('storage/icon/pepesmile.ico') }}" class="avatar_user" id="personal_avatar" alt="">
+                    <img src="{{ asset('storage/avatar/' . \Illuminate\Support\Facades\Auth::id() . '/avatar.jpeg') }}" class="avatar_user" id="personal_avatar" alt="">
                     <div class="modal_user hidden_modal">
                         <a href="{{ route('personal.information', ['id' => \Illuminate\Support\Facades\Auth::id()]) }}">
                         <span>
@@ -58,8 +58,6 @@
                     <i class="fa fa-caret-down"></i>
                 </a>
             </li>
-
-
             <li id="ranking">
                 <a href="" class="gap-[4px]">
                     <span>
@@ -120,6 +118,10 @@
 
     function getSearchTitleRoute() {
         return "{{ route('search.title') }}"
+    }
+
+    function getRegisterRoute() {
+        return "{{ route('register') }}"
     }
 
 </script>
