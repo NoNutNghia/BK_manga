@@ -11,4 +11,8 @@ interface UserRepository
     public function getUserByEmailOrNickname($email, $nickname);
 
     public function createUser($request);
+
+    public function getExistUserByNickName($nickname);
+
+    public function changePersonalInformation($user, $data);
 }

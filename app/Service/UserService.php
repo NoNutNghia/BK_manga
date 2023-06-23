@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Enum\ResponseResult;
+use App\Helper\ImageHandleHelper;
 use App\ResponseObject\ResponseObject;
 use App\Service\Repository\UserRepository;
 use Illuminate\Http\Request;
@@ -11,14 +12,21 @@ use Illuminate\Support\Facades\Auth;
 class UserService
 {
     private UserRepository $userRepository;
+    private ImageHandleHelper $imageHandleHelper;
 
     /**
      * @param UserRepository $userRepository
+     * @param ImageHandleHelper $imageHandleHelper
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(
+        UserRepository $userRepository,
+        ImageHandleHelper $imageHandleHelper
+    )
     {
         $this->userRepository = $userRepository;
+        $this->imageHandleHelper = $imageHandleHelper;
     }
+
 
     public function login(Request $request)
     {
@@ -99,5 +107,38 @@ class UserService
         $response = new ResponseObject(ResponseResult::SUCCESS, $createUser, '');
 
         return response()->json($response->responseObject());
+    }
+
+    public function changeInformation(Request $request)
+    {
+        try {
+            $existIDUser = $this->userRepository->getExistUserByNickName($request->nick_name);
+
+            $base64StringFile = $request->string_file;
+
+            if ($existIDUser && $existIDUser->id != Auth::id()) {
+                $response = new ResponseObject(ResponseResult::FAILURE, 'info_nick_name_error', __('error_message.nick_name_exist'));
+
+                return response()->json($response->responseObject());
+            }
+
+            $updateUser = $this->userRepository->changePersonalInformation(Auth::user(), $request);
+
+            if (!$updateUser) {
+                $response = new ResponseObject(ResponseResult::FAILURE, '', __('error_message.update_personal_information'));
+
+                return response()->json($response->responseObject());
+            }
+
+            $this->imageHandleHelper->uploadImage($base64StringFile);
+
+            $response = new ResponseObject(ResponseResult::SUCCESS, '', __('success_message.change_personal_information'));
+
+            return response()->json($response->responseObject());
+        } catch (\Exception $e) {
+            $response = new ResponseObject(ResponseResult::FAILURE, '', __('error_message.update_personal_information'));
+
+            return response()->json($response->responseObject());
+        }
     }
 }

@@ -75,6 +75,7 @@ Route::middleware('authorization')->group(function () {
 
     Route::prefix('/personal')->name('personal.')->group(function () {
         Route::get('/information', [UserController::class, 'personalInformation'])->name('information');
+        Route::post('/changeInformation', [UserController::class, 'changeInformationUser'])->name('changeInformation');
 
         Route::get('/change_password', function () {
             return view('pages.user.personal.change_password');
