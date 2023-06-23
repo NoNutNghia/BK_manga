@@ -74,4 +74,29 @@ class UserRepositoryImpl implements UserRepository
             return false;
         }
     }
+
+    public function getExistUserByNickName($nickname)
+    {
+        try {
+            return $this->user->select('id')->where('nick_name', $nickname)->first();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function changePersonalInformation($user, $data)
+    {
+        try {
+            $user->update(array(
+                'nick_name' => $data->nick_name,
+                'full_name' => $data->full_name,
+                'gender' => (int) $data->gender,
+                'date_of_birth' => $data->date_of_birth
+            ));
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }
