@@ -26,6 +26,9 @@ class User extends Authenticatable
         'email',
         'role',
         'status',
+        'password',
+        'email_verify_token',
+        'email_verify_token_expiry_at'
     ];
 
     protected $table = 'user';
@@ -36,7 +39,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password'
+        'password', 'email_verify_token', 'email_verify_token_expiry_at'
     ];
 
     public $timestamps = true;

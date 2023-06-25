@@ -41,4 +41,14 @@ class UserController extends Controller
     {
         return $this->userService->changeInformation($request);
     }
+
+    public function verifyEmail(Request $request)
+    {
+        return $this->userService->verifyEmail($request);
+    }
+
+    public function verifyResult(Request $request)
+    {
+        return $this->userService->verifyResult($request);
+    }
 }

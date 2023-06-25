@@ -49,7 +49,9 @@ button_update_information.on('click', function () {
                         timer: 1500
                     })
 
-                    avatar_user.attr('src', string_file)
+                    if (string_file) {
+                        avatar_user.attr('src', string_file)
+                    }
                 } else {
                     if (res.data) {
                         $(`#${res.data}`).html(res.message)

@@ -22,4 +22,9 @@ class ImageHandleHelper
 
         return Storage::put('public/avatar/' . Auth::id() . '/' . $avatarName, base64_decode($img));
     }
+
+    public function genNewAvatarUser($userId)
+    {
+        return Storage::copy('public/avatar/register.jpeg', 'public/avatar/' . $userId . '/avatar.jpeg');
+    }
 }
