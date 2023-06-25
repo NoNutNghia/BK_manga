@@ -23,6 +23,11 @@ class CreateUserTable extends Migration
             $table->tinyInteger('user_status');
             $table->tinyInteger('role');
             $table->date('date_of_birth');
+            $table->dateTime('email_verify_at')->nullable();
+            $table->string('email_verify_token')->unique()->nullable();
+            $table->dateTime('email_verify_token_expiry_at')->nullable();
+            $table->string('reset_password_token')->nullable();
+            $table->dateTime('reset_password_token_expiry_at')->nullable();
             $table->timestamps();
         });
     }

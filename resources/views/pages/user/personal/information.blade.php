@@ -8,3 +8,12 @@
         </div>
     </div>
 @endsection
+
+@section('script')
+    <script type="text/javascript">
+        function getRouteChangeInformation() {
+            return '{{ route('personal.changeInformation') }}'
+        }
+    </script>
+    <script src="{{ asset('assets/js/personal.js') }}"></script>
+@endsection

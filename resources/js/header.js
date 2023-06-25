@@ -129,9 +129,25 @@ function popup_register() {
     let html_input =
         `
             <div class="flex flex-col gap-[8px] login_popup">
+                <span class="error_message text-center" id="register_error">
+                </span>
                 <div class="flex flex-col w-full gap-[4px]">
-                    <label for="email_login" class="label_input">Email</label>
-                    <input type='text' placeholder='Email' class="input_auth" id="email_login">
+                    <label for="full_name" class="label_input">Full name</label>
+                    <input type='text' placeholder='Full name' class="input_auth" id="full_name">
+                    <span class="error_message" id="full_name_error">
+                    </span>
+                </div>
+                <div class="flex flex-col w-full gap-[4px]">
+                    <label for="nick_name" class="label_input">Nickname</label>
+                    <input type='text' placeholder='Nickname' class="input_auth" id="nick_name">
+                    <span class="error_message" id="nick_name_error">
+                    </span>
+                </div>
+                <div class="flex flex-col w-full gap-[4px]">
+                    <label for="login_id" class="label_input">Email</label>
+                    <input type='text' placeholder='Email' class="input_auth" id="login_id">
+                    <span class="error_message" id="email_error">
+                    </span>
                 </div>
                 <div class="flex flex-col w-full gap-[4px]">
                     <label for="password_login" class="label_input">Password</label>
@@ -140,6 +156,37 @@ function popup_register() {
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon_eye" id="show_password" onclick="show_password_action(true)" viewBox="0 0 576 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226 49.4 256c13.6 30 40.2 72.5 78.6 108.3C169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256c-13.6-30-40.2-72.5-78.6-108.3C406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1c3.3 7.9 3.3 16.7 0 24.6c-14.9 35.7-46.2 87.7-93 131.1C433.5 443.2 368.8 480 288 480s-145.5-36.8-192.6-80.6C48.6 356 17.3 304 2.5 268.3c-3.3-7.9-3.3-16.7 0-24.6C17.3 208 48.6 156 95.4 112.6zM288 336c44.2 0 80-35.8 80-80s-35.8-80-80-80c-.7 0-1.3 0-2 0c1.3 5.1 2 10.5 2 16c0 35.3-28.7 64-64 64c-5.5 0-10.9-.7-16-2c0 .7 0 1.3 0 2c0 44.2 35.8 80 80 80zm0-208a128 128 0 1 1 0 256 128 128 0 1 1 0-256z"/></svg>
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon_eye" id="hide_password" onclick="show_password_action(false)" viewBox="0 0 640 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zm151 118.3C226 97.7 269.5 80 320 80c65.2 0 118.8 29.6 159.9 67.7C518.4 183.5 545 226 558.6 256c-12.6 28-36.6 66.8-70.9 100.9l-53.8-42.2c9.1-17.6 14.2-37.5 14.2-58.7c0-70.7-57.3-128-128-128c-32.2 0-61.7 11.9-84.2 31.5l-46.1-36.1zM394.9 284.2l-81.5-63.9c4.2-8.5 6.6-18.2 6.6-28.3c0-5.5-.7-10.9-2-16c.7 0 1.3 0 2 0c44.2 0 80 35.8 80 80c0 9.9-1.8 19.4-5.1 28.2zm9.4 130.3C378.8 425.4 350.7 432 320 432c-65.2 0-118.8-29.6-159.9-67.7C121.6 328.5 95 286 81.4 256c8.3-18.4 21.5-41.5 39.4-64.8L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5l-41.9-33zM192 256c0 70.7 57.3 128 128 128c13.3 0 26.1-2 38.2-5.8L302 334c-23.5-5.4-43.1-21.2-53.7-42.3l-56.1-44.2c-.2 2.8-.3 5.6-.3 8.5z"/></svg>
                     </div>
+                    <span class="error_message" id="password_error">
+                    </span>
+                </div>
+                <div class="flex flex-col gap-[4px]" >
+                    <div class="label_input">
+                        Gender
+                    </div>
+                    <div class="gender_option">
+                        <div>
+                            <label for="male" class="label_input">Male</label>
+                            <input type="radio" name="gender" id="male" checked value="1">
+                        </div>
+
+                        <div>
+                            <label for="female" class="label_input">Female</label>
+                            <input type="radio" name="gender" id="female" value="2">
+                        </div>
+
+                        <div>
+                            <label for="other" class="label_input">Other</label>
+                            <input type="radio" name="gender" id="other" value="3">
+                        </div>
+                    </div>
+                    <span class="error_message" id="gender_error">
+                    </span>
+                </div>
+                <div class="flex flex-col w-full gap-[4px]">
+                    <label for="date_of_birth" class="label_input">Date of birth</label>
+                    <input type='date' class="input_auth" id="date_of_birth">
+                    <span class="error_message" id="date_of_birth_error">
+                    </span>
                 </div>
                 <div class="flex flex-row items-center justify-between mt-[16px]">
                     <div class="flex flex-row items-center">
@@ -149,7 +196,7 @@ function popup_register() {
                             </span>
                         </span>
                     </div>
-                    <button class="button_auth">
+                    <button class="button_auth" id="button_register">
                         <span>
                             Register
                         </span>
@@ -165,18 +212,61 @@ function popup_register() {
         showConfirmButton: false,
         showCloseButton: true,
     })
+
+    let button_register = $('#button_register')
+
+    button_register.on('click', function () {
+
+        resetInputStatus()
+        resetMessageError()
+
+        let password = $('#password_login').val().trim()
+        let login_id = $('#login_id').val().trim()
+        let nick_name = $('#nick_name').val().trim()
+        let full_name = $('#full_name').val().trim()
+        let date_of_birth = $('#date_of_birth').val()
+        let gender = $('input[name="gender"]:checked').val()
+
+        data = {
+            'login_id': login_id,
+            'full_name': full_name,
+            'password': password,
+            'nick_name': nick_name,
+            'date_of_birth': date_of_birth,
+            'gender': gender,
+        }
+
+        if(validationRegisterUser(data)) {
+            $.ajax({
+                type: 'POST',
+                url: getRegisterRoute(),
+                headers: {'X-CSRF-TOKEN': getCSRFToken()},
+                data: data,
+                success: function (res) {
+                    if (!res.result) {
+                        $(`#${res.data}`).html(res.message)
+                    }
+                }
+            })
+        }
+
+        let email_error_message = $('#email_error')
+        let password_error_message = $('#password_error')
+        let login_error_message = $('#login_error')
+    })
 }
 
 function popup_login() {
     let html_input =
         `
             <div class="flex flex-col gap-[8px] login_popup">
+                <span class="error_message text-center" id="login_error">
+                </span>
                 <div class="flex flex-col w-full gap-[4px]">
-                    <label for="email_login" class="label_input">Email</label>
-                    <input type='text' placeholder='Email' class="input_auth" id="login_id">
-<!--                    <span class="error_message" id="email_error">-->
-<!--                        Error message Error message Error message Error message Error message-->
-<!--                    </span>-->
+                    <label for="login_id" class="label_input">Email / Nickname</label>
+                    <input type='text' placeholder='Email / Nickname' class="input_auth" id="login_id">
+                    <span class="error_message" id="email_error">
+                    </span>
                 </div>
                 <div class="flex flex-col w-full gap-[4px]">
                     <label for="password_login" class="label_input">Password</label>
@@ -185,9 +275,8 @@ function popup_login() {
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon_eye" id="show_password" onclick="show_password_action(true)" viewBox="0 0 576 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226 49.4 256c13.6 30 40.2 72.5 78.6 108.3C169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256c-13.6-30-40.2-72.5-78.6-108.3C406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1c3.3 7.9 3.3 16.7 0 24.6c-14.9 35.7-46.2 87.7-93 131.1C433.5 443.2 368.8 480 288 480s-145.5-36.8-192.6-80.6C48.6 356 17.3 304 2.5 268.3c-3.3-7.9-3.3-16.7 0-24.6C17.3 208 48.6 156 95.4 112.6zM288 336c44.2 0 80-35.8 80-80s-35.8-80-80-80c-.7 0-1.3 0-2 0c1.3 5.1 2 10.5 2 16c0 35.3-28.7 64-64 64c-5.5 0-10.9-.7-16-2c0 .7 0 1.3 0 2c0 44.2 35.8 80 80 80zm0-208a128 128 0 1 1 0 256 128 128 0 1 1 0-256z"/></svg>
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon_eye" id="hide_password" onclick="show_password_action(false)" viewBox="0 0 640 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zm151 118.3C226 97.7 269.5 80 320 80c65.2 0 118.8 29.6 159.9 67.7C518.4 183.5 545 226 558.6 256c-12.6 28-36.6 66.8-70.9 100.9l-53.8-42.2c9.1-17.6 14.2-37.5 14.2-58.7c0-70.7-57.3-128-128-128c-32.2 0-61.7 11.9-84.2 31.5l-46.1-36.1zM394.9 284.2l-81.5-63.9c4.2-8.5 6.6-18.2 6.6-28.3c0-5.5-.7-10.9-2-16c.7 0 1.3 0 2 0c44.2 0 80 35.8 80 80c0 9.9-1.8 19.4-5.1 28.2zm9.4 130.3C378.8 425.4 350.7 432 320 432c-65.2 0-118.8-29.6-159.9-67.7C121.6 328.5 95 286 81.4 256c8.3-18.4 21.5-41.5 39.4-64.8L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5l-41.9-33zM192 256c0 70.7 57.3 128 128 128c13.3 0 26.1-2 38.2-5.8L302 334c-23.5-5.4-43.1-21.2-53.7-42.3l-56.1-44.2c-.2 2.8-.3 5.6-.3 8.5z"/></svg>
                     </div>
-<!--                    <span class="error_message" id="email_error">-->
-<!--                        Error message Error message Error message Error message Error message-->
-<!--                    </span>-->
+                    <span class="error_message" id="password_error">
+                    </span>
                 </div>
                 <div class="flex flex-row items-center justify-between mt-[16px]">
                     <div class="flex flex-row items-center gap-[8px]">
@@ -223,24 +312,92 @@ function popup_login() {
     let button_login = $('#button_login')
 
     button_login.on('click', function () {
-        let password = $('#password_login').val()
-        let login_id = $('#login_id').val()
 
-        $.ajax({
-            type: 'POST',
-            url: getLoginRoute(),
-            headers: {'X-CSRF-TOKEN': getCSRFToken()},
-            data: {
-                'login_id': login_id,
-                'password': password
-            },
-            success: function (response) {
-                if (response.result) {
-                    location.reload()
+        let password = $('#password_login').val().trim()
+        let login_id = $('#login_id').val().trim()
+
+        let email_error_message = $('#email_error')
+        let password_error_message = $('#password_error')
+        let login_error_message = $('#login_error')
+
+        resetInputStatus()
+        resetMessageError()
+
+        if (password && login_id) {
+            $.ajax({
+                type: 'POST',
+                url: getLoginRoute(),
+                headers: {'X-CSRF-TOKEN': getCSRFToken()},
+                data: {
+                    'login_id': login_id,
+                    'password': password
+                },
+                success: function (response) {
+                    if (response.result) {
+                        location.reload()
+                    } else {
+                        login_error_message.html(response.message)
+                    }
                 }
+            })
+        } else {
+
+            if (!login_id) {
+                email_error_message.html("You must input your email / nickname!")
+                setErrorInput($('#login_id'))
             }
-        })
+
+            if (!password) {
+                password_error_message.html("You must input your password!")
+                setErrorInput($('#password_login'))
+            }
+        }
     })
+}
+
+function validationRegisterUser(data) {
+    let validation = true
+
+    if (!data['nick_name']) {
+        $('#nick_name_error').html('You must input your nick name!')
+        setErrorInput($('#nick_name'), validation)
+    }
+
+    if (!data['full_name']) {
+        $('#full_name_error').html('You must input your full name!')
+        setErrorInput($('#full_name'), validation)
+    }
+
+    if (!data['login_id']) {
+        $('#email_error').html('You must input your email!')
+        setErrorInput($('#login_id'), validation)
+    }
+
+    if (!data['password']) {
+        $('#password_error').html('You must input your password!')
+        setErrorInput($('#password_login'), validation)
+    }
+
+    if (!data['date_of_birth']) {
+        $('#date_of_birth_error').html('You must choose your date of birth!')
+        setErrorInput($('#date_of_birth'), validation)
+    }
+
+    if (!data['gender']) {
+        $('#gender_error').html('You must choose your gender!')
+        validation = false
+    }
+
+    return validation
+}
+
+function setErrorInput(input, validation) {
+    input.addClass('error_input')
+    validation = false
+}
+
+function resetInputStatus() {
+    $('input').removeClass('error_input')
 }
 
 avatar_user.on('click', function () {
@@ -250,6 +407,10 @@ avatar_user.on('click', function () {
         modal_user.addClass('hidden_modal')
     }
 })
+
+function resetMessageError() {
+    $('.error_message').html('')
+}
 
 function getGenre() {
     $.ajax({

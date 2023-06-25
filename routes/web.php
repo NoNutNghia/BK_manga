@@ -23,11 +23,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/login', [UserController::class, 'login'])->name('login');
+Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+Route::get('/verify/email', [UserController::class, 'verifyEmail'])->name('verify_email');
+Route::get('/verify/resend/mail', [UserController::class, 'reVerifyEmail'])->name('re_verify_email');
+Route::get('/verify/result', [UserController::class, 'verifyResult'])->name('verify_result');
+Route::get('/verify/error', function () {
+    return view('pages.user.error.token_expiry');
+})->name('verify_error');
 
-Route::get('/', [MangaController::class, 'mangaCardList']);
-
-Route::get('/main', [MangaController::class, 'mangaCardList'])->name('main');
+Route::name('main')->group(function () {
+    Route::get('/', [MangaController::class, 'mangaCardList']);
+    Route::get('/main', [MangaController::class, 'mangaCardList']);
+});
 
 Route::get('/detail', [MangaController::class, 'mangaDetail'])->name('detail');
 
@@ -73,6 +81,7 @@ Route::middleware('authorization')->group(function () {
 
     Route::prefix('/personal')->name('personal.')->group(function () {
         Route::get('/information', [UserController::class, 'personalInformation'])->name('information');
+        Route::post('/changeInformation', [UserController::class, 'changeInformationUser'])->name('changeInformation');
 
         Route::get('/change_password', function () {
             return view('pages.user.personal.change_password');
