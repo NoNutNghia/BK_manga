@@ -4,8 +4,10 @@ namespace App\Service;
 
 use App\Enum\ResponseResult;
 use App\Helper\ImageHandleHelper;
+use App\Helper\MailHandleHelper;
 use App\ResponseObject\ResponseObject;
 use App\Service\Repository\UserRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,20 +15,23 @@ class UserService
 {
     private UserRepository $userRepository;
     private ImageHandleHelper $imageHandleHelper;
+    private MailHandleHelper $mailHandleHelper;
 
     /**
      * @param UserRepository $userRepository
      * @param ImageHandleHelper $imageHandleHelper
+     * @param MailHandleHelper $mailHandleHelper
      */
     public function __construct(
         UserRepository $userRepository,
-        ImageHandleHelper $imageHandleHelper
+        ImageHandleHelper $imageHandleHelper,
+        MailHandleHelper $mailHandleHelper
     )
     {
         $this->userRepository = $userRepository;
         $this->imageHandleHelper = $imageHandleHelper;
+        $this->mailHandleHelper = $mailHandleHelper;
     }
-
 
     public function login(Request $request)
     {
@@ -65,36 +70,54 @@ class UserService
 
     public function register(Request $request)
     {
-        $nick_name = $request->nick_name;
-        $login_id = $request->login_id;
+        try {
+            $nick_name = $request->nick_name;
+            $login_id = $request->login_id;
 
-        $foundUser = $this->userRepository->getUserByEmailOrNickname($login_id, $nick_name);
+            $foundUser = $this->userRepository->getUserByEmailOrNickname($login_id, $nick_name);
 
-        if ($foundUser) {
-            if ($foundUser->nick_name == $nick_name) {
+            if ($foundUser) {
+                if ($foundUser->nick_name == $nick_name) {
+                    $response = new ResponseObject(
+                        ResponseResult::FAILURE,
+                        'nick_name_error',
+                        __('error_message.nick_name_exist')
+                    );
+
+                    return response()->json($response->responseObject());
+                }
+
+                if ($foundUser->email == $login_id) {
+                    $response = new ResponseObject(
+                        ResponseResult::FAILURE,
+                        'email_error',
+                        __('error_message.email_exist')
+                    );
+
+                    return response()->json($response->responseObject());
+                }
+            }
+
+            $createUser = $this->userRepository->createUser($request);
+
+            if (!$createUser) {
                 $response = new ResponseObject(
                     ResponseResult::FAILURE,
-                    'nick_name_error',
-                    __('error_message.nick_name_exist')
+                    'register_error',
+                    __('error_message.register_user')
                 );
 
                 return response()->json($response->responseObject());
             }
 
-            if ($foundUser->email == $login_id) {
-                $response = new ResponseObject(
-                    ResponseResult::FAILURE,
-                    'email_error',
-                    __('error_message.email_exist')
-                );
+            $this->mailHandleHelper->sendRegisterMail($createUser);
 
-                return response()->json($response->responseObject());
-            }
-        }
+            $this->imageHandleHelper->genNewAvatarUser($createUser->id);
 
-        $createUser = $this->userRepository->createUser($request);
+            $response = new ResponseObject(ResponseResult::SUCCESS, $createUser, '');
 
-        if (!$createUser) {
+            return response()->json($response->responseObject());
+        } catch (\Exception $e) {
             $response = new ResponseObject(
                 ResponseResult::FAILURE,
                 'register_error',
@@ -104,9 +127,6 @@ class UserService
             return response()->json($response->responseObject());
         }
 
-        $response = new ResponseObject(ResponseResult::SUCCESS, $createUser, '');
-
-        return response()->json($response->responseObject());
     }
 
     public function changeInformation(Request $request)
@@ -130,7 +150,9 @@ class UserService
                 return response()->json($response->responseObject());
             }
 
-            $this->imageHandleHelper->uploadImage($base64StringFile);
+            if ($base64StringFile) {
+                $this->imageHandleHelper->uploadImage($base64StringFile);
+            }
 
             $response = new ResponseObject(ResponseResult::SUCCESS, '', __('success_message.change_personal_information'));
 
@@ -140,5 +162,40 @@ class UserService
 
             return response()->json($response->responseObject());
         }
+    }
+
+    public function verifyEmail(Request $request)
+    {
+
+        $emailVerifyToken = $request->email_verify_token;
+
+        if (!$emailVerifyToken) {
+            return redirect()->route('error');
+        }
+
+        $foundUser = $this->userRepository->getUserByEmailVerifyToken($emailVerifyToken);
+
+        if (!$foundUser) {
+            return redirect()->route('error');
+        }
+
+        $checkTime = Carbon::parse($foundUser->email_verify_token_expiry_at)->greaterThanOrEqualTo(Carbon::now());
+
+        if ($checkTime) {
+            $checkActive = $this->userRepository->activeUser($foundUser->id);
+
+            if (!$checkActive) {
+                return redirect()->route('verify_error');
+            }
+
+            return redirect()->route('verify_result');
+        }
+
+        return redirect()->route('verify_error');
+    }
+
+    public function verifyResult(Request $request)
+    {
+        return view('partial.verify_email');
     }
 }

@@ -25,6 +25,12 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+Route::get('/verify/email', [UserController::class, 'verifyEmail'])->name('verify_email');
+Route::get('/verify/resend/mail', [UserController::class, 'reVerifyEmail'])->name('re_verify_email');
+Route::get('/verify/result', [UserController::class, 'verifyResult'])->name('verify_result');
+Route::get('/verify/error', function () {
+    return view('pages.user.error.token_expiry');
+})->name('verify_error');
 
 Route::name('main')->group(function () {
     Route::get('/', [MangaController::class, 'mangaCardList']);
