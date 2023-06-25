@@ -2,20 +2,27 @@
 
 namespace App\Service\Repository\Impl;
 
+use App\Enum\UserRole;
+use App\Enum\UserStatus;
+use App\Helper\TokenGenerateHelper;
 use App\Models\User;
 use App\Service\Repository\UserRepository;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class UserRepositoryImpl implements UserRepository
 {
 
     private User $user;
 
+    private TokenGenerateHelper $tokenGenerateHelper;
+
     /**
      */
     public function __construct()
     {
         $this->user = new User();
+        $this->tokenGenerateHelper = new TokenGenerateHelper();
     }
 
     public function getUser($login_id, $password)
@@ -56,20 +63,27 @@ class UserRepositoryImpl implements UserRepository
 
     public function createUser($request) {
         try {
-            return $this->user->insert(array(
-                array(
-                    'full_name' => $request->full_name,
-                    'nick_name' => $request->nick_name,
-                    'password' => sha1($request->password),
-                    'email' => $request->login_id,
-                    'date_of_birth' => $request->date_of_birth,
-                    'gender' => $request->gender,
-                    'user_status' => 1,
-                    'role' => 1,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                )
-            ));
+            $user = new User();
+
+            $user->full_name = $request->full_name;
+            $user->nick_name = $request->nick_name;
+            $user->password = sha1($request->password);
+            $user->email = $request->login_id;
+            $user->date_of_birth = $request->date_of_birth;
+            $user->gender = $request->gender;
+            $user->user_status = UserStatus::NOT_ACTIVE;
+            $user->role = UserRole::USER;
+            $user->email_verify_token = $this->tokenGenerateHelper->generateTokenString();
+            $user->email_verify_token_expiry_at = Carbon::now()->addDays();
+
+            $check = $user->save();
+
+            if (!$check) {
+                return $check;
+            }
+
+            return $user;
+
         } catch (\Exception $e) {
             return false;
         }
@@ -95,6 +109,31 @@ class UserRepositoryImpl implements UserRepository
             ));
 
             return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function activeUser($userId)
+    {
+        try {
+            return $this->user->where('id', $userId)->update(
+                array(
+                    'email_verify_token' => null,
+                    'email_verify_token_expiry_at' => null,
+                    'email_verify_at' => Carbon::now(),
+                    'user_status' => UserStatus::ACTIVE
+                )
+            );
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function getUserByEmailVerifyToken($token)
+    {
+        try {
+            return $this->user->where('email_verify_token', $token)->first();
         } catch (\Exception $e) {
             return false;
         }

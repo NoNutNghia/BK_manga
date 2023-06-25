@@ -20,7 +20,10 @@ class UserStatusSeeder extends Seeder
             ),
             array(
                 'status_name' => 'disable'
-            )
+            ),
+            array(
+                'status_name' => 'not_active'
+            ),
         ));
     }
 }

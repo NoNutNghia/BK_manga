@@ -15,4 +15,8 @@ interface UserRepository
     public function getExistUserByNickName($nickname);
 
     public function changePersonalInformation($user, $data);
+
+    public function activeUser($userId);
+
+    public function getUserByEmailVerifyToken($token);
 }
