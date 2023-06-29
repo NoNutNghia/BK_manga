@@ -21,44 +21,44 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## All development tools requirement
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Install Xampp oldest version
+- Add path of folder php in Xampp to environment path (if Window).
+- Install composer (recommend LTS version)
+- Install nodejs
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Clone and setup project BK manga
 
-## Laravel Sponsors
+    Command following
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    - git clone git@github.com:NoNutNghia/BK_manga.git (Using SSH, location in folder htdocs if Windows)
+    - cd to folder BK_manga
 
-### Premium Partners
+    After clone project, command following to setup BK manga
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+    - composer install --ignore-platform-reqs
+    - npm run dev
+    - cp .env.example .env
+    - php artisan key:generate
 
-## Contributing
+    Run Xampp and turn on Apache and MySql
+    
+    Create database name `bk_manga` in mysql phpmyadmin interface
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    Command follow to migrate database and seeding data
 
-## Code of Conduct
+    - php artisan migrate --seed
+    
+    To link image in storage folder to display in the website, command
+    
+    - php artisan storage:link
+    
+    Cache again all config
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    - php artisan config:clear
+    - php artisan config:cache
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    Finish setup run: php artisan serve
+  
+    
