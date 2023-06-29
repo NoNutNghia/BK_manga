@@ -10,6 +10,8 @@ interface MangaDetailRepository
 
     public function getMangaCardList();
 
+    public function getMangaList($key);
+
     public function getFilterManga($filterObject, $filterGenre);
 
     public function getTopFollowingManga();

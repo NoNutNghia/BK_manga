@@ -138,4 +138,17 @@ class UserRepositoryImpl implements UserRepository
             return false;
         }
     }
+
+    public function getUserList($key)
+    {
+        try {
+            return $this->user->where(function ($query) use ($key) {
+                $query->where('nick_name', 'LIKE', $key)
+                    ->orWhere('email', 'LIKE', $key)
+                    ->orWhere('full_name', 'LIKE', $key);
+            })->where('role', UserRole::USER)->get();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

@@ -25,6 +25,16 @@ class MangaDetail extends Model
         return $this->hasMany(GenreManga::class, 'manga_id', 'manga_id');
     }
 
+    public function age_range_manga()
+    {
+        return $this->belongsTo(AgeRange::class, 'age_range', 'id');
+    }
+
+    public function main_manga()
+    {
+        return $this->hasOne(Manga::class, 'id', 'manga_id');
+    }
+
     public function author_manga()
     {
         return $this->belongsTo(Author::class, 'author_id', 'id');

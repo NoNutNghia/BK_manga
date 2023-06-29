@@ -25,7 +25,7 @@ class User extends Authenticatable
         'date_of_birth',
         'email',
         'role',
-        'status',
+        'user_status',
         'password',
         'email_verify_token',
         'email_verify_token_expiry_at'
@@ -46,7 +46,7 @@ class User extends Authenticatable
 
     public function statusUser()
     {
-        return $this->belongsTo(UserStatus::class, 'status', 'id');
+        return $this->belongsTo(UserStatus::class, 'user_status', 'id');
     }
 
     public function roleUser()
