@@ -19,4 +19,6 @@ interface UserRepository
     public function activeUser($userId);
 
     public function getUserByEmailVerifyToken($token);
+
+    public function getUserList($key);
 }

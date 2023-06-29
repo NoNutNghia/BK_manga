@@ -157,4 +157,16 @@ class MangaDetailRepositoryImpl implements MangaDetailRepository
             return false;
         }
     }
+
+    public function getMangaList($key)
+    {
+        try {
+            return $this->mangaDetail->where(function ($query) use ($key) {
+                $query->where('title', 'LIKE', $key)
+                    ->orWhere('other_name', 'LIKE', $key);
+            })->orderBy('title')->get();
+        } catch (\Exception) {
+            return false;
+        }
+    }
 }

@@ -25,4 +25,13 @@ class ChapterRepositoryImpl implements ChapterRepository
             return false;
         }
     }
+
+    public function getListChapterByMangaId($id)
+    {
+        try {
+            return $this->chapter->where('manga_id', $id)->get();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\MangaManageController;
+use App\Http\Controllers\Admin\UserManageController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowController;
@@ -91,5 +93,16 @@ Route::middleware('authorization')->group(function () {
     Route::name('comment.')->prefix('/comment')->group(function () {
         Route::post('/manga', [CommentController::class, 'commentManga'])->name('manga_post');
         Route::post('/chapter', [CommentController::class, 'commentChapter'])->name('chapter_post');
+    });
+});
+
+Route::prefix('/admin')->name('admin.')->group(function () {
+    Route::prefix('/manga')->name('manga.')->group(function () {
+        Route::get('/manage', [MangaManageController::class, 'getMangaList'])->name('manage');
+        Route::get('/detail', [MangaManageController::class, 'getMangaDetail'])->name('detail');
+    });
+
+    Route::prefix('/user')->name('user.')->group(function () {
+        Route::get('/manage', [UserManageController::class, 'getUserList'])->name('manage');
     });
 });
