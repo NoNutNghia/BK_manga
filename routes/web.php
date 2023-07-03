@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\MangaManageController;
+use App\Http\Controllers\Admin\UserManageController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowController;
@@ -25,8 +27,13 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+Route::prefix('/forgot')->name('forgot.')->group(function () {
+    Route::post('/check/email', [UserController::class, 'checkExistEmail'])->name('check_exist_email');
+    Route::get('reset/password', [UserController::class, 'resetPassword'])->name('reset_password');
+    Route::post('reset/password', [UserController::class, 'postResetPassword'])->name('post_reset_password');
+});
 Route::get('/verify/email', [UserController::class, 'verifyEmail'])->name('verify_email');
-Route::get('/verify/resend/mail', [UserController::class, 'reVerifyEmail'])->name('re_verify_email');
+//Route::get('/verify/resend/mail', [UserController::class, 'reVerifyEmail'])->name('re_verify_email');
 Route::get('/verify/result', [UserController::class, 'verifyResult'])->name('verify_result');
 Route::get('/verify/error', function () {
     return view('pages.user.error.token_expiry');
@@ -86,10 +93,22 @@ Route::middleware('authorization')->group(function () {
         Route::get('/change_password', function () {
             return view('pages.user.personal.change_password');
         })->name('change_password');
+        Route::post('/change_password', [UserController::class, 'postChangePassword'])->name('post_change_password');
     });
 
     Route::name('comment.')->prefix('/comment')->group(function () {
         Route::post('/manga', [CommentController::class, 'commentManga'])->name('manga_post');
         Route::post('/chapter', [CommentController::class, 'commentChapter'])->name('chapter_post');
+    });
+});
+
+Route::prefix('/admin')->middleware('admin.verify')->name('admin.')->group(function () {
+    Route::prefix('/manga')->name('manga.')->group(function () {
+        Route::get('/manage', [MangaManageController::class, 'getMangaList'])->name('manage');
+        Route::get('/detail', [MangaManageController::class, 'getMangaDetail'])->name('detail');
+    });
+
+    Route::prefix('/user')->name('user.')->group(function () {
+        Route::get('/manage', [UserManageController::class, 'getUserList'])->name('manage');
     });
 });

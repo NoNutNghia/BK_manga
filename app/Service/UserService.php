@@ -3,6 +3,8 @@
 namespace App\Service;
 
 use App\Enum\ResponseResult;
+use App\Enum\UserRole;
+use App\Enum\UserStatus;
 use App\Helper\ImageHandleHelper;
 use App\Helper\MailHandleHelper;
 use App\ResponseObject\ResponseObject;
@@ -10,6 +12,7 @@ use App\Service\Repository\UserRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class UserService
 {
@@ -44,8 +47,11 @@ class UserService
 
             Auth::login($user);
 
-            $loginResponse = new ResponseObject(true, '', '');
-
+            if ($user->role == UserRole::ADMIN) {
+                $loginResponse = new ResponseObject(true, 'admin', route('admin.manga.manage'));
+            } else {
+                $loginResponse = new ResponseObject(true, '', '');
+            }
             return response()->json($loginResponse->responseObject());
         }
 
@@ -114,7 +120,7 @@ class UserService
 
             $this->imageHandleHelper->genNewAvatarUser($createUser->id);
 
-            $response = new ResponseObject(ResponseResult::SUCCESS, $createUser, '');
+            $response = new ResponseObject(ResponseResult::SUCCESS, $createUser, __('success_message.verify_email_register'));
 
             return response()->json($response->responseObject());
         } catch (\Exception $e) {
@@ -197,5 +203,111 @@ class UserService
     public function verifyResult(Request $request)
     {
         return view('partial.verify_email');
+    }
+
+    public function checkExistEmail(Request $request)
+    {
+        $email = $request->email;
+
+        $foundUser = $this->userRepository->getUserByEmail($email);
+
+        if (!$foundUser) {
+            $response = new ResponseObject(ResponseResult::FAILURE, 'error_email', __('error_message.not_exist_user'));
+
+            return response()->json($response->responseObject());
+        }
+
+        if ($foundUser->user_status == UserStatus::NOT_ACTIVE) {
+            $response = new ResponseObject(ResponseResult::FAILURE, 'error_email', __('error_message.cannot_forgot_password'));
+
+            return response()->json($response->responseObject());
+        }
+
+        $check = $this->userRepository->updateUserPasswordResetToken($foundUser->id);
+
+        if (!$check)
+        {
+            $response = new ResponseObject(ResponseResult::FAILURE, 'error_reset', __('error_message.cannot_reset_password'));
+
+            return response()->json($response->responseObject());
+        }
+
+        $this->mailHandleHelper->sendForgotMail($foundUser);
+
+        $response = new ResponseObject(ResponseResult::SUCCESS, '', __('success_message.verify_reset_password'));
+
+        return response()->json($response->responseObject());
+    }
+
+    function resetPassword(Request $request)
+    {
+        $resetPasswordToken = $request->reset_password_token;
+
+        if (!$resetPasswordToken) {
+            return redirect()->route('error');
+        }
+
+        $foundUser = $this->userRepository->getUserByResetPasswordToken($resetPasswordToken);
+
+        if (!$foundUser) {
+            return redirect()->route('error');
+        }
+
+        if (Carbon::parse($foundUser->reset_password_token_expiry_at)->greaterThanOrEqualTo(Carbon::now())) {
+            return view('pages.user.personal.reset_password', ['id' => $foundUser->id]);
+        }
+
+        return redirect()->route('error');
+    }
+
+    function postResetPassword(Request $request)
+    {
+        $newPassword = $request->new_password;
+        $userID = $request->user_id;
+
+        $updatePassword = $this->userRepository->updatePassword($newPassword, $userID);
+
+        if (!$updatePassword) {
+            $response = new ResponseObject(ResponseResult::FAILURE, '', __('error_message.cannot_reset_password'));
+            return response()->json($response->responseObject());
+        }
+
+        $message = '<div><span>Change password successfully!</span></div>
+                <div class="flex flex-row items-center justify-center gap-[1%]">
+                    <span>
+                        Now login and enjoy your moment with BK Manga
+                    </span>
+                <img width="8%" src="'. asset('storage/icon/pepesmile.ico') . '" alt=""> </div>';
+
+        $response = new ResponseObject(ResponseResult::SUCCESS, 'content_main', $message);
+
+        return response()->json($response->responseObject());
+    }
+
+    function postChangePassword(Request $request)
+    {
+        $currentPassword = $request->current_password;
+
+        $foundUser = $this->userRepository->getUserByIdAndPassword(Auth::id(), $currentPassword);
+
+        if (!$foundUser) {
+            $response = new ResponseObject(ResponseResult::FAILURE, 'error_current_password', __('error_message.not_found_user_change_password'));
+
+            return response()->json($response->responseObject());
+        }
+
+        $newPassword = $request->new_password;
+
+        $update = $this->userRepository->changePassword($newPassword, Auth::id());
+
+        if (!$update) {
+            $response = new ResponseObject(ResponseResult::FAILURE, 'error_change_password', __('error_message.cannot_reset_password'));
+
+            return response()->json($response->responseObject());
+        }
+
+        $response = new ResponseObject(ResponseResult::SUCCESS, '', __('success_message.change_password'));
+
+        return response()->json($response->responseObject());
     }
 }

@@ -92,13 +92,15 @@ function get_hide_password_eye() {
 function popup_forgot_password() {
     let html_input =
         `
-            <div class="flex flex-col gap-[16px] login_popup">
+            <div class="flex flex-col gap-[8px] login_popup">
+                <span class="error_message" id="error_reset"></span>
                 <div class="flex flex-col w-full gap-[4px]">
                     <label for="email_login" class="label_input">Email</label>
                     <input type='text' placeholder='Email' class="input_auth" id="email_login">
                 </div>
-                 <div class="flex flex-col w-full">
-                    <button class="button_auth button_forgot_password w-full">
+                <span class="error_message" id="error_email"></span>
+                <div class="flex flex-col w-full mt-[8px]">
+                    <button class="button_auth button_forgot_password w-full" id="button_send_request_reset_password">
                         <span>
                             Send Request Reset Password
                         </span>
@@ -122,6 +124,50 @@ function popup_forgot_password() {
         background: "#fff",
         showConfirmButton: false,
         showCloseButton: true,
+    })
+
+    $('#button_send_request_reset_password').on('click', function () {
+
+        $(this).attr('disabled', true)
+
+        resetMessageError()
+        resetMessageError()
+
+        email = $('#email_login').val().trim();
+
+        data = {
+            'email': email
+        }
+
+        if (validationForgotPassword(data)) {
+            $.ajax({
+                url: getCheckExistEmailRoute(),
+                type: 'POST',
+                headers: {'X-CSRF-TOKEN': getCSRFToken()},
+                data: data,
+                success: function (response) {
+                    if (!response.result) {
+                        $('#button_send_request_reset_password').removeAttr('disabled')
+                        $(`#${response.data}`).html(response.message)
+                    } else {
+                        html_input = `
+                        <div class="flex flex-col justify-center items-center gap-[16px] login_popup">
+                            <span class="font-bold text-[30px]">
+                                ${response.message}
+                            </span>
+                            <i class="fa-solid fa-envelope fa-beat-fade text-[60px] text-[blue] h-[70px]"></i>
+                        </div>
+                    `
+                        Swal.fire({
+                            color: "#000",
+                            html: html_input,
+                            background: "#fff",
+                            showConfirmButton: true,
+                        })
+                    }
+                }
+            })
+        }
     })
 }
 
@@ -217,6 +263,8 @@ function popup_register() {
 
     button_register.on('click', function () {
 
+        $(this).attr('disabled', true)
+
         resetInputStatus()
         resetMessageError()
 
@@ -244,15 +292,27 @@ function popup_register() {
                 data: data,
                 success: function (res) {
                     if (!res.result) {
+                        button_register.removeAttr('disabled')
                         $(`#${res.data}`).html(res.message)
+                    } else {
+                        html_input = `
+                            <div class="flex flex-col justify-center items-center gap-[16px] login_popup">
+                                <span class="font-bold text-[30px]">
+                                    ${res.message}
+                                </span>
+                                <i class="fa-solid fa-envelope fa-beat-fade text-[60px] text-[blue] h-[70px]"></i>
+                            </div>
+                        `
+                        Swal.fire({
+                            color: "#000",
+                            html: html_input,
+                            background: "#fff",
+                            showConfirmButton: true,
+                        })
                     }
                 }
             })
         }
-
-        let email_error_message = $('#email_error')
-        let password_error_message = $('#password_error')
-        let login_error_message = $('#login_error')
     })
 }
 
@@ -313,6 +373,8 @@ function popup_login() {
 
     button_login.on('click', function () {
 
+        $(this).attr('disabled', true)
+
         let password = $('#password_login').val().trim()
         let login_id = $('#login_id').val().trim()
 
@@ -334,8 +396,13 @@ function popup_login() {
                 },
                 success: function (response) {
                     if (response.result) {
-                        location.reload()
+                        if(response.data === 'admin') {
+                            location.href = response.message
+                        } else {
+                            location.reload()
+                        }
                     } else {
+                        button_login.removeAttr('disabled')
                         login_error_message.html(response.message)
                     }
                 }
@@ -351,6 +418,9 @@ function popup_login() {
                 password_error_message.html("You must input your password!")
                 setErrorInput($('#password_login'))
             }
+
+            button_login.removeAttr('disabled')
+
         }
     })
 }
@@ -361,26 +431,31 @@ function validationRegisterUser(data) {
     if (!data['nick_name']) {
         $('#nick_name_error').html('You must input your nick name!')
         setErrorInput($('#nick_name'), validation)
+        validation = false
     }
 
     if (!data['full_name']) {
         $('#full_name_error').html('You must input your full name!')
         setErrorInput($('#full_name'), validation)
+        validation = false
     }
 
     if (!data['login_id']) {
         $('#email_error').html('You must input your email!')
         setErrorInput($('#login_id'), validation)
+        validation = false
     }
 
     if (!data['password']) {
         $('#password_error').html('You must input your password!')
         setErrorInput($('#password_login'), validation)
+        validation = false
     }
 
     if (!data['date_of_birth']) {
         $('#date_of_birth_error').html('You must choose your date of birth!')
         setErrorInput($('#date_of_birth'), validation)
+        validation = false
     }
 
     if (!data['gender']) {
@@ -388,12 +463,31 @@ function validationRegisterUser(data) {
         validation = false
     }
 
+    if (!validation) {
+        $('#button_register').removeAttr('disabled')
+    }
+
+    return validation
+}
+
+function validationForgotPassword(data) {
+    let validation = true
+
+    if (!data['email']) {
+        $('#error_email').html('You must input your email!')
+        validation = false
+    }
+
+    if (!validation) {
+        $('#button_send_request_reset_password').removeAttr('disabled');
+    }
+
     return validation
 }
 
 function setErrorInput(input, validation) {
     input.addClass('error_input')
-    validation = false
+    return false
 }
 
 function resetInputStatus() {

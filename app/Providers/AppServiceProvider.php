@@ -5,10 +5,12 @@ namespace App\Providers;
 use App\Service\Repository\ChapterRepository;
 use App\Service\Repository\CommentRepository;
 use App\Service\Repository\FollowRepository;
+use App\Service\Repository\GenreMangaRepository;
 use App\Service\Repository\GenreRepository;
 use App\Service\Repository\Impl\ChapterRepositoryImpl;
 use App\Service\Repository\Impl\CommentRepositoryImpl;
 use App\Service\Repository\Impl\FollowRepositoryImpl;
+use App\Service\Repository\Impl\GenreMangaRepositoryImpl;
 use App\Service\Repository\Impl\GenreRepositoryImpl;
 use App\Service\Repository\Impl\LikeRepositoryImpl;
 use App\Service\Repository\Impl\MangaDetailRepositoryImpl;
@@ -60,6 +62,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton(CommentRepository::class, function () {
             return new CommentRepositoryImpl();
+        });
+        $this->app->singleton(GenreMangaRepository::class, function () {
+            return new GenreMangaRepositoryImpl();
         });
     }
 
