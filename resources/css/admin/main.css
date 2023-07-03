@@ -2,12 +2,11 @@
     height: auto;
     margin-top: 60px;
     margin-left: 200px;
-    width: 100%;
+    width: calc(100% - 200px);
 }
 
 .content_admin > div {
     padding: 1.5rem;
-    width: 100%;
     height: 100%;
 }
 

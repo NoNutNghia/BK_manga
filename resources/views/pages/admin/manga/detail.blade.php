@@ -1,7 +1,7 @@
 @extends('layout.admin.master')
 
 @section('content')
-    <div class="flex flex-col manga_detail gap-[1.5rem]">
+    <div class="flex flex-col gap-[1.5rem]">
         <div class="flex flex-row w-full justify-between">
             <div class="flex flex-col w-[60%]">
                 <div class="flex label_content_manga flex-row items-center">
@@ -48,7 +48,7 @@
                     <span class="w-1/5 font-bold">
                         Description
                     </span>
-                    <span class="content_manga">
+                    <span class="content_manga break-words">
                         {{ $foundManga->description }}
                     </span>
                 </div>
@@ -59,7 +59,7 @@
                         Cover manga
                     </span>
                     <div class="flex flex-col justify-center">
-                        <img class="image_logo" width="50%" src="{{ asset('storage/manga/' . $foundManga->manga_id . '/image_logo.jpg') }}" alt="">
+                        <img class="image_logo" width="50%" src="{{ asset('storage/manga/' . $foundManga->id . '/image_logo.jpg') }}" alt="">
                     </div>
                 </div>
 
@@ -68,7 +68,7 @@
                         Image manga will show if manga in top ranking
                     </span>
                 </div>
-                <img class="image_large" src="{{ asset('storage/manga/' . $foundManga->manga_id . '/image_large.jpg') }}" alt="">
+                <img class="image_large" src="{{ asset('storage/manga/' . $foundManga->id . '/image_large.jpg') }}" alt="">
             </div>
 
         </div>
@@ -100,13 +100,16 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="w-1/3">
+                        <th class="w-1/4">
                             Chapter title
                         </th>
-                        <th class="w-1/3">
-                            Update by
+                        <th class="w-1/4">
+                            Updated by
                         </th>
-                        <th class="w-1/3">
+                        <th class="w-1/4">
+                            Uploaded by
+                        </th>
+                        <th class="w-1/4">
                             Upload at
                         </th>
                     </tr>
@@ -115,7 +118,8 @@
                     @foreach($chapterList as $chapter)
                         <tr>
                             <td>{{ $chapter->title }}</td>
-                            <td>{{ $chapter->updated_by }}</td>
+                            <td>{{ $chapter->person_update->nick_name }}</td>
+                            <td>{{ $chapter->person_upload->nick_name }}</td>
                             <td>{{ $chapter->uploaded_at }}</td>
                         </tr>
                     @endforeach

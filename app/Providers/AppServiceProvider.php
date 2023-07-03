@@ -2,11 +2,15 @@
 
 namespace App\Providers;
 
+use App\Service\Repository\AgeRangeRepository;
+use App\Service\Repository\AuthorRepository;
 use App\Service\Repository\ChapterRepository;
 use App\Service\Repository\CommentRepository;
 use App\Service\Repository\FollowRepository;
 use App\Service\Repository\GenreMangaRepository;
 use App\Service\Repository\GenreRepository;
+use App\Service\Repository\Impl\AgeRangeRepositoryImpl;
+use App\Service\Repository\Impl\AuthorRepositoryImpl;
 use App\Service\Repository\Impl\ChapterRepositoryImpl;
 use App\Service\Repository\Impl\CommentRepositoryImpl;
 use App\Service\Repository\Impl\FollowRepositoryImpl;
@@ -14,11 +18,13 @@ use App\Service\Repository\Impl\GenreMangaRepositoryImpl;
 use App\Service\Repository\Impl\GenreRepositoryImpl;
 use App\Service\Repository\Impl\LikeRepositoryImpl;
 use App\Service\Repository\Impl\MangaDetailRepositoryImpl;
+use App\Service\Repository\Impl\MangaRepositoryImpl;
 use App\Service\Repository\Impl\MangaStatusRepositoryImpl;
 use App\Service\Repository\Impl\UserRepositoryImpl;
 use App\Service\Repository\Impl\ViewRepositoryImpl;
 use App\Service\Repository\LikeRepository;
 use App\Service\Repository\MangaDetailRepository;
+use App\Service\Repository\MangaRepository;
 use App\Service\Repository\MangaStatusRepository;
 use App\Service\Repository\UserRepository;
 use App\Service\Repository\ViewRepository;
@@ -65,6 +71,15 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton(GenreMangaRepository::class, function () {
             return new GenreMangaRepositoryImpl();
+        });
+        $this->app->singleton(AgeRangeRepository::class, function () {
+            return new AgeRangeRepositoryImpl();
+        });
+        $this->app->singleton(AuthorRepository::class, function () {
+            return new AuthorRepositoryImpl();
+        });
+        $this->app->singleton(MangaRepository::class, function () {
+            return new MangaRepositoryImpl();
         });
     }
 
