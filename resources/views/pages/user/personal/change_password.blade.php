@@ -8,3 +8,15 @@
         </div>
     </div>
 @endsection
+
+@if(\Illuminate\Support\Facades\Auth::user()->role == \App\Enum\UserRole::USER)
+    @section('script')
+        <script type="text/javascript">
+            function getRouteChangePassword() {
+                return "{{ route('personal.post_change_password') }}"
+            }
+        </script>
+        <script src="{{ asset('assets/js/change_password.js') }}"></script>
+    @endsection
+@endif
+

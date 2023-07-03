@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Enum\ResponseResult;
+use App\Enum\UserRole;
 use App\Enum\UserStatus;
 use App\Helper\ImageHandleHelper;
 use App\Helper\MailHandleHelper;
@@ -46,8 +47,11 @@ class UserService
 
             Auth::login($user);
 
-            $loginResponse = new ResponseObject(true, '', '');
-
+            if ($user->role == UserRole::ADMIN) {
+                $loginResponse = new ResponseObject(true, 'admin', route('admin.manga.manage'));
+            } else {
+                $loginResponse = new ResponseObject(true, '', '');
+            }
             return response()->json($loginResponse->responseObject());
         }
 
@@ -276,6 +280,33 @@ class UserService
                 <img width="8%" src="'. asset('storage/icon/pepesmile.ico') . '" alt=""> </div>';
 
         $response = new ResponseObject(ResponseResult::SUCCESS, 'content_main', $message);
+
+        return response()->json($response->responseObject());
+    }
+
+    function postChangePassword(Request $request)
+    {
+        $currentPassword = $request->current_password;
+
+        $foundUser = $this->userRepository->getUserByIdAndPassword(Auth::id(), $currentPassword);
+
+        if (!$foundUser) {
+            $response = new ResponseObject(ResponseResult::FAILURE, 'error_current_password', __('error_message.not_found_user_change_password'));
+
+            return response()->json($response->responseObject());
+        }
+
+        $newPassword = $request->new_password;
+
+        $update = $this->userRepository->changePassword($newPassword, Auth::id());
+
+        if (!$update) {
+            $response = new ResponseObject(ResponseResult::FAILURE, 'error_change_password', __('error_message.cannot_reset_password'));
+
+            return response()->json($response->responseObject());
+        }
+
+        $response = new ResponseObject(ResponseResult::SUCCESS, '', __('success_message.change_password'));
 
         return response()->json($response->responseObject());
     }

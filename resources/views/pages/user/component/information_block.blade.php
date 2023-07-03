@@ -1,3 +1,7 @@
+@php
+    $checkAdmin = \Illuminate\Support\Facades\Auth::user()->role
+@endphp
+
 <div class="flex flex-col w-[63%] gap-[12px]">
     <div class="flex flex-col gap-[12px]">
         <div class="flex flex-row items-center justify-center">
@@ -5,10 +9,12 @@
                 <img src="{{ asset('storage/avatar/' . $foundUser->id . '/avatar.jpeg') }}" class="avatar_user" id="avatar_user" alt="">
             </div>
         </div>
-        <div class="flex flex-row items-center justify-center">
-            <input type="file" accept="image/jpeg" id="upload-file" hidden />
-            <label class="button_action button_follow" for="upload-file">Upload</label>
-        </div>
+        @if($checkAdmin == \App\Enum\UserRole::USER)
+            <div class="flex flex-row items-center justify-center">
+                <input type="file" accept="image/jpeg" id="upload-file" hidden />
+                <label class="button_action button_follow" for="upload-file">Upload</label>
+            </div>
+        @endif
     </div>
 
     <div class="flex flex-col gap-[8px]">
@@ -30,7 +36,7 @@
             <span>
                 Full name
             </span>
-            <input type="text" class="input_auth" value="{{ $foundUser->full_name }}" id="info_full_name">
+            <input type="text" class="input_auth" value="{{ $foundUser->full_name }}" {{ $checkAdmin == \App\Enum\UserRole::USER ? '' : 'disabled' }} id="info_full_name">
         </div>
         <span class="error_message" id="info_full_name_error">
         </span>
@@ -38,7 +44,7 @@
             <span>
                 Nickname
             </span>
-            <input type="text" class="input_auth" value="{{ $foundUser->nick_name }}" id="info_nick_name">
+            <input type="text" class="input_auth" value="{{ $foundUser->nick_name }}" {{ $checkAdmin == \App\Enum\UserRole::USER ? '' : 'disabled' }} id="info_nick_name">
         </div>
         <span class="error_message" id="info_nick_name_error">
         </span>
@@ -46,7 +52,7 @@
             <span>
                 Date of Birth
             </span>
-            <input type="date" class="input_auth" value="{{ $foundUser->date_of_birth }}" id="info_date_of_birth">
+            <input type="date" class="input_auth" value="{{ $foundUser->date_of_birth }}" {{ $checkAdmin == \App\Enum\UserRole::USER ? '' : 'disabled' }} id="info_date_of_birth">
         </div>
         <span class="error_message" id="info_date_of_birth_error">
         </span>
@@ -65,12 +71,15 @@
         </div>
         <span class="error_message" id="info_gender_error">
         </span>
-        <div class="flex flex-row items-center justify-center">
-            <button class="button_action button_send_comment" id="update_information">
-                <span>
-                    Save
-                </span>
-            </button>
-        </div>
+        @if($checkAdmin == \App\Enum\UserRole::USER)
+            <div class="flex flex-row items-center justify-center">
+                <button class="button_action button_send_comment" id="update_information">
+                    <span>
+                        Save
+                    </span>
+                </button>
+            </div>
+        @endif
+
     </div>
 </div>

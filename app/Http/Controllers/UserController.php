@@ -67,4 +67,9 @@ class UserController extends Controller
         return $this->userService->postResetPassword($request);
     }
 
+    function postChangePassword(Request $request)
+    {
+        return $this->userService->postChangePassword($request);
+    }
+
 }
