@@ -124,4 +124,8 @@
         return "{{ route('register') }}"
     }
 
+    function getCheckExistEmailRoute() {
+        return "{{ route('forgot.check_exist_email') }}"
+    }
+
 </script>

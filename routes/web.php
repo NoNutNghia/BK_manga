@@ -27,6 +27,11 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+Route::prefix('/forgot')->name('forgot.')->group(function () {
+    Route::post('/check/email', [UserController::class, 'checkExistEmail'])->name('check_exist_email');
+    Route::get('reset/password', [UserController::class, 'resetPassword'])->name('reset_password');
+    Route::post('reset/password', [UserController::class, 'postResetPassword'])->name('post_reset_password');
+});
 Route::get('/verify/email', [UserController::class, 'verifyEmail'])->name('verify_email');
 Route::get('/verify/resend/mail', [UserController::class, 'reVerifyEmail'])->name('re_verify_email');
 Route::get('/verify/result', [UserController::class, 'verifyResult'])->name('verify_result');

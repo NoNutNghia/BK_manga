@@ -21,4 +21,12 @@ interface UserRepository
     public function getUserByEmailVerifyToken($token);
 
     public function getUserList($key);
+
+    public function getUserByEmail($email);
+
+    public function updateUserPasswordResetToken($userID);
+
+    public function getUserByResetPasswordToken($resetPasswordToken);
+
+    public function updatePassword($newPassword, $userID);
 }
