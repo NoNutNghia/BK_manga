@@ -46,7 +46,7 @@ class MangaDetailRepositoryImpl implements MangaDetailRepository
     public function getMangaDetailById($id)
     {
         try {
-            return $this->mangaDetail->where('manga_id', $id)->first();
+            return $this->mangaDetail->where('id', $id)->first();
         } catch (\Exception $e) {
             return false;
         }
@@ -166,6 +166,28 @@ class MangaDetailRepositoryImpl implements MangaDetailRepository
                     ->orWhere('other_name', 'LIKE', $key);
             })->orderBy('title')->get();
         } catch (\Exception) {
+            return false;
+        }
+    }
+
+    public function createDetailManga($data, $mangaID)
+    {
+        try {
+            $newMangaDetail = new MangaDetail();
+
+            $newMangaDetail->manga_id = $mangaID;
+            $newMangaDetail->manga_status = MangaStatus::IN_PROCESS;
+            $newMangaDetail->author_id = $data->author;
+            $newMangaDetail->other_name = $data->other_name;
+            $newMangaDetail->title = $data->title;
+            $newMangaDetail->age_range = $data->age_range;
+            $newMangaDetail->description = $data->description;
+
+            $newMangaDetail->save();
+
+            return $newMangaDetail->id;
+
+        } catch (\Exception $e) {
             return false;
         }
     }

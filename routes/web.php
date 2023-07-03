@@ -104,8 +104,10 @@ Route::middleware('authorization')->group(function () {
 
 Route::prefix('/admin')->middleware('admin.verify')->name('admin.')->group(function () {
     Route::prefix('/manga')->name('manga.')->group(function () {
+        Route::get('/add', [MangaManageController::class, 'getMangaAdd'])->name('add_index');
         Route::get('/manage', [MangaManageController::class, 'getMangaList'])->name('manage');
         Route::get('/detail', [MangaManageController::class, 'getMangaDetail'])->name('detail');
+        Route::post('/create', [MangaManageController::class, 'createManga'])->name('create');
     });
 
     Route::prefix('/user')->name('user.')->group(function () {

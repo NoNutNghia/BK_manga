@@ -35,4 +35,16 @@ class ViewRepositoryImpl implements ViewRepository
             return false;
         }
     }
+
+    public function createView($mangaID)
+    {
+        try {
+            $this->view->create(array(
+                'manga_id' => $mangaID
+            ));
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

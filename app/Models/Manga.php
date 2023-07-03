@@ -10,6 +10,7 @@ class Manga extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'updated_by',
         'approved_by'
     ];

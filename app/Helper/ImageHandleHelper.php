@@ -27,4 +27,28 @@ class ImageHandleHelper
     {
         return Storage::copy('public/avatar/register.jpeg', 'public/avatar/' . $userId . '/avatar.jpeg');
     }
+
+    public function uploadNewMangaImage($arrayBase64StringFile, $mangaDetailID)
+    {
+        try {
+            $imageLogo = $arrayBase64StringFile['image_logo'];
+            $imageLarge = $arrayBase64StringFile['image_large'];
+            $imgLogo = preg_replace('/^data:image\/\w+;base64,/', '', $imageLogo);
+            $imgLarge = preg_replace('/^data:image\/\w+;base64,/', '', $imageLarge);
+
+            $imgLogo = str_replace(' ', '+', $imgLogo);
+            $imgLarge = str_replace(' ', '+', $imgLarge);
+
+            $imageLogoName = 'image_logo.jpg';
+            $imageLargeName = 'image_large.jpg';
+
+            Storage::put('public/manga/' . $mangaDetailID . '/' . $imageLogoName, base64_decode($imgLogo));
+            Storage::put('public/manga/' . $mangaDetailID . '/' . $imageLargeName, base64_decode($imgLarge));
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+
+    }
 }

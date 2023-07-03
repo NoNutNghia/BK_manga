@@ -27,4 +27,14 @@ class MangaManageController extends Controller
     {
         return $this->mangaManageService->getMangaDetail($request);
     }
+
+    public function getMangaAdd(Request $request)
+    {
+        return $this->mangaManageService->getMangaAdd($request);
+    }
+
+    public function createManga(Request $request)
+    {
+        return $this->mangaManageService->createManga($request);
+    }
 }

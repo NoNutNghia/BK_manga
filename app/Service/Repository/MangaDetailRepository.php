@@ -21,4 +21,6 @@ interface MangaDetailRepository
     public function getNewestManga();
 
     public function getCompleteManga();
+
+    public function createDetailManga($data, $mangaID);
 }

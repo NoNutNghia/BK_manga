@@ -28,4 +28,14 @@ class Chapter extends Model
         return $this->hasMany(ChapterComment::class, 'chapter_id', 'id');
     }
 
+    public function person_update()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
+    }
+
+    public function person_upload()
+    {
+        return $this->belongsTo(User::class,'uploaded_by', 'id');
+    }
+
 }
