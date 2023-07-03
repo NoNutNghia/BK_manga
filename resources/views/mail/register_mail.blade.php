@@ -1,6 +1,6 @@
 <div>
     <span>
-        Thank you for register account in BKManga!
+        Thank you for register account in BK Manga!
     </span>
 </div>
 
@@ -8,7 +8,7 @@
 
 <div>
     <span>
-        It's the last step to complete your account
+        It's the last step to complete your account!
     </span>
 </div>
 

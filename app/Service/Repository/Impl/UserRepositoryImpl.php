@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Service\Repository\UserRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use function Symfony\Component\Translation\t;
 
 class UserRepositoryImpl implements UserRepository
 {
@@ -147,6 +148,55 @@ class UserRepositoryImpl implements UserRepository
                     ->orWhere('email', 'LIKE', $key)
                     ->orWhere('full_name', 'LIKE', $key);
             })->where('role', UserRole::USER)->get();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function getUserByEmail($email)
+    {
+        try {
+            return $this->user->where('email', $email)->where('user_status', '!=', UserStatus::DISABLE)->first();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function updateUserPasswordResetToken($userID)
+    {
+        try {
+            $this->user->where('id', $userID)->update(
+                array(
+                    'reset_password_token' => $this->tokenGenerateHelper->generateTokenString(),
+                    'reset_password_token_expiry_at' => Carbon::now()->addDays()
+                )
+            );
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function getUserByResetPasswordToken($resetPasswordToken)
+    {
+        try {
+            return $this->user->where('reset_password_token', $resetPasswordToken)->first();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function updatePassword($newPassword, $userID)
+    {
+        try {
+            $this->user->where('id', $userID)->update(array(
+                'password' => sha1($newPassword),
+                'reset_password_token' => null,
+                'reset_password_token_expiry_at' => null
+            ));
+
+            return true;
         } catch (\Exception $e) {
             return false;
         }

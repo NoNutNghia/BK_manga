@@ -51,4 +51,20 @@ class UserController extends Controller
     {
         return $this->userService->verifyResult($request);
     }
+
+    public function checkExistEmail(Request $request)
+    {
+        return $this->userService->checkExistEmail($request);
+    }
+
+    function resetPassword(Request $request)
+    {
+        return $this->userService->resetPassword($request);
+    }
+
+    function postResetPassword(Request $request)
+    {
+        return $this->userService->postResetPassword($request);
+    }
+
 }
