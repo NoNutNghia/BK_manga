@@ -396,7 +396,11 @@ function popup_login() {
                 },
                 success: function (response) {
                     if (response.result) {
-                        location.reload()
+                        if(response.data === 'admin') {
+                            location.href = response.message
+                        } else {
+                            location.reload()
+                        }
                     } else {
                         button_login.removeAttr('disabled')
                         login_error_message.html(response.message)

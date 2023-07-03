@@ -29,4 +29,8 @@ interface UserRepository
     public function getUserByResetPasswordToken($resetPasswordToken);
 
     public function updatePassword($newPassword, $userID);
+
+    public function changePassword($newPassword, $userID);
+
+    public function getUserByIdAndPassword($userID, $password);
 }

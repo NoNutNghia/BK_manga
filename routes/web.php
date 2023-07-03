@@ -33,7 +33,7 @@ Route::prefix('/forgot')->name('forgot.')->group(function () {
     Route::post('reset/password', [UserController::class, 'postResetPassword'])->name('post_reset_password');
 });
 Route::get('/verify/email', [UserController::class, 'verifyEmail'])->name('verify_email');
-Route::get('/verify/resend/mail', [UserController::class, 'reVerifyEmail'])->name('re_verify_email');
+//Route::get('/verify/resend/mail', [UserController::class, 'reVerifyEmail'])->name('re_verify_email');
 Route::get('/verify/result', [UserController::class, 'verifyResult'])->name('verify_result');
 Route::get('/verify/error', function () {
     return view('pages.user.error.token_expiry');
@@ -93,6 +93,7 @@ Route::middleware('authorization')->group(function () {
         Route::get('/change_password', function () {
             return view('pages.user.personal.change_password');
         })->name('change_password');
+        Route::post('/change_password', [UserController::class, 'postChangePassword'])->name('post_change_password');
     });
 
     Route::name('comment.')->prefix('/comment')->group(function () {
@@ -101,7 +102,7 @@ Route::middleware('authorization')->group(function () {
     });
 });
 
-Route::prefix('/admin')->name('admin.')->group(function () {
+Route::prefix('/admin')->middleware('admin.verify')->name('admin.')->group(function () {
     Route::prefix('/manga')->name('manga.')->group(function () {
         Route::get('/manage', [MangaManageController::class, 'getMangaList'])->name('manage');
         Route::get('/detail', [MangaManageController::class, 'getMangaDetail'])->name('detail');

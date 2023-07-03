@@ -201,4 +201,26 @@ class UserRepositoryImpl implements UserRepository
             return false;
         }
     }
+
+    public function changePassword($newPassword, $userID)
+    {
+        try {
+            $this->user->where('id', $userID)->update(array(
+                'password' => sha1($newPassword)
+            ));
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function getUserByIdAndPassword($userID, $password)
+    {
+        try {
+            return $this->user->where('id', $userID)->where('password', sha1($password))->first();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

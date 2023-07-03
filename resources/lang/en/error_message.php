@@ -10,5 +10,6 @@ return [
 
     'not_exist_user' => 'User not exist!',
     'cannot_forgot_password' => 'Your account is not verify email! Please verify your email first!',
-    'cannot_reset_password' => 'Something wrong! Please try later!'
+    'cannot_reset_password' => 'Something wrong! Please try later!',
+    'not_found_user_change_password' => 'Your current password is not correct!'
 ];
