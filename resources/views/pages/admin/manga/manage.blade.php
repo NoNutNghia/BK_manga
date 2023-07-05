@@ -60,6 +60,11 @@
                         </td>
                         <td>
                             <div class="flex flex-col gap-[12px]">
+                                <a role="button" href="{{ route('admin.chapter.add_index', ['id' => $manga->id]) }}" class="button_action button_like">
+                                    <span>
+                                        Add chapter
+                                    </span>
+                                </a>
                                 <a role="button" href="{{ route('admin.manga.detail', ['id' => $manga->id]) }}" class="button_action button_send_comment">
                                     <span>
                                         Detail

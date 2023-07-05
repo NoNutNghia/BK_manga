@@ -67,7 +67,7 @@ class MangaDetail extends Model
     public function chapter_manga()
     {
         return $this->hasMany(Chapter::class, 'manga_id', 'id')
-            ->orderBy('chapter.uploaded_at', 'desc');
+            ->orderBy('chapter.manga_id', 'desc');
     }
 
     public function comment_manga()

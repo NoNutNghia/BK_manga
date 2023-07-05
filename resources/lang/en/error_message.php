@@ -13,5 +13,6 @@ return [
     'cannot_reset_password' => 'Something wrong! Please try later!',
     'not_found_user_change_password' => 'Your current password is not correct!',
 
-    'cannot_create_manga' => "Cannot create manga! Please try later!"
+    'cannot_create_manga' => "Cannot create manga! Please try later!",
+    'cannot_create_chapter' => "Cannot upload chapter! Please try later!"
 ];

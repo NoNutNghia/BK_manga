@@ -3,6 +3,7 @@
 namespace App\Helper;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class ImageHandleHelper
@@ -50,5 +51,26 @@ class ImageHandleHelper
             return false;
         }
 
+    }
+
+    public function uploadNewChapterImage($mangaID, $chapterID)
+    {
+        try {
+            if (!Storage::exists('public/manga/' . $mangaID . '/chapter')) {
+                Storage::makeDirectory('public/manga/' . $mangaID . '/chapter');
+            }
+
+            Storage::makeDirectory('public/manga/' . $mangaID . '/chapter/' . $chapterID);
+
+            $imageList = Storage::disk('public')->allFiles('test/');
+
+            foreach ($imageList as $imageDir) {
+                Storage::copy('public/'. $imageDir, 'public/manga/' . $mangaID . '/chapter/'. $chapterID .'/' . pathinfo($imageDir)['basename']);
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }

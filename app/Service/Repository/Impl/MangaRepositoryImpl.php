@@ -4,6 +4,8 @@ namespace App\Service\Repository\Impl;
 
 use App\Models\Manga;
 use App\Service\Repository\MangaRepository;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class MangaRepositoryImpl implements MangaRepository
 {
@@ -26,6 +28,20 @@ class MangaRepositoryImpl implements MangaRepository
             $manga->save();
 
             return $manga->id;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function updateTimeManga()
+    {
+        try {
+            $this->manga->update(array(
+                'updated_by' => Auth::id(),
+                'approved_by' => Auth::id()
+            ));
+
+            return true;
         } catch (\Exception $e) {
             return false;
         }

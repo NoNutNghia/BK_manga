@@ -7,4 +7,5 @@ return [
     'change_password' => 'Change password successfully',
 
     'create_manga' => 'Create manga successfully!',
+    'create_chapter' => 'Create chapter successfully!',
 ];

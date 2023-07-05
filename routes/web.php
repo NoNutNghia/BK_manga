@@ -110,6 +110,11 @@ Route::prefix('/admin')->middleware('admin.verify')->name('admin.')->group(funct
         Route::post('/create', [MangaManageController::class, 'createManga'])->name('create');
     });
 
+    Route::prefix('/chapter')->name('chapter.')->group(function () {
+        Route::get('/add', [MangaManageController::class, 'getChapterAdd'])->name('add_index');
+        Route::post('/create', [MangaManageController::class, 'createChapter'])->name('create');
+    });
+
     Route::prefix('/user')->name('user.')->group(function () {
         Route::get('/manage', [UserManageController::class, 'getUserList'])->name('manage');
     });
