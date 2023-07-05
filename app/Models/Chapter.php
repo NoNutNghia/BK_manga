@@ -9,6 +9,7 @@ class Chapter extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id',
         'title',
         'manga_id',
         'uploaded_by',
@@ -17,6 +18,8 @@ class Chapter extends Model
     ];
 
     protected $table = 'chapter';
+
+    public $timestamps = false;
 
     public function parent_manga()
     {

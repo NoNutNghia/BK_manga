@@ -175,4 +175,61 @@ class MangaManageService
 
         return response()->json($response->responseObject());
     }
+
+    public function getChapterAdd(Request $request)
+    {
+        $mangaID = $request->id;
+
+        $latestChapter = $this->chapterRepository->getLatestChapterByMangaID($mangaID);
+
+        return view('pages.admin.chapter.add', compact('latestChapter', 'mangaID'));
+    }
+
+    public function createChapter(Request $request)
+    {
+        DB::beginTransaction();
+        $createChapter = $this->chapterRepository->createChapter($request);
+
+        if (!$createChapter) {
+            DB::rollBack();
+
+            $response = new ResponseObject(ResponseResult::FAILURE, '', __('error_message.cannot_create_chapter'));
+
+            return response()->json($response->responseObject());
+        }
+
+        $upload = $this->imageHandleHelper->uploadNewChapterImage($request->manga_id, $createChapter);
+
+        $update = $this->mangaRepository->updateTimeManga();
+
+        if (!$update) {
+            DB::rollBack();
+
+            $response = new ResponseObject(
+                ResponseResult::FAILURE,
+                '',
+                __('error_message.cannot_create_chapter')
+            );
+
+            return response()->json($response->responseObject());
+        }
+
+        if (!$upload) {
+            DB::rollBack();
+
+            $response = new ResponseObject(ResponseResult::FAILURE, '', __('error_message.cannot_create_chapter'));
+
+            return response()->json($response->responseObject());
+        }
+
+        DB::commit();
+
+        $response = new ResponseObject(
+            ResponseResult::SUCCESS,
+            route('admin.manga.detail', ['id' => $request->manga_id]),
+            __('success_message.create_chapter')
+        );
+
+        return response()->json($response->responseObject());
+    }
 }

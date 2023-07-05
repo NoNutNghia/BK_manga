@@ -33,7 +33,7 @@ class MangaDetailRepositoryImpl implements MangaDetailRepository
                 ->join(
                     DB::raw('(SELECT manga_id, title FROM chapter
 	                WHERE id IN (SELECT MAX(id) from chapter GROUP BY manga_id)
-                    ) chapter_tmp'), 'chapter_tmp.manga_id', '=', 'manga_detail.manga_id')
+                    ) chapter_tmp'), 'chapter_tmp.manga_id', '=', 'manga_detail.id')
                 ->where(function ($query) use ($key) {
                     $query->where('manga_detail.title', 'LIKE', $key)
                         ->orWhere('manga_detail.other_name', 'LIKE', $key);
@@ -64,9 +64,9 @@ class MangaDetailRepositoryImpl implements MangaDetailRepository
                 ->join(
                     DB::raw('(SELECT manga_id, title, id as latest_id FROM chapter
 	                WHERE id IN (SELECT MAX(id) from chapter GROUP BY manga_id)
-                    ) chapter_tmp'), 'chapter_tmp.manga_id', '=', 'manga_detail.manga_id')
+                    ) chapter_tmp'), 'chapter_tmp.manga_id', '=', 'manga_detail.id')
                 ->join('manga', 'manga.id', '=', 'manga_detail.manga_id')
-                ->join('view', 'manga_detail.manga_id', '=', 'view.manga_id')
+                ->join('view', 'manga_detail.id', '=', 'view.manga_id')
                 ->orderBy('view.number_of_views', 'desc')
                 ->orderBy('manga.updated_at', 'desc')
                 ->get();
