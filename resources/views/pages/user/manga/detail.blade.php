@@ -24,7 +24,7 @@
     }
 
     function getMangaId() {
-        return '{{ $foundManga->manga_id }}'
+        return '{{ $foundManga->id }}'
     }
 
     function getUserId() {

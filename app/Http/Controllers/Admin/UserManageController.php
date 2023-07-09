@@ -22,4 +22,14 @@ class UserManageController extends Controller
     {
         return $this->userManageService->getUserList($request);
     }
+
+    public function getUserDetail(Request $request)
+    {
+        return $this->userManageService->getUserDetail($request);
+    }
+
+    public function updateStatusUser(Request $request)
+    {
+        return $this->userManageService->updateStatusUser($request);
+    }
 }

@@ -25,4 +25,35 @@ class GenreMangaRepositoryImpl implements GenreMangaRepository
             return false;
         }
     }
+
+    public function createGenreWithMangaID($genreList, $mangaDetailID)
+    {
+        try {
+            $genreRecord = array();
+
+            foreach ($genreList as $item) {
+                $data = array(
+                    'genre_id' => $item,
+                    'manga_id' => $mangaDetailID
+                );
+                array_push($genreRecord, $data);
+            }
+
+            $this->genreManga->insert($genreRecord);
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function removeGenreWithMangaID($genreList, $mangaDetailID)
+    {
+        try {
+            $this->genreManga->where('manga_id', $mangaDetailID)->whereIn('genre_id', $genreList)->delete();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

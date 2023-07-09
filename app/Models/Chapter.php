@@ -9,6 +9,7 @@ class Chapter extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id',
         'title',
         'manga_id',
         'uploaded_by',
@@ -18,6 +19,8 @@ class Chapter extends Model
 
     protected $table = 'chapter';
 
+    public $timestamps = false;
+
     public function parent_manga()
     {
         return $this->belongsTo(MangaDetail::class, 'manga_id', 'manga_id');
@@ -26,6 +29,16 @@ class Chapter extends Model
     public function comment_chapter()
     {
         return $this->hasMany(ChapterComment::class, 'chapter_id', 'id');
+    }
+
+    public function person_update()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
+    }
+
+    public function person_upload()
+    {
+        return $this->belongsTo(User::class,'uploaded_by', 'id');
     }
 
 }

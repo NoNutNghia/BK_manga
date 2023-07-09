@@ -90,7 +90,7 @@
     }
 
     function getMangaId() {
-        return '{{ $chapterObject['parentManga']->manga_id }}'
+        return '{{ $chapterObject['parentManga']->id }}'
     }
 
     function getUserId() {

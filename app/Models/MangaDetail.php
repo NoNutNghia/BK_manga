@@ -10,15 +10,19 @@ class MangaDetail extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'manga_id',
         'manga_status',
         'author_id',
         'other_name',
         'age_range',
-        'description'
+        'description',
+        'title',
     ];
 
     protected $table = "manga_detail";
+
+    public $timestamps = false;
 
     public function genre_manga()
     {
@@ -47,27 +51,27 @@ class MangaDetail extends Model
 
     public function manga_views()
     {
-        return $this->hasOne(View::class, 'manga_id', 'manga_id');
+        return $this->hasOne(View::class, 'manga_id', 'id');
     }
 
     public function manga_follows()
     {
-        return $this->hasMany(Follow::class, 'manga_id', 'manga_id');
+        return $this->hasMany(Follow::class, 'manga_id', 'id');
     }
 
     public function manga_likes()
     {
-        return $this->hasMany(Like::class, 'manga_id', 'manga_id');
+        return $this->hasMany(Like::class, 'manga_id', 'id');
     }
 
     public function chapter_manga()
     {
-        return $this->hasMany(Chapter::class, 'manga_id', 'manga_id')
-            ->orderBy('chapter.uploaded_at', 'desc');
+        return $this->hasMany(Chapter::class, 'manga_id', 'id')
+            ->orderBy('chapter.manga_id', 'desc');
     }
 
     public function comment_manga()
     {
-        return $this->hasMany(MangaComment::class, 'manga_id', 'manga_id');
+        return $this->hasMany(MangaComment::class, 'manga_id', 'id');
     }
 }

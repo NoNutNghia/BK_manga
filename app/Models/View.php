@@ -19,6 +19,6 @@ class View extends Model
 
     public function mapping_to_manga()
     {
-        return $this->hasOne(MangaDetail::class, 'manga_id', 'manga_id');
+        return $this->hasOne(MangaDetail::class, 'manga_id', 'id');
     }
 }

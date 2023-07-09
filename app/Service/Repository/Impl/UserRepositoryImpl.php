@@ -223,4 +223,26 @@ class UserRepositoryImpl implements UserRepository
             return false;
         }
     }
+
+    public function getUserByIDManage($userID)
+    {
+        try {
+            return $this->user->where('id', $userID)->first();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function updateStatusUser($userID, $userStatus)
+    {
+        try {
+            $this->user->where('id', (int) $userID)->update(array(
+                'user_status' => $userStatus
+            ));
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

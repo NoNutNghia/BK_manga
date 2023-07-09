@@ -33,4 +33,8 @@ interface UserRepository
     public function changePassword($newPassword, $userID);
 
     public function getUserByIdAndPassword($userID, $password);
+
+    public function getUserByIDManage($userID);
+
+    public function updateStatusUser($userID, $userStatus);
 }

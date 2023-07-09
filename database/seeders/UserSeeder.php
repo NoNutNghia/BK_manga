@@ -27,6 +27,7 @@ class UserSeeder extends Seeder
                 'user_status' => UserStatus::ACTIVE,
                 'role' => UserRole::USER,
                 'password' => sha1('admin'),
+                'email_verify_at' => Carbon::now(),
                 'date_of_birth' => Carbon::createFromFormat('d/m/Y','26/07/2001'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -39,6 +40,7 @@ class UserSeeder extends Seeder
                 'user_status' => UserStatus::ACTIVE,
                 'role' => UserRole::ADMIN,
                 'password' => sha1('admin'),
+                'email_verify_at' => Carbon::now(),
                 'date_of_birth' => Carbon::createFromFormat('d/m/Y','26/07/2001'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

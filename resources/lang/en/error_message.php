@@ -11,5 +11,10 @@ return [
     'not_exist_user' => 'User not exist!',
     'cannot_forgot_password' => 'Your account is not verify email! Please verify your email first!',
     'cannot_reset_password' => 'Something wrong! Please try later!',
-    'not_found_user_change_password' => 'Your current password is not correct!'
+    'not_found_user_change_password' => 'Your current password is not correct!',
+
+    'cannot_create_manga' => "Cannot create manga! Please try later!",
+    'cannot_create_chapter' => "Cannot upload chapter! Please try later!",
+    'cannot_edit_manga' => "Something wrong! Please try later!",
+    'cannot_edit_status_user' => "Something wrong! Please try later!",
 ];

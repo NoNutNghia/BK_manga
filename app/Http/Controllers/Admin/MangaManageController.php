@@ -27,4 +27,34 @@ class MangaManageController extends Controller
     {
         return $this->mangaManageService->getMangaDetail($request);
     }
+
+    public function getMangaAdd(Request $request)
+    {
+        return $this->mangaManageService->getMangaAdd($request);
+    }
+
+    public function createManga(Request $request)
+    {
+        return $this->mangaManageService->createManga($request);
+    }
+
+    public function getChapterAdd(Request $request)
+    {
+        return $this->mangaManageService->getChapterAdd($request);
+    }
+
+    public function createChapter(Request $request)
+    {
+        return $this->mangaManageService->createChapter($request);
+    }
+
+    public function getMangaEdit(Request $request)
+    {
+        return $this->mangaManageService->getMangaEdit($request);
+    }
+
+    public function editManga(Request $request)
+    {
+        return $this->mangaManageService->editManga($request);
+    }
 }

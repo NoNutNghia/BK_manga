@@ -104,11 +104,24 @@ Route::middleware('authorization')->group(function () {
 
 Route::prefix('/admin')->middleware('admin.verify')->name('admin.')->group(function () {
     Route::prefix('/manga')->name('manga.')->group(function () {
+        Route::get('/add', [MangaManageController::class, 'getMangaAdd'])->name('add_index');
         Route::get('/manage', [MangaManageController::class, 'getMangaList'])->name('manage');
         Route::get('/detail', [MangaManageController::class, 'getMangaDetail'])->name('detail');
+        Route::post('/create', [MangaManageController::class, 'createManga'])->name('create');
+        Route::get('/edit', [MangaManageController::class, 'getMangaEdit'])->name('edit_index');
+        Route::post('/edit', [MangaManageController::class, 'editManga'])->name('edit');
+    });
+
+    Route::prefix('/chapter')->name('chapter.')->group(function () {
+        Route::get('/add', [MangaManageController::class, 'getChapterAdd'])->name('add_index');
+        Route::post('/create', [MangaManageController::class, 'createChapter'])->name('create');
     });
 
     Route::prefix('/user')->name('user.')->group(function () {
         Route::get('/manage', [UserManageController::class, 'getUserList'])->name('manage');
+        Route::get('/detail', [UserManageController::class, 'getUserDetail'])->name('detail');
+        Route::prefix('/edit')->name('edit.')->group(function () {
+            Route::post('/status', [UserManageController::class, 'updateStatusUser'])->name('status');
+        });
     });
 });

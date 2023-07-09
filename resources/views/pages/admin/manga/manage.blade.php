@@ -16,7 +16,7 @@
                 </button>
             </form>
 
-            <a role="button" href="" class="w-[202px] button_action button_read_begin rounded font-bold">
+            <a role="button" href="{{ route('admin.manga.add_index') }}" class="w-[202px] button_action button_read_begin rounded font-bold">
                 <i class="fa-solid fa-plus"></i>
                 <span>
                     Add New Manga
@@ -50,7 +50,7 @@
                             {{ $manga->title }}
                         </td>
                         <td>
-                            <img width="100%" src="{{ asset('storage/manga/' . $manga->manga_id . '/image_logo.jpg') }}" alt="">
+                            <img width="100%" src="{{ asset('storage/manga/' . $manga->id . '/image_logo.jpg') }}" alt="">
                         </td>
                         <td>
                             {{ $manga->author_manga->author_name }}
@@ -60,16 +60,21 @@
                         </td>
                         <td>
                             <div class="flex flex-col gap-[12px]">
-                                <a role="button" href="{{ route('admin.manga.detail', ['id' => $manga->manga_id]) }}" class="button_action button_send_comment">
+                                <a role="button" href="{{ route('admin.chapter.add_index', ['id' => $manga->id]) }}" class="button_action button_like">
+                                    <span>
+                                        Add chapter
+                                    </span>
+                                </a>
+                                <a role="button" href="{{ route('admin.manga.detail', ['id' => $manga->id]) }}" class="button_action button_send_comment">
                                     <span>
                                         Detail
                                     </span>
                                 </a>
-                                <button class="button_action button_forgot_password">
+                                <a role="button" href="{{ route('admin.manga.edit_index', ['id' => $manga->id]) }}" class="button_action button_forgot_password">
                                     <span>
                                         Edit
                                     </span>
-                                </button>
+                                </a>
                             </div>
                         </td>
                     </tr>

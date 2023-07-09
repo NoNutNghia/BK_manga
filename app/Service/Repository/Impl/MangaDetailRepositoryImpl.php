@@ -33,7 +33,7 @@ class MangaDetailRepositoryImpl implements MangaDetailRepository
                 ->join(
                     DB::raw('(SELECT manga_id, title FROM chapter
 	                WHERE id IN (SELECT MAX(id) from chapter GROUP BY manga_id)
-                    ) chapter_tmp'), 'chapter_tmp.manga_id', '=', 'manga_detail.manga_id')
+                    ) chapter_tmp'), 'chapter_tmp.manga_id', '=', 'manga_detail.id')
                 ->where(function ($query) use ($key) {
                     $query->where('manga_detail.title', 'LIKE', $key)
                         ->orWhere('manga_detail.other_name', 'LIKE', $key);
@@ -46,7 +46,7 @@ class MangaDetailRepositoryImpl implements MangaDetailRepository
     public function getMangaDetailById($id)
     {
         try {
-            return $this->mangaDetail->where('manga_id', $id)->first();
+            return $this->mangaDetail->where('id', $id)->first();
         } catch (\Exception $e) {
             return false;
         }
@@ -64,9 +64,9 @@ class MangaDetailRepositoryImpl implements MangaDetailRepository
                 ->join(
                     DB::raw('(SELECT manga_id, title, id as latest_id FROM chapter
 	                WHERE id IN (SELECT MAX(id) from chapter GROUP BY manga_id)
-                    ) chapter_tmp'), 'chapter_tmp.manga_id', '=', 'manga_detail.manga_id')
+                    ) chapter_tmp'), 'chapter_tmp.manga_id', '=', 'manga_detail.id')
                 ->join('manga', 'manga.id', '=', 'manga_detail.manga_id')
-                ->join('view', 'manga_detail.manga_id', '=', 'view.manga_id')
+                ->join('view', 'manga_detail.id', '=', 'view.manga_id')
                 ->orderBy('view.number_of_views', 'desc')
                 ->orderBy('manga.updated_at', 'desc')
                 ->get();
@@ -166,6 +166,46 @@ class MangaDetailRepositoryImpl implements MangaDetailRepository
                     ->orWhere('other_name', 'LIKE', $key);
             })->orderBy('title')->get();
         } catch (\Exception) {
+            return false;
+        }
+    }
+
+    public function createDetailManga($data, $mangaID)
+    {
+        try {
+            $newMangaDetail = new MangaDetail();
+
+            $newMangaDetail->manga_id = $mangaID;
+            $newMangaDetail->manga_status = MangaStatus::IN_PROCESS;
+            $newMangaDetail->author_id = $data->author;
+            $newMangaDetail->other_name = $data->other_name;
+            $newMangaDetail->title = $data->title;
+            $newMangaDetail->age_range = $data->age_range;
+            $newMangaDetail->description = $data->description;
+
+            $newMangaDetail->save();
+
+            return $newMangaDetail->id;
+
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function editManga($data)
+    {
+        try {
+            $this->mangaDetail->where('id', $data->id)->update(array(
+                'title' => $data->title,
+                'author_id' => $data->author_id,
+                'other_name' => $data->other_name,
+                'age_range' => $data->age_range,
+                'description' => $data->description,
+                'manga_status' => $data->manga_status
+            ));
+
+            return true;
+        } catch (\Exception $e) {
             return false;
         }
     }
