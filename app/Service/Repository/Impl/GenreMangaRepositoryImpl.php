@@ -46,4 +46,14 @@ class GenreMangaRepositoryImpl implements GenreMangaRepository
             return false;
         }
     }
+
+    public function removeGenreWithMangaID($genreList, $mangaDetailID)
+    {
+        try {
+            $this->genreManga->where('manga_id', $mangaDetailID)->whereIn('genre_id', $genreList)->delete();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }
