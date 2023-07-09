@@ -8,4 +8,6 @@ return [
 
     'create_manga' => 'Create manga successfully!',
     'create_chapter' => 'Create chapter successfully!',
+    'edit_manga' => "Edit manga successfully!",
+    'update_status_user' => "Update status user successfully!",
 ];

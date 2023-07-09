@@ -60,11 +60,11 @@
                     </td>
                     <td>
                         <div class="flex flex-col gap-[12px]">
-                            <button class="button_action button_send_comment">
+                            <a role="button" href="{{ route('admin.user.detail', ['id' => $user->id]) }}" class="button_action button_send_comment">
                                     <span>
                                         Detail
                                     </span>
-                            </button>
+                            </a>
 
                         </div>
                     </td>

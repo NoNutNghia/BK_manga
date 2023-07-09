@@ -12,6 +12,7 @@ use App\Service\Repository\GenreMangaRepository;
 use App\Service\Repository\GenreRepository;
 use App\Service\Repository\MangaDetailRepository;
 use App\Service\Repository\MangaRepository;
+use App\Service\Repository\MangaStatusRepository;
 use App\Service\Repository\ViewRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +29,7 @@ class MangaManageService
     private MangaRepository $mangaRepository;
     private ImageHandleHelper $imageHandleHelper;
     private ViewRepository $viewRepository;
+    private MangaStatusRepository $mangaStatusRepository;
 
     /**
      * @param MangaDetailRepository $mangaDetailRepository
@@ -39,6 +41,7 @@ class MangaManageService
      * @param MangaRepository $mangaRepository
      * @param ImageHandleHelper $imageHandleHelper
      * @param ViewRepository $viewRepository
+     * @param MangaStatusRepository $mangaStatusRepository
      */
     public function __construct(
         MangaDetailRepository $mangaDetailRepository,
@@ -49,7 +52,8 @@ class MangaManageService
         AuthorRepository $authorRepository,
         MangaRepository $mangaRepository,
         ImageHandleHelper $imageHandleHelper,
-        ViewRepository $viewRepository
+        ViewRepository $viewRepository,
+        MangaStatusRepository $mangaStatusRepository
     )
     {
         $this->mangaDetailRepository = $mangaDetailRepository;
@@ -61,6 +65,7 @@ class MangaManageService
         $this->mangaRepository = $mangaRepository;
         $this->imageHandleHelper = $imageHandleHelper;
         $this->viewRepository = $viewRepository;
+        $this->mangaStatusRepository = $mangaStatusRepository;
     }
 
 
@@ -200,7 +205,7 @@ class MangaManageService
 
         $upload = $this->imageHandleHelper->uploadNewChapterImage($request->manga_id, $createChapter);
 
-        $update = $this->mangaRepository->updateTimeManga();
+        $update = $this->mangaRepository->updateTimeManga($request->manga_id);
 
         if (!$update) {
             DB::rollBack();
@@ -229,6 +234,107 @@ class MangaManageService
             route('admin.manga.detail', ['id' => $request->manga_id]),
             __('success_message.create_chapter')
         );
+
+        return response()->json($response->responseObject());
+    }
+
+    public function getMangaEdit(Request $request)
+    {
+        if (isset($request->id)) {
+            $id = $request->id;
+
+            $foundManga = $this->mangaDetailRepository->getMangaDetailById($id);
+
+            if (!$foundManga) {
+                return redirect()->route('error');
+            }
+
+            $genreList = $this->genreRepository->getGenre();
+            $authorList = $this->authorRepository->getAuthorList();
+            $genreMangaList = $this->genreMangaRepository->getGenreMangaListById($id);
+            $ageRangeList = $this->ageRangeRepository->getAgeRangeList();
+            $mangaStatusList = $this->mangaStatusRepository->getMangaStatus();
+
+            return view('pages.admin.manga.edit',
+                compact(
+                    'foundManga',
+                    'genreList',
+                    'genreMangaList',
+                    'authorList',
+                    'ageRangeList',
+                    'mangaStatusList'
+                )
+            );
+        }
+
+        return redirect()->route('error');
+    }
+
+    public function editManga(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $checkUpdate = $this->mangaDetailRepository->editManga($request);
+
+            if (!$checkUpdate) {
+                return $this->getErrorMessage();
+            }
+
+            $checkUpdateManga = $this->mangaRepository->updateTimeMangaViaMangaDetail($request->id);
+
+            if (!$checkUpdateManga) {
+                return $this->getErrorMessage();
+            }
+
+            $imageList = array(
+                'image_logo' => $request->image_logo,
+                'image_large' => $request->image_large
+            );
+
+            $currentGenreManga = $this->genreMangaRepository->getGenreMangaListById($request->id)->pluck('genre_id');
+            $requestGenreManga = collect(array_map('intval', $request->genre));
+
+            $deleteGenreList = $currentGenreManga->diff($requestGenreManga)->toArray();
+            $insertGenreList = $requestGenreManga->diff($currentGenreManga)->toArray();
+
+            if(count($insertGenreList) > 0) {
+                $checkInsertGenre = $this->genreMangaRepository->createGenreWithMangaID($insertGenreList, $request->id);
+
+                if (!$checkInsertGenre) {
+                    return $this->getErrorMessage();
+                }
+            }
+
+            if(count($deleteGenreList) > 0) {
+                $checkDeleteGenre = $this->genreMangaRepository->removeGenreWithMangaID($deleteGenreList, $request->id);
+
+                if (!$checkDeleteGenre) {
+                    return $this->getErrorMessage();
+                }
+            }
+
+            $this->imageHandleHelper->replaceImageManga($imageList, $request->id);
+
+            DB::commit();
+
+            $response = new ResponseObject(
+                ResponseResult::SUCCESS,
+                route('admin.manga.detail', ['id' => $request->id]),
+                __('success_message.edit_manga')
+            );
+
+            return response()->json($response->responseObject());
+
+        } catch (\Exception $e) {
+            return $this->getErrorMessage();
+        }
+    }
+
+    private function getErrorMessage()
+    {
+        DB::rollBack();
+
+        $response = new ResponseObject(ResponseResult::FAILURE, '', __('error_message.cannot_edit_manga'));
 
         return response()->json($response->responseObject());
     }

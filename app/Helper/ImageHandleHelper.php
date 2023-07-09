@@ -73,4 +73,47 @@ class ImageHandleHelper
             return false;
         }
     }
+
+    public function replaceImageManga($arrayBase64StringFile, $mangaDetailID)
+    {
+        try {
+            $imageLogo = $arrayBase64StringFile['image_logo'];
+            $imageLarge = $arrayBase64StringFile['image_large'];
+
+            if ($imageLogo) {
+
+                $imageLogoName = 'image_logo.jpg';
+
+                if ( Storage::exists('public/manga/' . $mangaDetailID . '/' . $imageLogoName) ) {
+                    Storage::delete('public/manga/' . $mangaDetailID . '/' . $imageLogoName);
+                }
+
+                $imgLogo = preg_replace('/^data:image\/\w+;base64,/', '', $imageLogo);
+
+                $imgLogo = str_replace(' ', '+', $imgLogo);
+
+                Storage::put('public/manga/' . $mangaDetailID . '/' . $imageLogoName, base64_decode($imgLogo));
+            }
+
+            if ($imageLarge) {
+
+                $imageLargeName = 'image_large.jpg';
+
+                if ( Storage::exists('public/manga/' . $mangaDetailID . '/' . $imageLargeName) ) {
+                    Storage::delete('public/manga/' . $mangaDetailID . '/' . $imageLargeName);
+                }
+
+                $imgLarge = preg_replace('/^data:image\/\w+;base64,/', '', $imageLarge);
+
+                $imgLarge = str_replace(' ', '+', $imgLarge);
+
+
+                Storage::put('public/manga/' . $mangaDetailID . '/' . $imageLargeName, base64_decode($imgLarge));
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

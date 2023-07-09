@@ -70,11 +70,11 @@
                                         Detail
                                     </span>
                                 </a>
-                                <button class="button_action button_forgot_password">
+                                <a role="button" href="{{ route('admin.manga.edit_index', ['id' => $manga->id]) }}" class="button_action button_forgot_password">
                                     <span>
                                         Edit
                                     </span>
-                                </button>
+                                </a>
                             </div>
                         </td>
                     </tr>

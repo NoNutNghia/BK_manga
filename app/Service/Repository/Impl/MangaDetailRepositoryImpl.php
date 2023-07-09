@@ -191,4 +191,22 @@ class MangaDetailRepositoryImpl implements MangaDetailRepository
             return false;
         }
     }
+
+    public function editManga($data)
+    {
+        try {
+            $this->mangaDetail->where('id', $data->id)->update(array(
+                'title' => $data->title,
+                'author_id' => $data->author_id,
+                'other_name' => $data->other_name,
+                'age_range' => $data->age_range,
+                'description' => $data->description,
+                'manga_status' => $data->manga_status
+            ));
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

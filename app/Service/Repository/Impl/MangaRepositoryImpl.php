@@ -33,13 +33,29 @@ class MangaRepositoryImpl implements MangaRepository
         }
     }
 
-    public function updateTimeManga()
+    public function updateTimeManga($mangaID)
     {
         try {
-            $this->manga->update(array(
+            $this->manga->where('id', $mangaID)->update(array(
                 'updated_by' => Auth::id(),
                 'approved_by' => Auth::id()
             ));
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function updateTimeMangaViaMangaDetail($mangaID)
+    {
+        try {
+            $this->manga->join('manga_detail', 'manga_detail.manga_id', '=', 'manga.id')
+                ->where('manga.id', $mangaID)
+                ->update(array(
+                    'updated_by' => Auth::id(),
+                    'approved_by' => Auth::id()
+                ));
 
             return true;
         } catch (\Exception $e) {

@@ -6,5 +6,7 @@ interface MangaRepository
 {
     public function createManga($userUpdate, $userApprove);
 
-    public function updateTimeManga();
+    public function updateTimeManga($mangaID);
+
+    public function updateTimeMangaViaMangaDetail($mangaID);
 }
