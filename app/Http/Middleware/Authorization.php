@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enum\UserStatus;
 use App\ResponseObject\ResponseObject;
 use Closure;
 use Illuminate\Http\Request;
@@ -22,6 +23,11 @@ class Authorization
         {
             $response = new ResponseObject(false, '', 'You must login first!');
             return response()->json($response->responseObject());
+        }
+
+        if (Auth::check() && Auth::user()->user_status == UserStatus::DISABLE) {
+            Auth::logout();
+            return redirect()->route('main');
         }
 
         if (!Auth::check())

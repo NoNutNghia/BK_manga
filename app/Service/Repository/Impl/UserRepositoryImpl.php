@@ -42,8 +42,7 @@ class UserRepositoryImpl implements UserRepository
     {
         try {
             return $this->user->where(function ($query) use ($id) {
-                $query->where('id', $id)
-                    ->where('user_status', 1);
+                $query->where('id', $id);
             })->first();
         } catch (\Exception $e) {
             return false;

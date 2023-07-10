@@ -45,6 +45,12 @@ class UserService
 
         if ($user) {
 
+            if ($user->user_status == UserStatus::DISABLE) {
+                $loginResponse = new ResponseObject(false, '', __('error_message.user_status'));
+
+                return response()->json($loginResponse->responseObject());
+            }
+
             Auth::login($user);
 
             if ($user->role == UserRole::ADMIN) {
@@ -62,7 +68,16 @@ class UserService
 
     public function logout(Request $request)
     {
+        $route = '';
+        if (Auth::user()->role == UserRole::ADMIN) {
+            $route = 'main';
+        }
+
         Auth::logout();
+
+        if ($route) {
+            return redirect()->route($route);
+        }
 
         return redirect()->back();
     }

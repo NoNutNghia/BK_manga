@@ -10,4 +10,9 @@
             User Management
         </span>
     </a>
+    <a href="{{ route('logout') }}">
+        <span>
+            Logout
+        </span>
+    </a>
 </div>
