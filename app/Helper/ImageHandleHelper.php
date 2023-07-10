@@ -116,4 +116,41 @@ class ImageHandleHelper
             return false;
         }
     }
+
+    public function initChapterImage()
+    {
+        try {
+
+            $imageList = Storage::disk('public')->allFiles('test/');
+
+            $indexChapter = 1;
+
+            for ($i = 1; $i <= 20; $i++) {
+                if (!Storage::exists('public/manga/' . $i)) {
+                    Storage::makeDirectory('public/manga/' . $i);
+                }
+
+                $value = $i * 10;
+
+                for ($indexChapter; $indexChapter <= $value; $indexChapter++) {
+                    if (!Storage::exists('public/manga/' . $i . '/chapter')) {
+                        Storage::makeDirectory('public/manga/' . $i . '/chapter');
+                    }
+
+                    if (!Storage::exists('public/manga/' . $i . '/chapter/' . $indexChapter)) {
+                        Storage::makeDirectory('public/manga/' . $i . '/chapter/' . $indexChapter);
+
+                        foreach ($imageList as $imageDir) {
+                            Storage::copy('public/'. $imageDir, 'public/manga/' . $i . '/chapter/' . $indexChapter .'/' . pathinfo($imageDir)['basename']);
+                        }
+                    }
+                }
+            }
+
+            return true;
+
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }
