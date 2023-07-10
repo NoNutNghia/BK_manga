@@ -6,25 +6,47 @@ let count_page = getCountPage()
 let count_comment = $('#count_comment')
 
 button_send_comment.on('click', function () {
+    $(this).attr('disabled', true)
+    resetError()
 
-    let content_comment = $('.comment_box').val()
+    let content_comment = $('.comment_box').val().trim()
 
     let send_comment = {
         'id': getMangaId(),
         'content_comment': content_comment
     }
 
-    $.ajax({
-        type: "POST",
-        url: getRoutePostCommentManga(),
-        headers: {'X-CSRF-TOKEN': getCSRFToken()},
-        data: send_comment,
-        success: function (response) {
-            if (response.result) {
-                resetCommentBlock()
+    if (validationData(send_comment)) {
+        $.ajax({
+            type: "POST",
+            url: getRoutePostCommentManga(),
+            headers: {'X-CSRF-TOKEN': getCSRFToken()},
+            data: send_comment,
+            success: function (response) {
+                if (response.result) {
+                    resetCommentBlock()
+                } else {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: `${response.message}`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+                button_send_comment.removeAttr('disabled')
             }
-        }
-    })
+        })
+    } else {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: `You must input your comment!`,
+            showConfirmButton: false,
+            timer: 1500
+        })
+        button_send_comment.removeAttr('disabled')
+    }
 })
 
 function getCommentManga(page) {
@@ -144,4 +166,19 @@ function getCountCurrentComment() {
             }
         }
     })
+}
+
+function validationData(data) {
+    let validation = true
+
+    if (!data['content_comment']) {
+        $('.comment_box').addClass('error_input')
+        validation = false
+    }
+
+    return validation
+}
+
+function resetError() {
+    $('.comment_box').removeClass('error_input')
 }

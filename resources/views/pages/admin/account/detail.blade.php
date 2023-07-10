@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="flex flex-col w-[39%] items-center font-bold gap-[12px]">
-                <img width="50%" src="{{ asset('storage/avatar/' . $foundUser->id . '/avatar.jpeg') }}" class="avatar_user" id="avatar_user" alt="">
+                <img width="50%" src="{{ asset('storage/avatar/' . $foundUser->id . '/avatar.jpeg') }}" class="avatar_user border-[black]" id="avatar_user" alt="">
                 @if(!is_null($foundUser->email_verify_at))
                     <button
                         class="button_action {{ $foundUser->user_status == \App\Enum\UserStatus::ACTIVE ? 'button_follow' : 'button_read_begin' }}"

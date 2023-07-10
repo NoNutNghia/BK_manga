@@ -24,20 +24,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', [UserController::class, 'login'])->name('login');
-Route::post('/register', [UserController::class, 'register'])->name('register');
-Route::get('/logout', [UserController::class, 'logout'])->name('logout');
-Route::prefix('/forgot')->name('forgot.')->group(function () {
-    Route::post('/check/email', [UserController::class, 'checkExistEmail'])->name('check_exist_email');
-    Route::get('reset/password', [UserController::class, 'resetPassword'])->name('reset_password');
-    Route::post('reset/password', [UserController::class, 'postResetPassword'])->name('post_reset_password');
-});
-Route::get('/verify/email', [UserController::class, 'verifyEmail'])->name('verify_email');
+Route::middleware('not.authorization')->group(function () {
+    Route::post('/login', [UserController::class, 'login'])->name('login');
+    Route::post('/register', [UserController::class, 'register'])->name('register');
+    Route::prefix('/forgot')->name('forgot.')->group(function () {
+        Route::post('/check/email', [UserController::class, 'checkExistEmail'])->name('check_exist_email');
+        Route::get('reset/password', [UserController::class, 'resetPassword'])->name('reset_password');
+        Route::post('reset/password', [UserController::class, 'postResetPassword'])->name('post_reset_password');
+    });
+    Route::get('/verify/email', [UserController::class, 'verifyEmail'])->name('verify_email');
 //Route::get('/verify/resend/mail', [UserController::class, 'reVerifyEmail'])->name('re_verify_email');
-Route::get('/verify/result', [UserController::class, 'verifyResult'])->name('verify_result');
-Route::get('/verify/error', function () {
-    return view('pages.user.error.token_expiry');
-})->name('verify_error');
+    Route::get('/verify/result', [UserController::class, 'verifyResult'])->name('verify_result');
+    Route::get('/verify/error', function () {
+        return view('pages.user.error.token_expiry');
+    })->name('verify_error');
+});
 
 Route::name('main')->group(function () {
     Route::get('/', [MangaController::class, 'mangaCardList']);
@@ -79,10 +80,19 @@ Route::name('comment.')->prefix('/comment')->group(function () {
 
 Route::middleware('authorization')->group(function () {
 
-    Route::post('/follow', [FollowController::class, 'followManga'])->name('follow');
-    Route::post('/unfollow', [FollowController::class, 'unfollowManga'])->name('unfollow');
-    Route::post('like', [LikeController::class, 'likeManga'])->name('like');
-    Route::post('unlike', [LikeController::class, 'unlikeManga'])->name('unlike');
+    Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
+    Route::middleware('verify_email')->group(function () {
+        Route::post('/follow', [FollowController::class, 'followManga'])->name('follow');
+        Route::post('/unfollow', [FollowController::class, 'unfollowManga'])->name('unfollow');
+        Route::post('like', [LikeController::class, 'likeManga'])->name('like');
+        Route::post('unlike', [LikeController::class, 'unlikeManga'])->name('unlike');
+
+        Route::name('comment.')->prefix('/comment')->group(function () {
+            Route::post('/manga', [CommentController::class, 'commentManga'])->name('manga_post');
+            Route::post('/chapter', [CommentController::class, 'commentChapter'])->name('chapter_post');
+        });
+    });
 
     Route::get('/following', [FollowController::class, 'index'])->name('following');
 
@@ -94,11 +104,6 @@ Route::middleware('authorization')->group(function () {
             return view('pages.user.personal.change_password');
         })->name('change_password');
         Route::post('/change_password', [UserController::class, 'postChangePassword'])->name('post_change_password');
-    });
-
-    Route::name('comment.')->prefix('/comment')->group(function () {
-        Route::post('/manga', [CommentController::class, 'commentManga'])->name('manga_post');
-        Route::post('/chapter', [CommentController::class, 'commentChapter'])->name('chapter_post');
     });
 });
 
