@@ -14,14 +14,14 @@
     @endif
     <div class="flex flex-row items-center w-full justify-center gap-[8px]">
         @if ($previousChapterId)
-            <a role="button" href="{{ route('chapter', ['id' => $previousChapterId]) }}" class="button_action button_send_comment gap-[4px]">
+            <a role="button" href="{{ route('chapter', ['id' => $previousChapterId]) }}" class="button_action button_chapter_navigation gap-[4px]">
                 <i class="fa-sharp fa-solid fa-arrow-left"></i>
                 <span>
                     Previous
                 </span>
             </a>
         @else
-            <button class="button_action button_not_allowed button_send_comment gap-[4px]">
+            <button class="button_action button_not_allowed button_chapter_navigation gap-[4px]">
                 <span>
                     Previous
                 </span>
@@ -38,14 +38,14 @@
         </select>
 
         @if ($nextChapterId)
-            <a role="button" href="{{ route('chapter', ['id' => $nextChapterId]) }}" class="button_action button_send_comment gap-[4px]">
+            <a role="button" href="{{ route('chapter', ['id' => $nextChapterId]) }}" class="button_action button_chapter_navigation gap-[4px]">
                 <span>
                     Next
                 </span>
                 <i class="fa-sharp fa-solid fa-arrow-right"></i>
             </a>
         @else
-            <button class="button_action button_not_allowed button_send_comment gap-[4px]">
+            <button class="button_action button_not_allowed button_chapter_navigation gap-[4px]">
                 <span>
                     Next
                 </span>
