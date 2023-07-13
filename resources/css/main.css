@@ -53,7 +53,8 @@
     background-color: #10e097;
 }
 
-.button_send_comment {
+.button_send_comment,
+.button_chapter_navigation {
     background-color: #3f94d5;
 }
 
@@ -61,6 +62,7 @@
 .button_like,
 .button_follow,
 .button_send_comment,
+.button_chapter_navigation,
 .button_unfollow,
 .button_unlike {
     min-width: 157px;
