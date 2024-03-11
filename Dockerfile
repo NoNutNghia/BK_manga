@@ -1,47 +1,39 @@
-# Use the official PHP image with Apache
-FROM php:8.3-apache
+FROM php:8.2-apache
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    zip \
-    curl \
-    sudo \
-    unzip \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y \
     libzip-dev \
-    && apt-get clean
+    zip \
+    npm
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
-
-# Enable Apache mod_rewrite
+# Enable mod_rewrite
 RUN a2enmod rewrite
 
-# Get latest Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql zip
 
-# Set working directory
-WORKDIR /var/www/html
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Copy existing application directory contents
+# Copy the application code
 COPY . /var/www/html
 
-# Expose port 80
-EXPOSE 80
+# Set the working directory
+WORKDIR /var/www/html
 
-# Run composer install to install the dependencies
-RUN composer update
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Install project dependencies
 RUN composer install
+RUN npm run dev
+COPY .env.example .env
+RUN php artisan key:generate
+RUN #php artisan migrate --seed
+RUN php artisan storage:link
+RUN php artisan optimize:clear
 
-# Change ownership of our applications
-RUN chown -R www-data:www-data /var/www/html
-
-# Start Apache in the foreground
-CMD ["apache2-foreground"]
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
